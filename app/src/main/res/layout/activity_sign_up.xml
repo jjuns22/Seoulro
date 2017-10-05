@@ -3,122 +3,198 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/signup_bg"
     android:orientation="vertical"
     tools:context="com.seoulsi.client.seoulro.login.SignUpActivity">
 
-    <ImageView
+    <View
         android:layout_width="match_parent"
-        android:layout_height="200dp" />
-
+        android:layout_height="87dp"></View>
     <LinearLayout
+        android:gravity="center"
         android:layout_width="match_parent"
-        android:layout_height="45dp"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:src="@drawable/signup_logo_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="8dp"></View>
+    <LinearLayout
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:textSize="48dp"
+            android:textColor="#02A652"
+            android:text="Sign up"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="80dp"></View>
+    <LinearLayout
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
         android:layout_gravity="center"
         android:orientation="horizontal">
 
+        <TextView
+            android:layout_width="10dp"
+            android:layout_height="wrap_content" />
         <ImageView
-            android:layout_width="45dp"
-            android:layout_height="45dp" />
-
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/signup_id_icon"
+            />
+        <TextView
+            android:layout_width="10dp"
+            android:layout_height="wrap_content" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="45dp"
             android:gravity="center"
-            android:text="Username" />
+            android:text="Nickname"
+            android:textColor="#FFFFFF" />
+
+        <TextView
+            android:layout_width="30dp"
+            android:layout_height="wrap_content" />
 
         <EditText
-            android:id="@+id/edittext_signup_username"
+            android:id="@+id/edittext_signup_nickname"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@null"/>
+            android:background="@null" />
     </LinearLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="#BBBCBB"
-      ></View>
+        android:background="#BBBCBB"></View>
+
     <LinearLayout
+        android:gravity="center"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="60dp"
         android:layout_gravity="center"
         android:orientation="horizontal">
-
-        <ImageView
-            android:layout_width="45dp"
-            android:layout_height="45dp" />
-
         <TextView
+            android:layout_width="10dp"
+            android:layout_height="wrap_content" />
+        <ImageView
+            android:src="@drawable/signup_email_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_width="10dp"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="45dp"
             android:gravity="center"
-            android:text="Email" />
+            android:text="E-mail"
+            android:textColor="#FFFFFF" />
+
+        <TextView
+            android:layout_width="30dp"
+            android:layout_height="wrap_content" />
 
         <EditText
             android:id="@+id/edittext_signup_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@null"/>
+            android:background="@null" />
     </LinearLayout>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="#BBBCBB"
-        ></View>
+        android:background="#BBBCBB"></View>
+
     <LinearLayout
+        android:gravity="center"
         android:layout_width="match_parent"
-        android:layout_height="45dp"
+        android:layout_height="60dp"
         android:layout_gravity="center"
         android:orientation="horizontal">
-
+        <TextView
+            android:layout_width="10dp"
+            android:layout_height="wrap_content" />
         <ImageView
-            android:layout_width="45dp"
-            android:layout_height="45dp" />
-
+            android:src="@drawable/signup_password_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_width="10dp"
+            android:layout_height="wrap_content" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="45dp"
             android:gravity="center"
-            android:text="Password" />
+            android:text="Password"
+            android:textColor="#FFFFFF" />
+
+        <TextView
+            android:layout_width="30dp"
+            android:layout_height="wrap_content" />
 
         <EditText
             android:id="@+id/edittext_signup_pwd"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@null"/>
+            android:background="@null" />
     </LinearLayout>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="#BBBCBB"
-        ></View>
+        android:background="#BBBCBB"></View>
+
     <LinearLayout
+        android:gravity="center"
         android:layout_width="match_parent"
-        android:layout_height="45dp"
+        android:layout_height="60dp"
         android:layout_gravity="center"
         android:orientation="horizontal">
-
+        <TextView
+            android:layout_width="10dp"
+            android:layout_height="wrap_content" />
         <ImageView
-            android:layout_width="45dp"
-            android:layout_height="45dp" />
-
+            android:src="@drawable/signup_password_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_width="10dp"
+            android:layout_height="wrap_content" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="45dp"
             android:gravity="center"
-            android:text="Confirm Password" />
+            android:text="Confirm Password"
+            android:textColor="#FFFFFF" />
+
+        <TextView
+            android:layout_width="30dp"
+            android:layout_height="wrap_content" />
 
         <EditText
             android:id="@+id/edittext_signup_confirm_pwd"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@null"/>
+            android:background="@null" />
     </LinearLayout>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="#BBBCBB"
-        ></View>
+        android:background="#BBBCBB"></View>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
