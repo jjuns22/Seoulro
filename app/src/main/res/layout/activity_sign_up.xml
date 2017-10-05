@@ -7,32 +7,37 @@
     tools:context="com.seoulsi.client.seoulro.login.SignUpActivity">
 
     <ImageView
-        android:id="@+id/imageView"
         android:layout_width="match_parent"
         android:layout_height="200dp" />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="45dp"
         android:layout_gravity="center"
         android:orientation="horizontal">
 
         <ImageView
-            android:layout_width="40dp"
-            android:layout_height="40dp" />
+            android:layout_width="45dp"
+            android:layout_height="45dp" />
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="40dp"
+            android:layout_height="45dp"
             android:gravity="center"
             android:text="Username" />
 
         <EditText
             android:id="@+id/edittext_signup_username"
             android:layout_width="match_parent"
-            android:layout_height="40dp" />
+            android:layout_height="wrap_content"
+            android:background="@null"/>
     </LinearLayout>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#BBBCBB"
+      ></View>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="40dp"
@@ -40,65 +45,80 @@
         android:orientation="horizontal">
 
         <ImageView
-            android:layout_width="40dp"
-            android:layout_height="40dp" />
+            android:layout_width="45dp"
+            android:layout_height="45dp" />
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="40dp"
+            android:layout_height="45dp"
             android:gravity="center"
             android:text="Email" />
 
         <EditText
             android:id="@+id/edittext_signup_email"
             android:layout_width="match_parent"
-            android:layout_height="40dp" />
+            android:layout_height="wrap_content"
+            android:background="@null"/>
     </LinearLayout>
-
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#BBBCBB"
+        ></View>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="45dp"
         android:layout_gravity="center"
         android:orientation="horizontal">
 
         <ImageView
-            android:layout_width="40dp"
-            android:layout_height="40dp" />
+            android:layout_width="45dp"
+            android:layout_height="45dp" />
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="40dp"
+            android:layout_height="45dp"
             android:gravity="center"
             android:text="Password" />
 
         <EditText
             android:id="@+id/edittext_signup_pwd"
             android:layout_width="match_parent"
-            android:layout_height="40dp" />
+            android:layout_height="wrap_content"
+            android:background="@null"/>
     </LinearLayout>
-
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#BBBCBB"
+        ></View>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="45dp"
         android:layout_gravity="center"
         android:orientation="horizontal">
 
         <ImageView
-            android:layout_width="40dp"
-            android:layout_height="40dp" />
+            android:layout_width="45dp"
+            android:layout_height="45dp" />
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="40dp"
+            android:layout_height="45dp"
             android:gravity="center"
             android:text="Confirm Password" />
 
         <EditText
             android:id="@+id/edittext_signup_confirm_pwd"
             android:layout_width="match_parent"
-            android:layout_height="40dp" />
+            android:layout_height="wrap_content"
+            android:background="@null"/>
     </LinearLayout>
-
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#BBBCBB"
+        ></View>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -107,7 +127,8 @@
         <Button
             android:id="@+id/btn_signup_success"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="56dp"
+            android:background="#BBBCBB"
             android:text="회원가입완료" />
     </LinearLayout>
 </LinearLayout>
