@@ -6,11 +6,14 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.seoulsi.client.seoulro.MainActivity;
 import com.seoulsi.client.seoulro.R;
 
 public class LoginActivity extends AppCompatActivity {
 
     Button btnLoginSignUp;
+    Button btnLoginSuccess;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +25,14 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getBaseContext(),SignUpActivity.class);
+                startActivity(intent);
+            }
+        });
+        btnLoginSuccess = (Button)findViewById(R.id.btn_login_success);
+        btnLoginSuccess.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getBaseContext(),MainActivity.class);
                 startActivity(intent);
             }
         });
