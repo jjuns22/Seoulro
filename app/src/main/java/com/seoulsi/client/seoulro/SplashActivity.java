@@ -1,4 +1,4 @@
-package com.seoulsi.client.seoulro.login;
+package com.seoulsi.client.seoulro;
 
 import android.content.Intent;
 import android.content.SharedPreferences;

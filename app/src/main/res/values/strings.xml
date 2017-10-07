@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Seoulro</string>
+    <color name="colorGreen">#009D4C</color>
 </resources>

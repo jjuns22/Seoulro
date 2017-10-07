@@ -8,10 +8,16 @@ import android.widget.Button;
 
 import com.seoulsi.client.seoulro.MainActivity;
 import com.seoulsi.client.seoulro.R;
+import com.seoulsi.client.seoulro.signup.SignUpActivity;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class LoginActivity extends AppCompatActivity {
 
+    @BindView(R.id.btn_login_sign_up)
     Button btnLoginSignUp;
+    @BindView(R.id.btn_login_success)
     Button btnLoginSuccess;
 
 
@@ -19,8 +25,8 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        ButterKnife.bind(this);
 
-        btnLoginSignUp = (Button)findViewById(R.id.btn_login_sign_up);
         btnLoginSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -28,7 +34,7 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        btnLoginSuccess = (Button)findViewById(R.id.btn_login_success);
+
         btnLoginSuccess.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -37,4 +43,5 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
+
 }

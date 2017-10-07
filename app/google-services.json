@@ -1,0 +1,43 @@
+{
+  "project_info": {
+    "project_number": "607093444720",
+    "project_id": "firebase-seoulro"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:607093444720:android:d87dd523c059e266",
+        "android_client_info": {
+          "package_name": "com.seoulsi.client.seoulro"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "607093444720-bej0p4t6v12e7gvvf5duu2i08c9n5s0m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCdwcHLQN7utx7cbxhFEBqvxp7EE9F6Fg4"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 2,
+          "analytics_property": {
+            "tracking_id": "UA-107725463-1"
+          }
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
