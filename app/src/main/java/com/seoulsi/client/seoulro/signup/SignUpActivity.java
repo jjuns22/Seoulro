@@ -1,16 +1,22 @@
 package com.seoulsi.client.seoulro.signup;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.os.Build;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.seoulsi.client.seoulro.R;
 import com.seoulsi.client.seoulro.application.ApplicationController;
+import com.seoulsi.client.seoulro.login.LoginActivity;
 import com.seoulsi.client.seoulro.network.NetworkService;
 
 import butterknife.BindView;
@@ -62,10 +68,24 @@ public class SignUpActivity extends AppCompatActivity {
                     getJoinResult.enqueue(new Callback<JoinResult>() {
                         @Override
                         public void onResponse(Call<JoinResult> call, Response<JoinResult> response) {
+                            Log.e("test","통신 성공 전");
                             if (response.isSuccessful()) {
-                                if (response.body().message.equals("2")) {
+                                Log.e("test","통신 성공 후");
+                                if (response.body().msg.equals("2")) {
                                     //회원가입 성공 시
                                     Toast.makeText(getBaseContext(),"회원가입성공", Toast.LENGTH_SHORT).show();
+                                    SharedPreferences userInfo;
+                                    userInfo = getSharedPreferences("user", MODE_PRIVATE);
+
+                                    SharedPreferences.Editor editor = userInfo.edit();
+
+                                    //sharedPreferences에 유저정보 객체로 저장
+                                    Gson gson = new Gson();
+                                    String json = gson.toJson(joinInfo);
+                                    editor.putString("email", joinInfo.email);
+                                    editor.putString("password", joinInfo.password);
+                                    editor.putString("nickname",joinInfo.nickname);
+                                    editor.commit();
                                     finish();
                                 }else
                                     Toast.makeText(getBaseContext(),"서버연결오류", Toast.LENGTH_SHORT).show();

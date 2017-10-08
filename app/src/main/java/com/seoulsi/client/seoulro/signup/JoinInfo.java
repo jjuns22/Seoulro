@@ -5,9 +5,9 @@ package com.seoulsi.client.seoulro.signup;
  */
 
 public class JoinInfo {
-    public String nickname;
-    public String email;
-    public String password;
+     String nickname;
+     String email;
+     String password;
 
     public JoinInfo(String nickname, String email, String password) {
         this.nickname = nickname;

@@ -3,73 +3,143 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/login_bg"
     android:orientation="vertical"
     tools:context="com.seoulsi.client.seoulro.login.LoginActivity">
 
-    <ImageView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="200dp" />
+        android:layout_height="400dp"></LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="50dp"
         android:layout_gravity="center"
+        android:gravity="center"
         android:orientation="horizontal">
 
-        <ImageView
+        <TextView
             android:layout_width="40dp"
-            android:layout_height="40dp" />
+            android:layout_height="wrap_content" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/login_id" />
 
         <TextView
+            android:layout_width="20dp"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/textView2"
             android:layout_width="wrap_content"
-            android:layout_height="40dp"
+            android:layout_height="45dp"
             android:gravity="center"
-            android:text="email" />
+            android:text="Nickname" />
+
+        <TextView
+            android:layout_width="30dp"
+            android:layout_height="wrap_content" />
 
         <EditText
-            android:id="@+id/edittext_login_email"
+            android:id="@+id/edittext_login_nickname"
             android:layout_width="match_parent"
-            android:layout_height="40dp" />
+            android:layout_height="wrap_content"
+            android:background="@null" />
     </LinearLayout>
+
+    <View
+        android:layout_width="340dp"
+        android:layout_height="1dp"
+        android:layout_gravity="center"
+        android:background="#BBBCBB"></View>
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="50dp"
         android:layout_gravity="center"
+        android:gravity="center"
         android:orientation="horizontal">
 
-        <ImageView
+        <TextView
             android:layout_width="40dp"
-            android:layout_height="40dp" />
+            android:layout_height="wrap_content" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/login_password" />
+
+        <TextView
+            android:layout_width="20dp"
+            android:layout_height="wrap_content" />
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="40dp"
+            android:layout_height="45dp"
             android:gravity="center"
-            android:text="password" />
+            android:text="Password" />
+
+        <TextView
+            android:layout_width="30dp"
+            android:layout_height="wrap_content" />
 
         <EditText
             android:id="@+id/edittext_login_pwd"
             android:layout_width="match_parent"
-            android:layout_height="40dp" />
+            android:layout_height="wrap_content"
+            android:background="@null" />
     </LinearLayout>
+
+    <View
+        android:layout_width="340dp"
+        android:layout_height="1dp"
+        android:layout_gravity="center"
+        android:background="#BBBCBB"></View>
+
     <LinearLayout
-        android:gravity="center"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="60dp"></LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/textview_login_sign_up"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="이메일로 회원가입하기"
+            android:textColor="@color/colorGreen" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="150dp"
+        android:layout_height="1dp"
+        android:layout_gravity="center"
+        android:background="@color/colorGreen"></View>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="16dp"></LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="bottom">
+
         <Button
             android:id="@+id/btn_login_success"
-            android:text="로그인"
-            android:layout_width="150dp"
-            android:layout_height="60dp" />
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_gravity="center"
+            android:background="#BBBCBB"
+            android:gravity="center"
+            android:text="로그인하기"
+            android:textColor="#7F7F7F"
+            android:textSize="20dp" />
     </LinearLayout>
-    <LinearLayout
-        android:gravity="center"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <Button
-            android:id="@+id/btn_login_sign_up"
-            android:text="회원가입"
-            android:layout_width="150dp"
-            android:layout_height="60dp" />
-    </LinearLayout>
+
 </LinearLayout>

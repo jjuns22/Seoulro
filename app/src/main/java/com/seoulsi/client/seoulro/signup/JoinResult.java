@@ -5,5 +5,5 @@ package com.seoulsi.client.seoulro.signup;
  */
 
 public class JoinResult {
-    public String message;
+    String msg;
 }

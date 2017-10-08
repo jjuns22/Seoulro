@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.seoulsi.client.seoulro.MainActivity;
 import com.seoulsi.client.seoulro.R;
@@ -15,8 +16,8 @@ import butterknife.ButterKnife;
 
 public class LoginActivity extends AppCompatActivity {
 
-    @BindView(R.id.btn_login_sign_up)
-    Button btnLoginSignUp;
+    @BindView(R.id.textview_login_sign_up)
+    TextView textViewLoginSignUp;
     @BindView(R.id.btn_login_success)
     Button btnLoginSuccess;
 
@@ -27,7 +28,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
 
-        btnLoginSignUp.setOnClickListener(new View.OnClickListener() {
+        textViewLoginSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getBaseContext(),SignUpActivity.class);
