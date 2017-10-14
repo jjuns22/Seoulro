@@ -1,6 +1,8 @@
 package com.seoulsi.client.seoulro.network;
 
 
+import com.seoulsi.client.seoulro.login.LoginInfo;
+import com.seoulsi.client.seoulro.login.LoginResult;
 import com.seoulsi.client.seoulro.signup.DupResult;
 import com.seoulsi.client.seoulro.signup.JoinInfo;
 import com.seoulsi.client.seoulro.signup.JoinResult;
@@ -23,4 +25,6 @@ public interface NetworkService {
     @POST("/signup/dup")
     Call<DupResult> getDupResult(@Field("nickname") String nickname, @Field("email") String email, @Field("flag") int flag);
 
+    @POST("/login/")
+    Call<LoginResult> checkLogin(@Body LoginInfo loginInfo);
 }

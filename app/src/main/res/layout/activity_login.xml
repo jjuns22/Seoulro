@@ -32,18 +32,17 @@
             android:layout_height="wrap_content" />
 
         <TextView
-            android:id="@+id/textView2"
             android:layout_width="wrap_content"
             android:layout_height="45dp"
             android:gravity="center"
-            android:text="Nickname" />
+            android:text="E-mail" />
 
         <TextView
             android:layout_width="30dp"
             android:layout_height="wrap_content" />
 
         <EditText
-            android:id="@+id/edittext_login_nickname"
+            android:id="@+id/edittext_login_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@null" />
