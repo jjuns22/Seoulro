@@ -147,6 +147,8 @@ public class SignUpActivity extends AppCompatActivity {
                     });
                 }else if(emaildupcount!=1 || nickdupcount !=1){
                     Toast.makeText(getBaseContext(), "닉네임/ 이메일 중복을 다시 확인합니다.", Toast.LENGTH_SHORT).show();
+                    nickName = editTextSignupNickname.getText().toString();
+                    email = editTextSignupEmail.getText().toString();
                     DupValid();
                 }
             }
@@ -155,8 +157,8 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     private boolean isValid() {
-        //nickName = editTextSignupNickname.getText().toString();
-        //email = editTextSignupEmail.getText().toString();
+        nickName = editTextSignupNickname.getText().toString();
+        email = editTextSignupEmail.getText().toString();
         password = editTextSignupPwd.getText().toString();
         rePassword = editTextSignupConfirmPwd.getText().toString();
 
