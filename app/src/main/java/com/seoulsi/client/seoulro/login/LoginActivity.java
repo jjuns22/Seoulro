@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -41,6 +42,8 @@ public class LoginActivity extends AppCompatActivity {
     private final long FINSH_INTERVAL_TIME = 2000;
     private long backPressedTime = 0;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,6 +76,8 @@ public class LoginActivity extends AppCompatActivity {
 
     public void checkLogin(String email, String password) {
         String regEmail = "^[_a-zA-Z0-9-\\.]+@[\\.a-zA-Z0-9-]+\\.[a-zA-Z]+$";
+        email = editTextLoginEmail.getText().toString();
+        password = editTextLoginPwd.getText().toString();
 
         if (email.equals("")) {
             //이메일 미입력
@@ -109,18 +114,10 @@ public class LoginActivity extends AppCompatActivity {
                         editor.commit();
                         Intent intent = new Intent(getBaseContext(), MainActivity.class);
 
-
-                        //activity stack 비우고 새로 시작하기
-                        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.GINGERBREAD_MR1) {
-                            //안드로이드 버전이 진저브레드가 아니면,
-                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                        } else {
-                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        }
-
                         startActivity(intent);
                         finish();
-                    } else if (response.body().msg.equals("6")) {
+                    }else if (response.body().msg.equals("6")) {
+                        Log.i("test","비밀번호 오류");
                         //비밀번호 오류
                         Toast.makeText(getBaseContext(), "비밀번호가 일치하지 않습니다.다시 한번 확인해주세요.", Toast.LENGTH_SHORT).show();
                     } else if (response.body().msg.equals("4")) {
@@ -134,7 +131,8 @@ public class LoginActivity extends AppCompatActivity {
                         Toast.makeText(getBaseContext(), "서버오류", Toast.LENGTH_SHORT).show();
                     }
 
-                }
+                }else
+                    Toast.makeText(getBaseContext(), "서버오류", Toast.LENGTH_SHORT).show();
             }
 
             @Override
