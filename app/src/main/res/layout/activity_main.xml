@@ -13,12 +13,14 @@
         android:layout_height="50dp"
         android:background="#fff">
 
-        <ImageView
+        <Button
             android:id="@+id/btn_toolBar_mypage"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_alignParentLeft="true"
-            android:src="@mipmap/ic_launcher" />
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/main_mypage" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -28,12 +30,14 @@
             android:textColor="#008600"
             android:textSize="19sp" />
 
-        <ImageView
+        <Button
             android:id="@+id/btn_toolBar_search"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_alignParentRight="true"
-            android:src="@mipmap/ic_launcher" />
+            android:layout_centerInParent="true"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/main_search" />
     </RelativeLayout>
     <LinearLayout
         android:id="@+id/main_map"
