@@ -4,6 +4,7 @@ import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Button;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -17,11 +18,20 @@ import org.jsoup.select.Elements;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import butterknife.BindView;
+
 public class MainActivity extends AppCompatActivity {
     private String htmlPageUrl = "http://www.seoul.go.kr/v2012/news/list.html?tr_code=gnb_news";
 
     public ImageView news1, news2;
     public ArrayList<String> news_link = new ArrayList<>();
+
+    @BindView(R.id.btn_toolBar_mypage)
+    Button BtnToolBarMypage;
+    @BindView(R.id.btn_toolBar_search)
+    Button BtnToolBarSearch;
+
+
 
 
     @Override
