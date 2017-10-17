@@ -12,13 +12,12 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.seoulsi.client.seoulro.R;
-<<<<<<< HEAD
+
 import com.seoulsi.client.seoulro.search.SearchInfoActivity;
-=======
 import com.seoulsi.client.seoulro.login.LoginActivity;
 import com.seoulsi.client.seoulro.mypage.MyPageActivity;
 import com.seoulsi.client.seoulro.search.SearchActivity;
->>>>>>> 84c2ca2c0bbc6e96a56c3a22fe30d77f7282363d
+
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -58,11 +57,9 @@ public class MainActivity extends AppCompatActivity {
         NewsAsyncTask newsAsyncTask = new NewsAsyncTask();
         newsAsyncTask.execute();
 
-<<<<<<< HEAD
-=======
+
         BtnToolBarMypage.setOnClickListener(onClickListener);
 
->>>>>>> 84c2ca2c0bbc6e96a56c3a22fe30d77f7282363d
     }
 
     private class NewsAsyncTask extends AsyncTask<Void, Void, Void> {
