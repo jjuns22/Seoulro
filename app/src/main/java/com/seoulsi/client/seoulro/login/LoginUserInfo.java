@@ -23,10 +23,8 @@ public class LoginUserInfo {
         return userObject;
     }
 
-    public void setUserInfo(UserInfo userObject) {
-        this.userObject = userObject;
-    }
     public void setUserInfo(String nickname, String token) {
+        userObject = new UserInfo();
         this.userObject.nickname = nickname;
         this.userObject.token = token;
     }
