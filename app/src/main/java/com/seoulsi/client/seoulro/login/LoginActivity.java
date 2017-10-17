@@ -112,6 +112,10 @@ public class LoginActivity extends AppCompatActivity {
 
                         SharedPreferences.Editor editor = userInfo.edit();
 
+                        editor.putString("nickname",userObj.nickname);
+                        editor.putString("token",userObj.token);
+                        Log.e("test","nickname : "+LoginUserInfo.getInstance().getUserInfo().nickname);
+                        Log.e("test","token : "+LoginUserInfo.getInstance().getUserInfo().token);
                         editor.commit();
                         Intent intent = new Intent(getBaseContext(), SearchInfoActivity.class);   //임시로 정보보기로
 
