@@ -12,7 +12,13 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.seoulsi.client.seoulro.R;
+<<<<<<< HEAD
 import com.seoulsi.client.seoulro.search.SearchInfoActivity;
+=======
+import com.seoulsi.client.seoulro.login.LoginActivity;
+import com.seoulsi.client.seoulro.mypage.MyPageActivity;
+import com.seoulsi.client.seoulro.search.SearchActivity;
+>>>>>>> 84c2ca2c0bbc6e96a56c3a22fe30d77f7282363d
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -23,6 +29,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
+
+import static com.seoulsi.client.seoulro.R.id.btn_toolBar_mypage;
+import static com.seoulsi.client.seoulro.R.id.btn_toolBar_search;
 
 public class MainActivity extends AppCompatActivity {
     private String htmlPageUrl = "http://www.seoul.go.kr/v2012/news/list.html?tr_code=gnb_news";
@@ -30,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
     public ImageView news1, news2;
     public ArrayList<String> news_link = new ArrayList<>();
 
-    @BindView(R.id.btn_toolBar_mypage)
+    @BindView(btn_toolBar_mypage)
     Button BtnToolBarMypage;
     @BindView(R.id.btn_toolBar_search)
     Button BtnToolBarSearch;
@@ -39,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
 
 
         news1 = (ImageView)findViewById(R.id.img_main_news1);
@@ -47,6 +58,11 @@ public class MainActivity extends AppCompatActivity {
         NewsAsyncTask newsAsyncTask = new NewsAsyncTask();
         newsAsyncTask.execute();
 
+<<<<<<< HEAD
+=======
+        BtnToolBarMypage.setOnClickListener(onClickListener);
+
+>>>>>>> 84c2ca2c0bbc6e96a56c3a22fe30d77f7282363d
     }
 
     private class NewsAsyncTask extends AsyncTask<Void, Void, Void> {
@@ -96,6 +112,23 @@ public class MainActivity extends AppCompatActivity {
             Glide.with(MainActivity.this).load(news_link.get(1)).into(news2);
         }
     }
+
+    View.OnClickListener onClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()){
+                case R.id.btn_toolBar_mypage:
+                    Intent mypage = new Intent(MainActivity.this, MyPageActivity.class);
+                    startActivity(mypage);
+                    break;
+                case R.id.btn_toolBar_search:
+                    Intent search = new Intent(MainActivity.this, SearchActivity.class);
+                    startActivity(search);
+                    break;
+
+            }
+        }
+    };
 
 
 }
