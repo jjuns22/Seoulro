@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.seoulsi.client.seoulro.main.MainActivity;
 import com.seoulsi.client.seoulro.R;
 import com.seoulsi.client.seoulro.application.ApplicationController;
+import com.seoulsi.client.seoulro.search.SearchInfoActivity;
 import com.seoulsi.client.seoulro.signup.SignUpActivity;
 import com.seoulsi.client.seoulro.network.NetworkService;
 import butterknife.BindView;
@@ -105,14 +106,14 @@ public class LoginActivity extends AppCompatActivity {
                     if (response.body().msg.equals("7")) {
                         //로그인 성공 시
                         LoginResult userObj = new LoginResult(response.body().msg, response.body().nickname, response.body().token);
-                        LoginUserInfo.getInstance().setUserInfo(userObj.token);
+                        LoginUserInfo.getInstance().setUserInfo(userObj.nickname, userObj.token);
                         SharedPreferences userInfo;
                         userInfo = getSharedPreferences("user", MODE_PRIVATE);
 
                         SharedPreferences.Editor editor = userInfo.edit();
 
                         editor.commit();
-                        Intent intent = new Intent(getBaseContext(), MainActivity.class);
+                        Intent intent = new Intent(getBaseContext(), SearchInfoActivity.class);   //임시로 정보보기로
 
                         startActivity(intent);
                         finish();

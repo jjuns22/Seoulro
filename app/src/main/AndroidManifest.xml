@@ -51,7 +51,8 @@
 
         <activity android:name=".mypage.MyPageActivity" />
         <activity android:name=".search.SearchActivity" />
-        <activity android:name=".search.SearchInfoActivity"></activity>
+        <activity android:name=".search.SearchInfoActivity" />
+        <activity android:name=".search.WriteReviewActivity"></activity>
     </application>
 
 </manifest>

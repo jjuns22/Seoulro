@@ -13,12 +13,15 @@ import com.seoulsi.client.seoulro.R;
  * Created by SanJuku on 2017-10-15.
  */
 
-public class ReviewFragment extends Fragment {
-    private final String TAG = "ReviewFragment";
+public class DetailsFragment extends Fragment {
+    private final String TAG = "DetailsFragment";
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater,ViewGroup container,Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_review, container, false);
+        final View view = inflater.inflate(R.layout.fragment_details, null);
+
+        return view;
     }
 
     @Override
@@ -30,6 +33,5 @@ public class ReviewFragment extends Fragment {
     public void onResume() {
         super.onResume();
     }
-
 
 }

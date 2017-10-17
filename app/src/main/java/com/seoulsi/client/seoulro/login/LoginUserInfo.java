@@ -19,15 +19,15 @@ public class LoginUserInfo {
     }
 
     private UserInfo userObject;
-    private String token;
     public UserInfo getUserInfo() {
         return userObject;
     }
 
-    /*public void setUserInfo(UserInfo userObject) {
+    public void setUserInfo(UserInfo userObject) {
         this.userObject = userObject;
-    }*/
-    public void setUserInfo(String token) {
-        this.token = token;
+    }
+    public void setUserInfo(String nickname, String token) {
+        this.userObject.nickname = nickname;
+        this.userObject.token = token;
     }
 }

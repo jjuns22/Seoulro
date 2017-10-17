@@ -6,5 +6,5 @@ package com.seoulsi.client.seoulro.login;
 
 public class UserInfo {
     public String nickname;
-    public String email;
+    public String token;
 }
