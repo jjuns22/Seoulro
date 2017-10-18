@@ -5,11 +5,11 @@ package com.seoulsi.client.seoulro.search.recyclerview;
  */
 
 public class ItemDataReview {
-    int img;
-    String title;
-    String content;
-    String writer;
-    String date;
+    public int img;
+    public String title;
+    public String content;
+    public String writer;
+    public String date;
 
     public ItemDataReview(int img, String title, String content, String writer, String date) {
         this.img = img;

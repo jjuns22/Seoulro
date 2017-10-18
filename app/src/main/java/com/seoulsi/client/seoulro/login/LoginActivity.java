@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.seoulsi.client.seoulro.main.MainActivity;
 import com.seoulsi.client.seoulro.R;
 import com.seoulsi.client.seoulro.application.ApplicationController;
+import com.seoulsi.client.seoulro.mypage.MyPageActivity;
 import com.seoulsi.client.seoulro.search.SearchInfoActivity;
 import com.seoulsi.client.seoulro.signup.SignUpActivity;
 import com.seoulsi.client.seoulro.network.NetworkService;
@@ -117,7 +118,7 @@ public class LoginActivity extends AppCompatActivity {
                         Log.e("test","nickname : "+LoginUserInfo.getInstance().getUserInfo().nickname);
                         Log.e("test","token : "+LoginUserInfo.getInstance().getUserInfo().token);
                         editor.commit();
-                        Intent intent = new Intent(getBaseContext(), SearchInfoActivity.class);   //임시로 정보보기로
+                        Intent intent = new Intent(getBaseContext(), MainActivity.class);   //임시로 정보보기로
 
                         startActivity(intent);
                         finish();
