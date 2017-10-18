@@ -1,41 +1,66 @@
 package com.seoulsi.client.seoulro.search;
 
+import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
+
 import java.io.BufferedOutputStream;
+
+import com.gun0912.tedpermission.PermissionListener;
+import com.gun0912.tedpermission.TedPermission;
 import com.seoulsi.client.seoulro.R;
+
+import java.io.ByteArrayOutputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class WriteReviewActivity extends AppCompatActivity {
 
-    private static final int PICK_FROM_CAMERA = 0;
-    private static final int PICK_FROM_ALBUM = 1;
-    private static final int CROP_FROM_IMAGE = 2;
+    private final int TAKE_CAMERA = 0;
+    private final int TAKE_GALLERY = 1;
 
-    private Uri mImageCaptureUri;
-    private String absoultePath;
+    private String imgUrl = "";
+    private Uri imgUri;
 
     @BindView(R.id.btn_write_review_image_upload)
     Button btnWriteReviewImageUpload;
     @Nullable
     @BindView(R.id.imageview_write_review_image)
     ImageView imageViewWriteReviewImg;
+    @BindView(R.id.btn_write_review_enrollment)
+    Button btnWriteReviewEnrollment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,135 +70,150 @@ public class WriteReviewActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         btnWriteReviewImageUpload.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
             public void onClick(View v) {
-                DialogInterface.OnClickListener cameraListener = new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        doTakePhotoAction();
-                    }
-                };
-                DialogInterface.OnClickListener albumListener = new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        doTakeAlbumAction();
-                    }
-                };
-                DialogInterface.OnClickListener cancelListener = new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                };
+                int permissionCheck = ContextCompat.checkSelfPermission(WriteReviewActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE);
 
-                new AlertDialog.Builder(WriteReviewActivity.this)
-                        .setTitle("업로드할 이미지 선택")
-                        .setPositiveButton("사진 촬영", cameraListener)
-                        .setNeutralButton("앨범 선택", albumListener)
-                        .setNegativeButton("취소", cancelListener)
-                        .show();
+                if (permissionCheck == PackageManager.PERMISSION_DENIED) {
+                    //권한없음
+                    ActivityCompat.requestPermissions(WriteReviewActivity.this,
+                            new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                            TAKE_GALLERY);
+                } else {
+                    // 권한 있음
+                    Intent intent = new Intent();
+                    intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
+                    intent.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    intent.setAction(Intent.ACTION_GET_CONTENT);
+                    startActivityForResult(intent, TAKE_GALLERY);
+                }
+            }
+        });
+
+        btnWriteReviewEnrollment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(WriteReviewActivity.this, SearchInfoActivity.class);
+                startActivity(intent);
             }
         });
     }
 
     @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case TAKE_GALLERY:
+                //Log.d(TAG, "requestCode == TAKE_GALLERY");
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // 권한 허가
+                    // 해당 권한을 사용해서 작업을 진행할 수 있습니다
+                } else {
+                    // 권한 거부
+                    // 사용자가 해당권한을 거부했을때 해주어야 할 동작을 수행합니다
+                    //Log.d(TAG, "requestCode == TAKE_GALLERY, 거부");
+                    new TedPermission(WriteReviewActivity.this)
+                            .setPermissionListener(permissionlistener)
+                            .setDeniedMessage("[설정] > [권한] 에서 권한을 다시 설정할 수 있습니다.")
+                            .setGotoSettingButton(true)
+                            .setPermissions(Manifest.permission.READ_CONTACTS)
+                            .check();
+                }
+                return;
+        }
+    }
+
+    PermissionListener permissionlistener = new PermissionListener() {
+        @Override
+        public void onPermissionGranted() {
+            Toast.makeText(WriteReviewActivity.this, "권한 허가", Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        public void onPermissionDenied(ArrayList<String> deniedPermissions) {
+            Toast.makeText(WriteReviewActivity.this, "권한 거부\n" + deniedPermissions.toString(), Toast.LENGTH_SHORT).show();
+        }
+
+
+    };
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            if (requestCode == TAKE_GALLERY) {
+                try {
+                    //이미지 데이터를 비트맵으로 받아온다.
+                    Bitmap image_bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), data.getData());
 
-        if(resultCode != RESULT_OK)
-            return;
+                    //imageViewProfile에 이미지 세팅
+                    imageViewWriteReviewImg.setImageBitmap(image_bitmap);
+                    imageViewWriteReviewImg.setVisibility(View.VISIBLE);
+                    this.imgUri = data.getData();
+                    imgUrl = this.imgUri.getPath();
+                    MultipartBody.Part body;
 
-        switch (requestCode)
-        {
-            case PICK_FROM_ALBUM:
-            {
-                mImageCaptureUri = data.getData();
-            }
-            case PICK_FROM_CAMERA:
-            {
-                //이미지를 가져온 이후의 리사이즈할 이미지 크기를 결정
-                //이후에 이미지 크롭 어플리케이션을 호출
-                Intent intent = new Intent("com.android.camera.action.CROP");
-                intent.setDataAndType(mImageCaptureUri,"image/*");
+                    if (imgUrl == "") {
+                        body = null;
+                    } else {
 
-                //CROP할 이미지를 200*200 크기로 저장
-                intent.putExtra("outputX",200); //CROP한 이미지의 x축 크기
-                intent.putExtra("outputY",200); //CROP한 이미지의 y축 크기
-                intent.putExtra("aspectX",1);   //CROP 박스의 X축 비율
-                intent.putExtra("aspectY",1);   //CROP 박스의 Y축 비율
-                intent.putExtra("scale",true);
-                intent.putExtra("return-data",true);
-                startActivityForResult(intent,CROP_FROM_IMAGE); //CROP_FROM_CAMERA case문 이동
-                break;
-            }
-            case CROP_FROM_IMAGE:
-            {
-                final Bundle extras = data.getExtras();
+                        /**
+                         * 비트맵 관련한 자료는 아래의 링크에서 참고
+                         * http://mainia.tistory.com/468
+                         */
 
-                String filePath = Environment.getExternalStorageDirectory().getAbsolutePath()+
-                        "/SmartWheel/"+System.currentTimeMillis()+".jpg";
+                        BitmapFactory.Options options = new BitmapFactory.Options();
+                        options.inSampleSize = 4; //얼마나 줄일지 설정하는 옵션 4--> 1/4로 줄이겠다
 
-                if(extras != null)
-                {
-                    Bitmap photo = extras.getParcelable("data");s
-                    imageViewWriteReviewImg.setImageBitmap(photo);
+                        InputStream in = null;
+                        try {
+                            in = getContentResolver().openInputStream(imgUri);
+                        } catch (FileNotFoundException e) {
+                            e.printStackTrace();
+                        }
 
-                    storeCropImage(photo, filePath);
-                    absoultePath = filePath;
-                    break;
+                        Bitmap bitmap = BitmapFactory.decodeStream(in, null, options); // InputStream 으로부터 Bitmap 을 만들어 준다.
+                        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                        bitmap.compress(Bitmap.CompressFormat.JPEG, 20, baos);
+                        // 압축 옵션( JPEG, PNG ) , 품질 설정 ( 0 - 100까지의 int형 ), 압축된 바이트 배열을 담을 스트림
+                        RequestBody photoBody = RequestBody.create(MediaType.parse("image/jpg"), baos.toByteArray());
+
+                        File photo = new File(imgUrl);
+
+                        // MultipartBody.Part
+                        body = MultipartBody.Part.createFormData("uploadFile", photo.getName(), photoBody);
+                        /*Call<ProfileImageResult> requestImgNotice = service.setProfileImg(body);
+                        requestImgNotice.enqueue(new Callback<ProfileImageResult>() {
+                            @Override
+                            public void onResponse(Call<ProfileImageResult> call, Response<ProfileImageResult> response) {
+                                if (response.isSuccessful()) {
+                                    if (response.body().message.equals("1")) {
+                                        Toast.makeText(getBaseContext(), "성공", Toast.LENGTH_SHORT).show();
+                                    }
+                                } else {
+                                    Toast.makeText(getBaseContext(), "실패", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<ProfileImageResult> call, Throwable t) {
+                                Toast.makeText(getBaseContext(), "onFailure", Toast.LENGTH_SHORT).show();
+                            }
+                        });*/
+                    }
+
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-
-                //임시 파일 삭제
-                File f = new File(mImageCaptureUri.getPath());
-                if(f.exists())
-                {
-                    f.delete();
-                }
+            } else if (requestCode == TAKE_CAMERA) {
+                Uri currImageURI = data.getData();
             }
         }
-    }
 
-    private void storeCropImage(Bitmap bitmap, String filePath)
-    {
-        String dirPath = Environment.getExternalStorageDirectory().getAbsolutePath()+"/SmartWheel";
-        File directorySmartWheel = new File(dirPath);
-
-        if(!directorySmartWheel.exists())
-            directorySmartWheel.mkdir();
-
-        File copyFile = new File(filePath);
-        BufferedOutputStream out = null;
-
-        try{
-            copyFile.createNewFile();
-            out = new BufferedOutputStream(new FileOutputStream(copyFile));
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
-
-            //sendBroadcast를 통해 CROPT된 사진을 앨범에 보이도록 갱신한다
-            sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE,Uri.fromFile(copyFile)));
-
-            out.flush();
-            out.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-    public void doTakePhotoAction()
-    {
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-
-        //임시로 사용할 파일의 경로를 생성
-        String url = "tmp_" + String.valueOf(System.currentTimeMillis()) + ".jpg";
-        mImageCaptureUri = Uri.fromFile(new File(Environment.getExternalStorageDirectory(), url));
-
-        intent.putExtra(MediaStore.EXTRA_OUTPUT,mImageCaptureUri);
-        startActivityForResult(intent,PICK_FROM_CAMERA);
-    }
-
-    public void doTakeAlbumAction()
-    {
-        Intent intent = new Intent(Intent.ACTION_PICK);
-        intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
-        startActivityForResult(intent,PICK_FROM_ALBUM);
     }
 }

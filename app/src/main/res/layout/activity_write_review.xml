@@ -222,6 +222,18 @@
             android:text="사진첨부"
             android:textSize="20dp" />
     </LinearLayout>
-
+<LinearLayout
+    android:gravity="center"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <Button
+        android:id="@+id/btn_write_review_enrollment"
+        android:gravity="center"
+        android:layout_gravity="bottom"
+        android:textSize="20dp"
+        android:text="등록하기"
+        android:layout_width="match_parent"
+        android:layout_height="70dp" />
+</LinearLayout>
 
 </LinearLayout>
