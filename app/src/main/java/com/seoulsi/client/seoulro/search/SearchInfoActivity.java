@@ -1,5 +1,7 @@
 package com.seoulsi.client.seoulro.search;
 
+import android.content.Intent;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -7,6 +9,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Switch;
 
 import com.seoulsi.client.seoulro.R;
@@ -18,6 +21,7 @@ import butterknife.ButterKnife;
 public class SearchInfoActivity extends AppCompatActivity {
     private ViewPager mViewPager;
     private TabLayout tabLayout;
+    private FloatingActionButton fab;
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
     @Override
@@ -32,6 +36,9 @@ public class SearchInfoActivity extends AppCompatActivity {
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
+        //플로팅버튼 초기화
+        fab = (FloatingActionButton) findViewById(R.id.fab);
+
         //view 객체 초기화
         mViewPager = (ViewPager) findViewById(R.id.view_pager);
         mViewPager.setAdapter(mSectionsPagerAdapter);
@@ -39,6 +46,35 @@ public class SearchInfoActivity extends AppCompatActivity {
         //tab 객체 초기화
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(SearchInfoActivity.this, WriteReviewActivity.class);
+                startActivity(i);
+            }
+        });
+        // Set up the ViewPager with the sections adapter.
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                SearchInfoActivity.this.invalidateTabIcon();
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                if (position == 0) {
+                    fab.setVisibility(View.GONE);
+                } else {
+                    fab.setVisibility(View.VISIBLE);
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
     }
 
    /* public void invalidateTabIcon() {
@@ -78,6 +114,30 @@ public class SearchInfoActivity extends AppCompatActivity {
         return R.drawable.tab_home_seletion;
     }
     */
+public void invalidateTabIcon() {
+    int selectedPosition = tabLayout.getSelectedTabPosition();
+    for (int i = 0; i < tabLayout.getTabCount(); i++) {
+        tabLayout.getTabAt(i).setText(getTabText(i, i == selectedPosition));
+    }
+}
+
+    private String getTabText(int position, boolean isSelected) {
+        switch (position) {
+            case 0:
+                if (isSelected) {
+                    return "정보";
+                } else {
+                    return "정보";
+                }
+            case 1:
+                if (isSelected) {
+                    return "후기";
+                } else {
+                    return "후기";
+                }
+        }
+        return "정보";
+    }
 
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
@@ -122,4 +182,5 @@ public class SearchInfoActivity extends AppCompatActivity {
         }
 
     }
+
 }

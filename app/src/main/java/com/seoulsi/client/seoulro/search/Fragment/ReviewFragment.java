@@ -2,6 +2,7 @@ package com.seoulsi.client.seoulro.search.Fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -30,6 +31,7 @@ public class ReviewFragment extends Fragment {
     //private ArrayList<WorryInfo> itemDataTabHome; //나중에 데이터 생기면 받아올 배열
     private ArrayList<ItemDataReview> itemdatas;
     private NetworkService service;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater,ViewGroup container,Bundle savedInstanceState) {
@@ -44,6 +46,7 @@ public class ReviewFragment extends Fragment {
         linearLayoutManager = new LinearLayoutManager(this.getContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mrecyclerview.setLayoutManager(linearLayoutManager);
+
 
         itemdatas = new ArrayList<ItemDataReview>();
         itemdatas.add(new ItemDataReview(R.drawable.login_bg, "1번", "내용","이상준","2017.10.29"));
@@ -64,6 +67,7 @@ public class ReviewFragment extends Fragment {
 
         }
     };
+
     @Override
     public void onPause() {
         super.onPause();
