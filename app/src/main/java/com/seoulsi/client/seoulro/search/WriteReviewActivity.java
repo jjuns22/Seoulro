@@ -21,6 +21,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.BufferedOutputStream;
@@ -28,6 +29,8 @@ import java.io.BufferedOutputStream;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
 import com.seoulsi.client.seoulro.R;
+import com.seoulsi.client.seoulro.application.ApplicationController;
+import com.seoulsi.client.seoulro.network.NetworkService;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
@@ -53,7 +56,8 @@ public class WriteReviewActivity extends AppCompatActivity {
 
     private String imgUrl = "";
     private Uri imgUri;
-
+    private NetworkService service;
+    private int placenum;
     @BindView(R.id.btn_write_review_image_upload)
     Button btnWriteReviewImageUpload;
     @Nullable
@@ -61,6 +65,10 @@ public class WriteReviewActivity extends AppCompatActivity {
     ImageView imageViewWriteReviewImg;
     @BindView(R.id.btn_write_review_enrollment)
     Button btnWriteReviewEnrollment;
+    @BindView(R.id.textview_review_title)
+    TextView textViewReviewTitle;
+    @BindView(R.id.textview_review_content)
+    TextView textViewReviewContent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +76,9 @@ public class WriteReviewActivity extends AppCompatActivity {
         setContentView(R.layout.activity_write_review);
 
         ButterKnife.bind(this);
+
+        //서비스 객체 초기화
+        service = ApplicationController.getInstance().getNetworkService();
 
         btnWriteReviewImageUpload.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.M)
@@ -181,26 +192,6 @@ public class WriteReviewActivity extends AppCompatActivity {
 
                         File photo = new File(imgUrl);
 
-                        // MultipartBody.Part
-                        body = MultipartBody.Part.createFormData("uploadFile", photo.getName(), photoBody);
-                        /*Call<ProfileImageResult> requestImgNotice = service.setProfileImg(body);
-                        requestImgNotice.enqueue(new Callback<ProfileImageResult>() {
-                            @Override
-                            public void onResponse(Call<ProfileImageResult> call, Response<ProfileImageResult> response) {
-                                if (response.isSuccessful()) {
-                                    if (response.body().message.equals("1")) {
-                                        Toast.makeText(getBaseContext(), "성공", Toast.LENGTH_SHORT).show();
-                                    }
-                                } else {
-                                    Toast.makeText(getBaseContext(), "실패", Toast.LENGTH_SHORT).show();
-                                }
-                            }
-
-                            @Override
-                            public void onFailure(Call<ProfileImageResult> call, Throwable t) {
-                                Toast.makeText(getBaseContext(), "onFailure", Toast.LENGTH_SHORT).show();
-                            }
-                        });*/
                     }
 
                 } catch (FileNotFoundException e) {

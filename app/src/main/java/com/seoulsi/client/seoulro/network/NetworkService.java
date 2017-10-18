@@ -3,6 +3,8 @@ package com.seoulsi.client.seoulro.network;
 
 import com.seoulsi.client.seoulro.login.LoginInfo;
 import com.seoulsi.client.seoulro.login.LoginResult;
+import com.seoulsi.client.seoulro.search.UploadReviewInfo;
+import com.seoulsi.client.seoulro.search.UploadReviewResult;
 import com.seoulsi.client.seoulro.signup.DupResult;
 import com.seoulsi.client.seoulro.signup.JoinInfo;
 import com.seoulsi.client.seoulro.signup.JoinResult;
@@ -33,5 +35,7 @@ public interface NetworkService {
     @POST("/login/")
     Call<LoginResult> checkLogin(@Body LoginInfo loginInfo);
 
-
+    @Multipart
+    @POST("/profile_image/profile_image")
+    Call<UploadReviewResult> uploadReview(@Part MultipartBody.Part uploadFile, @Body UploadReviewInfo uploadReviewInfo);
 }
