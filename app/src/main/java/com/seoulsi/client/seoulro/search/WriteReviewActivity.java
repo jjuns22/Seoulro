@@ -20,8 +20,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.BufferedOutputStream;
@@ -50,14 +50,18 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class WriteReviewActivity extends AppCompatActivity {
-
+    private final String TAG = "WriteReviewActivity";
     private final int TAKE_CAMERA = 0;
     private final int TAKE_GALLERY = 1;
 
     private String imgUrl = "";
     private Uri imgUri;
     private NetworkService service;
-    private int placenum;
+    private int placenum = 1;
+    private MultipartBody.Part body;
+    private File photo;
+    private RequestBody photoBody;
+
     @BindView(R.id.btn_write_review_image_upload)
     Button btnWriteReviewImageUpload;
     @Nullable
@@ -65,10 +69,10 @@ public class WriteReviewActivity extends AppCompatActivity {
     ImageView imageViewWriteReviewImg;
     @BindView(R.id.btn_write_review_enrollment)
     Button btnWriteReviewEnrollment;
-    @BindView(R.id.textview_review_title)
-    TextView textViewReviewTitle;
-    @BindView(R.id.textview_review_content)
-    TextView textViewReviewContent;
+    @BindView(R.id.edittext_write_review_title)
+    EditText editTextViewReviewTitle;
+    @BindView(R.id.edittext_write_review_content)
+    EditText editTextReviewContent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,8 +109,36 @@ public class WriteReviewActivity extends AppCompatActivity {
         btnWriteReviewEnrollment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(WriteReviewActivity.this, SearchInfoActivity.class);
-                startActivity(intent);
+                // MultipartBody.Part
+                body = MultipartBody.Part.createFormData("uploadFile", photo.getName(), photoBody);
+                UploadReviewInfo uploadReviewInfo = new UploadReviewInfo();
+                uploadReviewInfo.placenum = placenum;
+                uploadReviewInfo.title = editTextViewReviewTitle.getText().toString();
+                uploadReviewInfo.content = editTextReviewContent.getText().toString();
+                Call<UploadReviewResult> uploadReview = service.uploadReview(body, uploadReviewInfo);
+                uploadReview.enqueue(new Callback<UploadReviewResult>() {
+                    @Override
+                    public void onResponse(Call<UploadReviewResult> call, Response<UploadReviewResult> response) {
+                        Log.d(TAG,"통신 전");
+                        if (response.isSuccessful()) {
+                            Log.d(TAG,"통신 후");
+                            if (response.body().msg.equals("5")) {
+                                Log.d(TAG,"성공");
+                                Intent intent = new Intent(WriteReviewActivity.this, SearchInfoActivity.class);
+                                startActivity(intent);
+                                Toast.makeText(getBaseContext(), "성공", Toast.LENGTH_SHORT).show();
+                            }
+                        } else {
+                            Log.d(TAG,"실패");
+                            Toast.makeText(getBaseContext(), "실패", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<UploadReviewResult> call, Throwable t) {
+                        Toast.makeText(getBaseContext(), "onFailure", Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
         });
     }
@@ -163,7 +195,6 @@ public class WriteReviewActivity extends AppCompatActivity {
                     imageViewWriteReviewImg.setVisibility(View.VISIBLE);
                     this.imgUri = data.getData();
                     imgUrl = this.imgUri.getPath();
-                    MultipartBody.Part body;
 
                     if (imgUrl == "") {
                         body = null;
@@ -188,10 +219,9 @@ public class WriteReviewActivity extends AppCompatActivity {
                         ByteArrayOutputStream baos = new ByteArrayOutputStream();
                         bitmap.compress(Bitmap.CompressFormat.JPEG, 20, baos);
                         // 압축 옵션( JPEG, PNG ) , 품질 설정 ( 0 - 100까지의 int형 ), 압축된 바이트 배열을 담을 스트림
-                        RequestBody photoBody = RequestBody.create(MediaType.parse("image/jpg"), baos.toByteArray());
+                        photoBody = RequestBody.create(MediaType.parse("image/jpg"), baos.toByteArray());
 
-                        File photo = new File(imgUrl);
-
+                        photo = new File(imgUrl);
                     }
 
                 } catch (FileNotFoundException e) {
