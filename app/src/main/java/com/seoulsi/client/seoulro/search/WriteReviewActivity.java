@@ -30,6 +30,7 @@ import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
 import com.seoulsi.client.seoulro.R;
 import com.seoulsi.client.seoulro.application.ApplicationController;
+import com.seoulsi.client.seoulro.login.LoginUserInfo;
 import com.seoulsi.client.seoulro.network.NetworkService;
 
 import java.io.ByteArrayOutputStream;
@@ -48,6 +49,7 @@ import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.http.Header;
 
 public class WriteReviewActivity extends AppCompatActivity {
     private final String TAG = "WriteReviewActivity";
@@ -57,10 +59,11 @@ public class WriteReviewActivity extends AppCompatActivity {
     private String imgUrl = "";
     private Uri imgUri;
     private NetworkService service;
-    private int placenum = 1;
-    private MultipartBody.Part body;
+    private String num = "1";
+    private MultipartBody.Part placeimage;
     private File photo;
     private RequestBody photoBody;
+    private String token;
 
     @BindView(R.id.btn_write_review_image_upload)
     Button btnWriteReviewImageUpload;
@@ -110,12 +113,18 @@ public class WriteReviewActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // MultipartBody.Part
-                body = MultipartBody.Part.createFormData("uploadFile", photo.getName(), photoBody);
+                placeimage = MultipartBody.Part.createFormData("uploadFile", photo.getName(), photoBody);
                 UploadReviewInfo uploadReviewInfo = new UploadReviewInfo();
-                uploadReviewInfo.placenum = placenum;
-                uploadReviewInfo.title = editTextViewReviewTitle.getText().toString();
-                uploadReviewInfo.content = editTextReviewContent.getText().toString();
-                Call<UploadReviewResult> uploadReview = service.uploadReview(body, uploadReviewInfo);
+                token = LoginUserInfo.getInstance().getUserInfo().token;
+                //uploadReviewInfo.placenum = placenum;
+                //uploadReviewInfo.title = editTextViewReviewTitle.getText().toString();
+                //uploadReviewInfo.content = editTextReviewContent.getText().toString();
+
+                RequestBody title = RequestBody.create(MediaType.parse("multipart/form-data"),editTextViewReviewTitle.getText().toString());
+                RequestBody content = RequestBody.create(MediaType.parse("multipart/form-data"),editTextReviewContent.getText().toString());
+                RequestBody placenum = RequestBody.create(MediaType.parse("multipart/form-data"),num);
+
+                Call<UploadReviewResult> uploadReview = service.uploadReview(placeimage,token,title,content,placenum);
                 uploadReview.enqueue(new Callback<UploadReviewResult>() {
                     @Override
                     public void onResponse(Call<UploadReviewResult> call, Response<UploadReviewResult> response) {
@@ -197,7 +206,7 @@ public class WriteReviewActivity extends AppCompatActivity {
                     imgUrl = this.imgUri.getPath();
 
                     if (imgUrl == "") {
-                        body = null;
+                        placeimage = null;
                     } else {
 
                         /**

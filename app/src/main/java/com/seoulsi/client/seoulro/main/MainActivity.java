@@ -59,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         BtnToolBarMypage.setOnClickListener(onClickListener);
+        BtnToolBarSearch.setOnClickListener(onClickListener);
 
     }
 
@@ -119,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(mypage);
                     break;
                 case R.id.btn_toolBar_search:
-                    Intent search = new Intent(MainActivity.this, SearchActivity.class);
+                    Intent search = new Intent(MainActivity.this, SearchInfoActivity.class);
                     startActivity(search);
                     break;
 

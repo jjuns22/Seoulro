@@ -1,6 +1,7 @@
 package com.seoulsi.client.seoulro.network;
 
 
+import com.bumptech.glide.request.Request;
 import com.seoulsi.client.seoulro.login.LoginInfo;
 import com.seoulsi.client.seoulro.login.LoginResult;
 import com.seoulsi.client.seoulro.search.UploadReviewInfo;
@@ -10,6 +11,7 @@ import com.seoulsi.client.seoulro.signup.JoinInfo;
 import com.seoulsi.client.seoulro.signup.JoinResult;
 
 import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
@@ -36,6 +38,11 @@ public interface NetworkService {
     Call<LoginResult> checkLogin(@Body LoginInfo loginInfo);
 
     @Multipart
-    @POST("/profile_image/profile_image")
-    Call<UploadReviewResult> uploadReview(@Part MultipartBody.Part uploadFile, @Body UploadReviewInfo uploadReviewInfo);
+    @POST("/place/upload")
+    Call<UploadReviewResult> uploadReview(@Part MultipartBody.Part placeimage,
+                                          @Header("Authorization") String token,
+                                          @Part("title") RequestBody title,
+                                          @Part("content") RequestBody content,
+                                          @Part("placenum") RequestBody placenum);
+
 }

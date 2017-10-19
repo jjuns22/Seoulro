@@ -39,6 +39,7 @@ public class LoginActivity extends AppCompatActivity {
     private NetworkService service;
     private String email;
     private String password;
+    private String sendToken;
 
     //Back 키 두번 클릭 여부 확인
     private final long FINSH_INTERVAL_TIME = 2000;
@@ -106,8 +107,10 @@ public class LoginActivity extends AppCompatActivity {
 
                     if (response.body().msg.equals("7")) {
                         //로그인 성공 시
+
                         LoginResult userObj = new LoginResult(response.body().msg, response.body().nickname, response.body().token);
                         LoginUserInfo.getInstance().setUserInfo(userObj.nickname, userObj.token);
+
                         SharedPreferences userInfo;
                         userInfo = getSharedPreferences("user", MODE_PRIVATE);
 
