@@ -5,6 +5,5 @@ package com.seoulsi.client.seoulro.search;
  */
 
 public class UploadReviewResult {
-    UploadReviewInfo result;
     String msg;
 }

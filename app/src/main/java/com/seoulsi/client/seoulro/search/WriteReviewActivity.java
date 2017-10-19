@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -113,18 +114,23 @@ public class WriteReviewActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // MultipartBody.Part
-                placeimage = MultipartBody.Part.createFormData("uploadFile", photo.getName(), photoBody);
-                UploadReviewInfo uploadReviewInfo = new UploadReviewInfo();
+                //UploadReviewInfo uploadReviewInfo = new UploadReviewInfo();
+                placeimage = MultipartBody.Part.createFormData("placeimage", photo.getName(), photoBody);
                 token = LoginUserInfo.getInstance().getUserInfo().token;
                 //uploadReviewInfo.placenum = placenum;
                 //uploadReviewInfo.title = editTextViewReviewTitle.getText().toString();
                 //uploadReviewInfo.content = editTextReviewContent.getText().toString();
 
-                RequestBody title = RequestBody.create(MediaType.parse("multipart/form-data"),editTextViewReviewTitle.getText().toString());
-                RequestBody content = RequestBody.create(MediaType.parse("multipart/form-data"),editTextReviewContent.getText().toString());
-                RequestBody placenum = RequestBody.create(MediaType.parse("multipart/form-data"),num);
+               // RequestBody title = RequestBody.create(MediaType.parse("multipart/form-data"),editTextViewReviewTitle.getText().toString());
+               // RequestBody content = RequestBody.create(MediaType.parse("multipart/form-data"),editTextReviewContent.getText().toString());
+               // RequestBody placenum = RequestBody.create(MediaType.parse("multipart/form-data"),num);
 
+                String title = editTextViewReviewTitle.getText().toString();
+                String content = editTextReviewContent.getText().toString();
+                String placenum = num;
                 Call<UploadReviewResult> uploadReview = service.uploadReview(placeimage,token,title,content,placenum);
+
+
                 uploadReview.enqueue(new Callback<UploadReviewResult>() {
                     @Override
                     public void onResponse(Call<UploadReviewResult> call, Response<UploadReviewResult> response) {
@@ -190,12 +196,16 @@ public class WriteReviewActivity extends AppCompatActivity {
 
 
     };
+
+
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
             if (requestCode == TAKE_GALLERY) {
                 try {
+
                     //이미지 데이터를 비트맵으로 받아온다.
                     Bitmap image_bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), data.getData());
 
@@ -228,8 +238,7 @@ public class WriteReviewActivity extends AppCompatActivity {
                         ByteArrayOutputStream baos = new ByteArrayOutputStream();
                         bitmap.compress(Bitmap.CompressFormat.JPEG, 20, baos);
                         // 압축 옵션( JPEG, PNG ) , 품질 설정 ( 0 - 100까지의 int형 ), 압축된 바이트 배열을 담을 스트림
-                        photoBody = RequestBody.create(MediaType.parse("image/jpg"), baos.toByteArray());
-
+                        photoBody = RequestBody.create(MediaType.parse("image/png"), baos.toByteArray());
                         photo = new File(imgUrl);
                     }
 
@@ -242,8 +251,17 @@ public class WriteReviewActivity extends AppCompatActivity {
                 }
             } else if (requestCode == TAKE_CAMERA) {
                 Uri currImageURI = data.getData();
+                Log.d(TAG, "CAMERA : " + getRealPathFromURI(currImageURI));
             }
         }
+
+    }
+    public String getRealPathFromURI(Uri contentUri) {
+        String[] proj = {MediaStore.Images.Media.DATA};
+        Cursor cursor = managedQuery(contentUri, proj, null, null, null);//에러
+        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+        cursor.moveToFirst();
+        return cursor.getString(column_index);
 
     }
 }
