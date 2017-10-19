@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+     android:layout_width="match_parent"
+    android:layout_height="119dp"
+    >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#fff">
+
+
+    <LinearLayout
+        android:layout_weight="7"
+        android:layout_width="match_parent"
+        android:layout_height="114dp">
+        <ImageView
+            android:id="@+id/img_reviewpicture_mypage"
+            android:layout_margin="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/mypage_review_picture"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_weight="3"
+        android:layout_width="match_parent"
+        android:layout_height="114dp"
+        android:orientation="vertical"
+        >
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/text_titleRV_mypage"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="제목"
+                android:textSize="15sp"/>
+            <TextView
+                android:id="@+id/text_dateRV_mypage"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="5dp"
+                android:layout_alignParentRight="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2017.10.13"
+                android:textSize="13sp"/>
+            <TextView
+                android:id="@+id/text_contextRV_mypage"
+                android:layout_marginTop="13dp"
+                android:layout_marginLeft="5dp"
+                android:layout_below="@+id/text_titleRV_mypage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="내용이지롱"
+                android:textSize="13sp"/>
+            <TextView
+                android:id="@+id/text_nameRV_mypage"
+                android:layout_marginLeft="5dp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="15dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="이름"
+                android:textSize="10sp"/>
+
+
+        </RelativeLayout>
+
+
+    </LinearLayout>
+</LinearLayout>
+
+
+</LinearLayout>
