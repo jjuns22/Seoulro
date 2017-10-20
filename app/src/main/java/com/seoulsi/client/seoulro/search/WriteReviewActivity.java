@@ -118,17 +118,11 @@ public class WriteReviewActivity extends AppCompatActivity {
                     placeimage = MultipartBody.Part.createFormData("placeimage", photo.getName(), photoBody);
                 }
                 token = LoginUserInfo.getInstance().getUserInfo().token;
-                //uploadReviewInfo.placenum = placenum;
-                //uploadReviewInfo.title = editTextViewReviewTitle.getText().toString();
-                //uploadReviewInfo.content = editTextReviewContent.getText().toString();
 
-                // RequestBody title = RequestBody.create(MediaType.parse("multipart/form-data"),editTextViewReviewTitle.getText().toString());
-                // RequestBody content = RequestBody.create(MediaType.parse("multipart/form-data"),editTextReviewContent.getText().toString());
-                // RequestBody placenum = RequestBody.create(MediaType.parse("multipart/form-data"),num);
+                RequestBody title = RequestBody.create(MediaType.parse("multipart/form-data"),editTextViewReviewTitle.getText().toString());
+                RequestBody content = RequestBody.create(MediaType.parse("multipart/form-data"),editTextReviewContent.getText().toString());
+                RequestBody placenum = RequestBody.create(MediaType.parse("multipart/form-data"),num);
 
-                String title = editTextViewReviewTitle.getText().toString();
-                String content = editTextReviewContent.getText().toString();
-                String placenum = num;
 
                 Call<UploadReviewResult> uploadReview = service.uploadReview(placeimage, token, title, content, placenum);
                 uploadReview.enqueue(new Callback<UploadReviewResult>() {

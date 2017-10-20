@@ -106,8 +106,8 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(Void result) {
-            Glide.with(MainActivity.this).load(news_link.get(0)).into(news1);
-            Glide.with(MainActivity.this).load(news_link.get(1)).into(news2);
+            //Glide.with(MainActivity.this).load(news_link.get(0)).into(news1);
+           // Glide.with(MainActivity.this).load(news_link.get(1)).into(news2);
         }
     }
 

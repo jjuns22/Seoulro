@@ -7,9 +7,13 @@ import okhttp3.MultipartBody;
  */
 
 public class ReviewInfo {
-    int article_id;
-    int user_id;
-    String title;
-    String place_num;
-
+    public int article_id;
+    public int user_id;
+    public String title;
+    public String content;
+    public String place_num;
+    public String place_picture;
+    public String profile_picture;
+    public String nickname;
+    public long written_time;
 }

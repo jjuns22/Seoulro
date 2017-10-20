@@ -16,10 +16,10 @@ import java.util.ArrayList;
  */
 
 public class MyReviewRecyclerAdapter extends RecyclerView.Adapter<MyReviewViewHolder>{
-    ArrayList<ItemDataReview> itemdatas;
+    ArrayList<ItemDataMyReview> itemdatas;
     View.OnClickListener clickListener;
 
-    public MyReviewRecyclerAdapter(ArrayList<ItemDataReview> itemdatas, View.OnClickListener clickListener) {
+    public MyReviewRecyclerAdapter(ArrayList<ItemDataMyReview> itemdatas, View.OnClickListener clickListener) {
         this.itemdatas = itemdatas;
         this.clickListener = clickListener;
     }

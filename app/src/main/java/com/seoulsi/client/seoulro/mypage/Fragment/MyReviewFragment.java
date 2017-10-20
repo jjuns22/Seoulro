@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.seoulsi.client.seoulro.R;
 import com.seoulsi.client.seoulro.application.ApplicationController;
+import com.seoulsi.client.seoulro.mypage.ItemDataMyReview;
 import com.seoulsi.client.seoulro.mypage.MyReviewRecyclerAdapter;
 import com.seoulsi.client.seoulro.network.NetworkService;
 import com.seoulsi.client.seoulro.search.recyclerview.ItemDataReview;
@@ -28,7 +29,7 @@ public class MyReviewFragment extends Fragment{
     private MyReviewRecyclerAdapter adapter;
     private LinearLayoutManager linearLayoutManager;
     //private ArrayList<WorryInfo> itemDataTabHome; //나중에 데이터 생기면 받아올 배열
-    private ArrayList<ItemDataReview> itemdatas;
+    private ArrayList<ItemDataMyReview> itemdatas;
     private NetworkService service;
 
 
@@ -59,13 +60,13 @@ public class MyReviewFragment extends Fragment{
             linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
             myReviewRecyclerview.setLayoutManager(linearLayoutManager);
 
-            itemdatas = new ArrayList<ItemDataReview>();
-            itemdatas.add(new ItemDataReview(R.drawable.mypage_review_picture, "1번", "내용","이상준","2017.10.29"));
-            itemdatas.add(new ItemDataReview(R.drawable.mypage_review_picture, "2번", "내용","김지희","2017.10.29"));
-            itemdatas.add(new ItemDataReview(R.drawable.mypage_review_picture, "3번", "내용","김다혜","2017.10.29"));
-            itemdatas.add(new ItemDataReview(R.drawable.mypage_review_picture, "4번", "내용","박성준","2017.10.29"));
-            itemdatas.add(new ItemDataReview(R.drawable.mypage_review_picture, "5번", "내용","정승후","2017.10.29"));
-            itemdatas.add(new ItemDataReview(R.drawable.mypage_review_picture, "6번", "내용","배지원","2017.10.29"));
+            itemdatas = new ArrayList<ItemDataMyReview>();
+            itemdatas.add(new ItemDataMyReview(R.drawable.mypage_review_picture, "1번", "내용","이상준","2017.10.29"));
+            itemdatas.add(new ItemDataMyReview(R.drawable.mypage_review_picture, "2번", "내용","김지희","2017.10.29"));
+            itemdatas.add(new ItemDataMyReview(R.drawable.mypage_review_picture, "3번", "내용","김다혜","2017.10.29"));
+            itemdatas.add(new ItemDataMyReview(R.drawable.mypage_review_picture, "4번", "내용","박성준","2017.10.29"));
+            itemdatas.add(new ItemDataMyReview(R.drawable.mypage_review_picture, "5번", "내용","정승후","2017.10.29"));
+            itemdatas.add(new ItemDataMyReview(R.drawable.mypage_review_picture, "6번", "내용","배지원","2017.10.29"));
 
             adapter = new MyReviewRecyclerAdapter(itemdatas,clickEvent);
             myReviewRecyclerview.setAdapter(adapter);
