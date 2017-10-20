@@ -15,6 +15,7 @@ import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -23,6 +24,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.BufferedOutputStream;
@@ -77,6 +79,8 @@ public class WriteReviewActivity extends AppCompatActivity {
     EditText editTextViewReviewTitle;
     @BindView(R.id.edittext_write_review_content)
     EditText editTextReviewContent;
+    @BindView(R.id.textview_write_review_photo_upload)
+    TextView textViewWriteReviewPhotoUpload;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -212,6 +216,8 @@ public class WriteReviewActivity extends AppCompatActivity {
                     //imageViewProfile에 이미지 세팅
                     imageViewWriteReviewImg.setImageBitmap(image_bitmap);
                     imageViewWriteReviewImg.setVisibility(View.VISIBLE);
+                    textViewWriteReviewPhotoUpload.setVisibility(View.GONE);
+                    btnWriteReviewImageUpload.setVisibility(View.GONE);
                     this.imgUri = data.getData();
                     imgUrl = this.imgUri.getPath();
 

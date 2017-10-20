@@ -1,6 +1,5 @@
 package com.seoulsi.client.seoulro.search.review;
 
-import okhttp3.MultipartBody;
 
 /**
  * Created by SanJuku on 2017-10-20.
