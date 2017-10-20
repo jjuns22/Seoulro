@@ -9,7 +9,6 @@ import com.seoulsi.client.seoulro.signup.JoinInfo;
 import com.seoulsi.client.seoulro.signup.JoinResult;
 
 import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
@@ -41,6 +40,5 @@ public interface NetworkService {
                                           @Part("title") String title,
                                           @Part("content") String content,
                                           @Part("placenum") String placenum);
-
 
 }

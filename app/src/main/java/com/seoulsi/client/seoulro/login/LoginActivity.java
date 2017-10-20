@@ -19,6 +19,7 @@ import com.seoulsi.client.seoulro.mypage.MyPageActivity;
 import com.seoulsi.client.seoulro.search.SearchInfoActivity;
 import com.seoulsi.client.seoulro.signup.SignUpActivity;
 import com.seoulsi.client.seoulro.network.NetworkService;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import retrofit2.Call;
@@ -46,7 +47,6 @@ public class LoginActivity extends AppCompatActivity {
     private long backPressedTime = 0;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,7 +59,7 @@ public class LoginActivity extends AppCompatActivity {
         textViewLoginSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getBaseContext(),SignUpActivity.class);
+                Intent intent = new Intent(getBaseContext(), SignUpActivity.class);
                 startActivity(intent);
             }
         });
@@ -71,7 +71,7 @@ public class LoginActivity extends AppCompatActivity {
                 password = editTextLoginPwd.getText().toString();
                 //Intent intent = new Intent(getBaseContext(),MainActivity.class);
                 //startActivity(intent);
-                checkLogin(email,password);
+                checkLogin(email, password);
             }
         });
 
@@ -116,17 +116,17 @@ public class LoginActivity extends AppCompatActivity {
 
                         SharedPreferences.Editor editor = userInfo.edit();
 
-                        editor.putString("nickname",userObj.nickname);
-                        editor.putString("token",userObj.token);
-                        Log.e("test","nickname : "+LoginUserInfo.getInstance().getUserInfo().nickname);
-                        Log.e("test","token : "+LoginUserInfo.getInstance().getUserInfo().token);
+                        editor.putString("nickname", userObj.nickname);
+                        editor.putString("token", userObj.token);
+                        Log.e("test", "nickname : " + LoginUserInfo.getInstance().getUserInfo().nickname);
+                        Log.e("test", "token : " + LoginUserInfo.getInstance().getUserInfo().token);
                         editor.commit();
                         Intent intent = new Intent(getBaseContext(), MainActivity.class);   //임시로 정보보기로
 
                         startActivity(intent);
                         finish();
-                    }else if (response.body().msg.equals("6")) {
-                        Log.i("test","비밀번호 오류");
+                    } else if (response.body().msg.equals("6")) {
+                        Log.i("test", "비밀번호 오류");
                         //비밀번호 오류
                         Toast.makeText(getBaseContext(), "비밀번호가 일치하지 않습니다.다시 한번 확인해주세요.", Toast.LENGTH_SHORT).show();
                     } else if (response.body().msg.equals("4")) {
@@ -140,7 +140,7 @@ public class LoginActivity extends AppCompatActivity {
                         Toast.makeText(getBaseContext(), "서버오류", Toast.LENGTH_SHORT).show();
                     }
 
-                }else
+                } else
                     Toast.makeText(getBaseContext(), "서버오류", Toast.LENGTH_SHORT).show();
             }
 

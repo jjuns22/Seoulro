@@ -54,6 +54,7 @@ public class SignUpActivity extends AppCompatActivity {
     public int nickdupcount, emaildupcount;
     public int nickfocus;
     public int emailfocus;
+    public int pwdFocus;
 
     private NetworkService service;
 
@@ -106,6 +107,16 @@ public class SignUpActivity extends AppCompatActivity {
             }
         });
 
+       /* editTextSignupConfirmPwd.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+
+                } else {
+                    isValidPwd();
+                }
+            }
+        });*/
 
         btnSignupSuccess.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -145,7 +156,7 @@ public class SignUpActivity extends AppCompatActivity {
 
                         }
                     });
-                }else if(emaildupcount!=1 || nickdupcount !=1){
+                } else if (emaildupcount != 1 || nickdupcount != 1) {
                     Toast.makeText(getBaseContext(), "닉네임/ 이메일 중복을 다시 확인합니다.", Toast.LENGTH_SHORT).show();
                     nickName = editTextSignupNickname.getText().toString();
                     email = editTextSignupEmail.getText().toString();
@@ -184,13 +195,22 @@ public class SignUpActivity extends AppCompatActivity {
         if (!email.matches(regEmail)) {
             //이메일 형식을 맞추지 않았을 때,
             Toast.makeText(getBaseContext(), "이메일 형식을 올바르게 입력해주세요.", Toast.LENGTH_SHORT).show();
-            editTextSignupEmail.requestFocus();
             return false;
         }
         if (!password.equals(rePassword)) {
             //두 비밀번호가 같지 않을 때,
             Toast.makeText(getBaseContext(), "비밀번호가 일치하지 않습니다. 다시 한번 확인해주세요.", Toast.LENGTH_SHORT).show();
-            editTextSignupConfirmPwd.requestFocus();
+            //텍스트 : 비밀번호 재입력
+            return false;
+        }
+        return true;
+    }
+
+    private boolean isValidEmail() {
+        String regEmail = "^[_a-zA-Z0-9-\\.]+@[\\.a-zA-Z0-9-]+\\.[a-zA-Z]+$";
+        if (!email.matches(regEmail)) {
+            //이메일 형식을 맞추지 않았을 때,
+            Toast.makeText(getBaseContext(), "이메일 형식을 올바르게 입력해주세요.", Toast.LENGTH_SHORT).show();
             return false;
         }
         return true;
@@ -214,6 +234,7 @@ public class SignUpActivity extends AppCompatActivity {
                         } else if (dupResult.msg.equals("4")) {
                             nickdupcount = 0;
                             Toast.makeText(SignUpActivity.this, "이미 사용중인 닉네임 입니다.", Toast.LENGTH_SHORT).show();
+                            editTextSignupNickname.requestFocus();
                         } else {
                             nickdupcount = 0;
                             Toast.makeText(SignUpActivity.this, "서버연결오류", Toast.LENGTH_SHORT).show();
@@ -228,30 +249,33 @@ public class SignUpActivity extends AppCompatActivity {
             });
 
         } else if (emailfocus == 1 && !email.equals("") && emaildupcount != 1) {
-            //이메일이 입력되었꼬 아직 중복검사를 완료하지 않은상태
-            Call<DupResult> getDupResult = service.getDupResult("", email, 2);
-            getDupResult.enqueue(new Callback<DupResult>() {
-                @Override
-                public void onResponse(Call<DupResult> call, Response<DupResult> response) {
-                    if (response.isSuccessful()) {
-                        if (response.body().msg.equals("3")) {
-                            emaildupcount = 1;
-                            Toast.makeText(SignUpActivity.this, "이메일 중복확인 성공", Toast.LENGTH_SHORT).show();
-                        } else if (response.body().msg.equals("4")) {
-                            emaildupcount = 0;
-                            Toast.makeText(SignUpActivity.this, "이미 사용중인 이메일 입니다.", Toast.LENGTH_SHORT).show();
-                        } else {
-                            emaildupcount = 0;
-                            Toast.makeText(SignUpActivity.this, "서버연결오류", Toast.LENGTH_SHORT).show();
+            //이메일이 입력되었고 아직 중복검사를 완료하지 않은상태
+            if (isValidEmail()) {
+                Call<DupResult> getDupResult = service.getDupResult("", email, 2);
+                getDupResult.enqueue(new Callback<DupResult>() {
+                    @Override
+                    public void onResponse(Call<DupResult> call, Response<DupResult> response) {
+                        if (response.isSuccessful()) {
+                            if (response.body().msg.equals("3")) {
+                                emaildupcount = 1;
+                                Toast.makeText(SignUpActivity.this, "이메일 중복확인 성공", Toast.LENGTH_SHORT).show();
+                            } else if (response.body().msg.equals("4")) {
+                                emaildupcount = 0;
+                                Toast.makeText(SignUpActivity.this, "이미 사용중인 이메일 입니다.", Toast.LENGTH_SHORT).show();
+                                editTextSignupEmail.requestFocus();
+                            } else {
+                                emaildupcount = 0;
+                                Toast.makeText(SignUpActivity.this, "서버연결오류", Toast.LENGTH_SHORT).show();
+                            }
                         }
                     }
-                }
 
-                @Override
-                public void onFailure(Call<DupResult> call, Throwable t) {
-                    Toast.makeText(getBaseContext(), "서버연결오류", Toast.LENGTH_SHORT).show();
-                }
-            });
+                    @Override
+                    public void onFailure(Call<DupResult> call, Throwable t) {
+                        Toast.makeText(getBaseContext(), "서버연결오류", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
         } else if (nickdupcount == 1 && emaildupcount == 1) {
             //중복확인이 모두 완료된 상태
             Log.i("msg", "중복확인 모두 완료");

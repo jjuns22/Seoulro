@@ -114,38 +114,45 @@ public class WriteReviewActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // MultipartBody.Part
-                //UploadReviewInfo uploadReviewInfo = new UploadReviewInfo();
-                placeimage = MultipartBody.Part.createFormData("placeimage", photo.getName(), photoBody);
+                if (placeimage != null) {
+                    placeimage = MultipartBody.Part.createFormData("placeimage", photo.getName(), photoBody);
+                }
                 token = LoginUserInfo.getInstance().getUserInfo().token;
                 //uploadReviewInfo.placenum = placenum;
                 //uploadReviewInfo.title = editTextViewReviewTitle.getText().toString();
                 //uploadReviewInfo.content = editTextReviewContent.getText().toString();
 
-               // RequestBody title = RequestBody.create(MediaType.parse("multipart/form-data"),editTextViewReviewTitle.getText().toString());
-               // RequestBody content = RequestBody.create(MediaType.parse("multipart/form-data"),editTextReviewContent.getText().toString());
-               // RequestBody placenum = RequestBody.create(MediaType.parse("multipart/form-data"),num);
+                // RequestBody title = RequestBody.create(MediaType.parse("multipart/form-data"),editTextViewReviewTitle.getText().toString());
+                // RequestBody content = RequestBody.create(MediaType.parse("multipart/form-data"),editTextReviewContent.getText().toString());
+                // RequestBody placenum = RequestBody.create(MediaType.parse("multipart/form-data"),num);
 
                 String title = editTextViewReviewTitle.getText().toString();
                 String content = editTextReviewContent.getText().toString();
                 String placenum = num;
-                Call<UploadReviewResult> uploadReview = service.uploadReview(placeimage,token,title,content,placenum);
 
-
+                Call<UploadReviewResult> uploadReview = service.uploadReview(placeimage, token, title, content, placenum);
                 uploadReview.enqueue(new Callback<UploadReviewResult>() {
                     @Override
                     public void onResponse(Call<UploadReviewResult> call, Response<UploadReviewResult> response) {
-                        Log.d(TAG,"통신 전");
-                        if (response.isSuccessful()) {
-                            Log.d(TAG,"통신 후");
-                            if (response.body().msg.equals("5")) {
-                                Log.d(TAG,"성공");
-                                Intent intent = new Intent(WriteReviewActivity.this, SearchInfoActivity.class);
-                                startActivity(intent);
-                                Toast.makeText(getBaseContext(), "성공", Toast.LENGTH_SHORT).show();
-                            }
+                        Log.d(TAG, "통신 전");
+                        if (editTextViewReviewTitle.getText().toString().equals("")) {
+                            Toast.makeText(getBaseContext(), "제목을 입력해주세요.", Toast.LENGTH_SHORT).show();
+                        } else if (editTextReviewContent.getText().toString().equals("")) {
+                            Toast.makeText(getBaseContext(), "내용을 입력해주세요.", Toast.LENGTH_SHORT).show();
                         } else {
-                            Log.d(TAG,"실패");
-                            Toast.makeText(getBaseContext(), "실패", Toast.LENGTH_SHORT).show();
+                            if (response.isSuccessful()) {
+                                Log.d(TAG, "통신 후");
+                                if (response.body().msg.equals("5")) {
+                                    Log.d(TAG, "성공");
+                                    Log.d(TAG,"placeimage : "+ placeimage);
+                                    Intent intent = new Intent(WriteReviewActivity.this, SearchInfoActivity.class);
+                                    startActivity(intent);
+                                    Toast.makeText(getBaseContext(), "성공", Toast.LENGTH_SHORT).show();
+                                }
+                            } else {
+                                Log.d(TAG, "실패");
+                                Toast.makeText(getBaseContext(), "실패", Toast.LENGTH_SHORT).show();
+                            }
                         }
                     }
 
@@ -196,7 +203,6 @@ public class WriteReviewActivity extends AppCompatActivity {
 
 
     };
-
 
 
     @Override
@@ -256,6 +262,7 @@ public class WriteReviewActivity extends AppCompatActivity {
         }
 
     }
+
     public String getRealPathFromURI(Uri contentUri) {
         String[] proj = {MediaStore.Images.Media.DATA};
         Cursor cursor = managedQuery(contentUri, proj, null, null, null);//에러

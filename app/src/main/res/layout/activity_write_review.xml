@@ -145,7 +145,7 @@
             android:layout_height="wrap_content"
             android:background="@null"
             android:hint="(12자 내외로 입력해주세요)"
-            android:maxLength="12" />
+            android:maxLength="20" />
     </LinearLayout>
 
     <View
