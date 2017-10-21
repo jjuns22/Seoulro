@@ -226,7 +226,7 @@
                             android:id="@+id/btn_write_review_picture_cancel"
                             android:layout_width="12dp"
                             android:layout_height="12dp"
-                            android:layout_marginEnd="15dp"
+                            android:layout_marginEnd="20dp"
                             android:layout_toRightOf="@+id/textview_write_review_picture_delete"
                             android:background="@drawable/review_picture_cancel" />
 

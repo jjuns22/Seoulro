@@ -10,18 +10,22 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Switch;
 
 import com.seoulsi.client.seoulro.R;
 import com.seoulsi.client.seoulro.search.Fragment.DetailsFragment;
 import com.seoulsi.client.seoulro.search.Fragment.ReviewFragment;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
+
 
 public class SearchInfoActivity extends AppCompatActivity {
     private ViewPager mViewPager;
     private TabLayout tabLayout;
-    private FloatingActionButton fab;
+    @BindView(R.id.btn_review_write_button)
+    Button btnReviewWriteButton;
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
     @Override
@@ -36,8 +40,7 @@ public class SearchInfoActivity extends AppCompatActivity {
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
-        //플로팅버튼 초기화
-        fab = (FloatingActionButton) findViewById(R.id.fab);
+
 
         //view 객체 초기화
         mViewPager = (ViewPager) findViewById(R.id.view_pager);
@@ -47,7 +50,7 @@ public class SearchInfoActivity extends AppCompatActivity {
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
 
-        fab.setOnClickListener(new View.OnClickListener() {
+        btnReviewWriteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(SearchInfoActivity.this, WriteReviewActivity.class);
@@ -64,9 +67,9 @@ public class SearchInfoActivity extends AppCompatActivity {
             @Override
             public void onPageSelected(int position) {
                 if (position == 0) {
-                    fab.setVisibility(View.GONE);
+                    btnReviewWriteButton.setVisibility(View.GONE);
                 } else {
-                    fab.setVisibility(View.VISIBLE);
+                    btnReviewWriteButton.setVisibility(View.VISIBLE);
                 }
             }
 
