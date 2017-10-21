@@ -247,7 +247,7 @@
             android:layout_height="70dp"
             android:layout_gravity="bottom"
             android:gravity="center"
-            android:text="등록하기"
+            android:background="@drawable/review_write_button"
             android:textSize="20dp" />
     </LinearLayout>
 
