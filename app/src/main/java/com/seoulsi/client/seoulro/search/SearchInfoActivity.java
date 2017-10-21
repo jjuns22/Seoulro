@@ -1,17 +1,12 @@
 package com.seoulsi.client.seoulro.search;
 
 import android.content.Intent;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Switch;
 
 import com.seoulsi.client.seoulro.R;
 import com.seoulsi.client.seoulro.search.Fragment.DetailsFragment;
@@ -20,14 +15,17 @@ import com.seoulsi.client.seoulro.search.Fragment.ReviewFragment;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-
 public class SearchInfoActivity extends AppCompatActivity {
-    private ViewPager mViewPager;
-    private TabLayout tabLayout;
+
     @BindView(R.id.btn_review_write_button)
     Button btnReviewWriteButton;
+    @BindView(R.id.btn_search_info_details)
+    Button btnSearchInfoDetails;
+    @BindView(R.id.btn_search_info_review)
+    Button btnSearchInfoReview;
+    @BindView(R.id.view_pager_search_info)
+    ViewPager vp;
 
-    private SectionsPagerAdapter mSectionsPagerAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -36,40 +34,27 @@ public class SearchInfoActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
 
-        // Create the adapter that will return a fragment for each of the three
-        // primary sections of the activity.
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
-
-
-
-        //view 객체 초기화
-        mViewPager = (ViewPager) findViewById(R.id.view_pager);
-        mViewPager.setAdapter(mSectionsPagerAdapter);
-
-        //tab 객체 초기화
-        tabLayout = (TabLayout) findViewById(R.id.tabs);
-        tabLayout.setupWithViewPager(mViewPager);
-
-        btnReviewWriteButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(SearchInfoActivity.this, WriteReviewActivity.class);
-                startActivity(i);
-            }
-        });
-        // Set up the ViewPager with the sections adapter.
-        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        vp.setAdapter(new pagerAdapter(getSupportFragmentManager()));
+        vp.setCurrentItem(0);
+        vp.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                SearchInfoActivity.this.invalidateTabIcon();
+
             }
 
             @Override
             public void onPageSelected(int position) {
-                if (position == 0) {
-                    btnReviewWriteButton.setVisibility(View.GONE);
-                } else {
-                    btnReviewWriteButton.setVisibility(View.VISIBLE);
+                switch (position) {
+                    case 0:
+                        btnSearchInfoDetails.setBackgroundResource(R.drawable.mypage_menu_green);
+                        btnSearchInfoReview.setBackgroundResource(R.drawable.mypage_menu_white);
+                        btnReviewWriteButton.setVisibility(View.GONE);
+                        break;
+
+                    case 1:
+                        btnSearchInfoDetails.setBackgroundResource(R.drawable.mypage_menu_green);
+                        btnSearchInfoReview.setBackgroundResource(R.drawable.mypage_menu_white);
+                        btnReviewWriteButton.setVisibility(View.VISIBLE);
                 }
             }
 
@@ -78,112 +63,64 @@ public class SearchInfoActivity extends AppCompatActivity {
 
             }
         });
+        // Set up the ViewPager with the sections adapter.
+
+
+        btnSearchInfoDetails.setOnClickListener(movePageListener);
+        btnSearchInfoDetails.setTag(0);
+        btnSearchInfoReview.setOnClickListener(movePageListener);
+        btnSearchInfoReview.setTag(1);
+
+        btnReviewWriteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(SearchInfoActivity.this, WriteReviewActivity.class);
+                startActivity(i);
+            }
+        });
+
     }
 
-   /* public void invalidateTabIcon() {
-        int selectedPosition = tabLayout.getSelectedTabPosition();
-        for (int i = 0; i < tabLayout.getTabCount(); i++) {
-            tabLayout.getTabAt(i).setIcon(getTabIcon(i, i == selectedPosition));
+    View.OnClickListener movePageListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            int tag = (int) v.getTag();
+            switch (tag) {
+                case 0:
+                    btnSearchInfoDetails.setBackgroundResource(R.drawable.mypage_menu_green);
+                    btnSearchInfoReview.setBackgroundResource(R.drawable.mypage_menu_white);
+                    break;
+                case 1:
+                    btnSearchInfoReview.setBackgroundResource(R.drawable.mypage_menu_green);
+                    btnSearchInfoDetails.setBackgroundResource(R.drawable.mypage_menu_white);
+                    break;
+            }
+            vp.setCurrentItem(tag);
         }
-    }*/
+    };
 
-/*    private int getTabIcon(int position, boolean isSelected) {
-        switch (position) {
-            case 0:
-                if (isSelected) {
-                    return R.drawable.tab_home_seletion;
-                } else {
-                    return R.drawable.tab_home_seletion_off;
-                }
-            case 1:
-                if (isSelected) {
-                    return R.drawable.tab_mypage_seletion;
-                } else {
-                    return R.drawable.tab_mypage_seletion_off;
-                }
-//            case 2:
-//                if (isSelected) {
-//                    return R.drawable.tab_notification_seletion;
-//                } else {
-//                    return R.drawable.tab_notification_seletion_off;
-//                }
-            case 2:
-                if (isSelected) {
-                    return R.drawable.tab_setting_seletion;
-                } else {
-                    return R.drawable.tab_setting_seletion_off;
-                }
-        }
-        return R.drawable.tab_home_seletion;
-    }
-    */
-public void invalidateTabIcon() {
-    int selectedPosition = tabLayout.getSelectedTabPosition();
-    for (int i = 0; i < tabLayout.getTabCount(); i++) {
-        tabLayout.getTabAt(i).setText(getTabText(i, i == selectedPosition));
-    }
-}
-
-    private String getTabText(int position, boolean isSelected) {
-        switch (position) {
-            case 0:
-                if (isSelected) {
-                    return "정보";
-                } else {
-                    return "정보";
-                }
-            case 1:
-                if (isSelected) {
-                    return "후기";
-                } else {
-                    return "후기";
-                }
-        }
-        return "정보";
-    }
-
-    public class SectionsPagerAdapter extends FragmentPagerAdapter {
-
-        public SectionsPagerAdapter(FragmentManager fm) {
+    private class pagerAdapter extends FragmentStatePagerAdapter {
+        public pagerAdapter(android.support.v4.app.FragmentManager fm) {
             super(fm);
         }
 
         @Override
-        public Fragment getItem(int position) {
-            // getItem is called to instantiate the fragment for the given page.
-            // Return a PlaceholderFragment (defined as a static inner class below).
+        public android.support.v4.app.Fragment getItem(int position) {
             switch (position) {
                 case 0:
                     return new DetailsFragment();
                 case 1:
                     return new ReviewFragment();
-            }
-            return null;
-        }
 
-        @Override
-        public int getCount() {
-            // Show 2 total pages.
-            return 2;
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            switch(position){
-                case 0:
-                    return "정보";
-                case 1:
-                    return "후기";
                 default:
                     return null;
             }
         }
 
         @Override
-        public int getItemPosition(Object object) {
-            return POSITION_NONE;
+        public int getCount() {
+            return 2;
         }
-
     }
 
 }

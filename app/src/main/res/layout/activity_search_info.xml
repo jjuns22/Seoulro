@@ -88,33 +88,47 @@
         android:layout_width="match_parent"
         android:layout_height="40dp"></View>
 
-
-    <android.support.design.widget.TabLayout
-        android:id="@+id/tabs"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fillViewport="false"></android.support.design.widget.TabLayout>
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp">
 
+            <Button
+                android:id="@+id/btn_search_info_details"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/mypage_menu_green"
+                android:text="정보"
+                android:textColor="#cacaca" />
 
-    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+            <Button
+                android:id="@+id/btn_search_info_review"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/mypage_menu_white"
+                android:text="후기"
+                android:textColor="#cacaca" />
+        </LinearLayout>
 
         <android.support.v4.view.ViewPager
-            android:id="@+id/view_pager"
+            android:id="@+id/view_pager_search_info"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
+    </LinearLayout>
 
-        <Button
-            android:id="@+id/btn_review_write_button"
-            android:visibility="gone"
-            android:background="@drawable/information_review_write_button"
-            android:layout_width="match_parent"
-            android:layout_height="52dp"
-            android:layout_gravity="center|bottom" ></Button>
-    </FrameLayout>
-
-
-
+    <Button
+        android:id="@+id/btn_review_write_button"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:layout_gravity="center|bottom"
+        android:background="@drawable/information_review_write_button"
+        android:visibility="gone"></Button>
 </LinearLayout>
