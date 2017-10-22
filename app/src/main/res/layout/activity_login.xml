@@ -9,7 +9,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="400dp"></LinearLayout>
+        android:layout_height="350dp"></LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -99,7 +99,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp"></LinearLayout>
+        android:layout_height="35dp"></LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -132,7 +132,7 @@
         <Button
             android:id="@+id/btn_login_success"
             android:layout_width="match_parent"
-            android:layout_height="70dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:background="#009D4C"
             android:gravity="center"
