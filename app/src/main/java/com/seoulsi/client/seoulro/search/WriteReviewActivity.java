@@ -1,6 +1,8 @@
 package com.seoulsi.client.seoulro.search;
 
 import android.Manifest;
+import android.app.AlertDialog;
+import android.app.Service;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -9,26 +11,26 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
-import android.os.Environment;
+import android.os.Bundle;
+import android.os.Looper;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.BufferedOutputStream;
-
+import com.bumptech.glide.Glide;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
 import com.seoulsi.client.seoulro.R;
@@ -37,12 +39,13 @@ import com.seoulsi.client.seoulro.login.LoginUserInfo;
 import com.seoulsi.client.seoulro.network.NetworkService;
 
 import java.io.ByteArrayOutputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.logging.Handler;
+import java.util.logging.LogRecord;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -52,7 +55,6 @@ import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.http.Header;
 
 public class WriteReviewActivity extends AppCompatActivity {
     private final String TAG = "WriteReviewActivity";
@@ -81,6 +83,12 @@ public class WriteReviewActivity extends AppCompatActivity {
     EditText editTextReviewContent;
     @BindView(R.id.textview_write_review_photo_upload)
     TextView textViewWriteReviewPhotoUpload;
+    @BindView(R.id.btn_write_review_picture_cancel)
+    Button btnWriteReviewPictureCancel;
+    @BindView(R.id.linearLayout_write_review_photo_upload)
+    LinearLayout linearLayoutWriteReviewPhotoUpload;
+    @BindView(R.id.textview_write_review_modify_photo)
+    TextView textViewWriteReviewModifyPhoto;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,6 +99,7 @@ public class WriteReviewActivity extends AppCompatActivity {
 
         //서비스 객체 초기화
         service = ApplicationController.getInstance().getNetworkService();
+
 
         btnWriteReviewImageUpload.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.M)
@@ -113,52 +122,28 @@ public class WriteReviewActivity extends AppCompatActivity {
                 }
             }
         });
-
+        //사진 삭제 버튼 클릭시
+        btnWriteReviewPictureCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                linearLayoutWriteReviewPhotoUpload.setVisibility(View.VISIBLE);    // "사진을 첨부하시겠습니까?" 버튼,텍스트 보임
+                imageViewWriteReviewImg.setVisibility(View.GONE);            //이미지사진 숨김
+                btnWriteReviewPictureCancel.setVisibility(View.GONE);        //이미지사진 삭제버튼(x) 숨김
+                textViewWriteReviewModifyPhoto.setVisibility(View.GONE);     //사진편집 텍스트뷰 숨김
+            }
+        });
+        //사진 편집 텍스트 클릭시
+        textViewWriteReviewModifyPhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                modifyPhotoDiologShow();
+            }
+        });
+        //사진등록 버튼 클릭시
         btnWriteReviewEnrollment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // MultipartBody.Part
-                if (placeimage != null) {
-                    placeimage = MultipartBody.Part.createFormData("placeimage", photo.getName(), photoBody);
-                }
-                token = LoginUserInfo.getInstance().getUserInfo().token;
-
-                RequestBody title = RequestBody.create(MediaType.parse("multipart/form-data"),editTextViewReviewTitle.getText().toString());
-                RequestBody content = RequestBody.create(MediaType.parse("multipart/form-data"),editTextReviewContent.getText().toString());
-                RequestBody placenum = RequestBody.create(MediaType.parse("multipart/form-data"),num);
-
-
-                Call<UploadReviewResult> uploadReview = service.uploadReview(placeimage, token, title, content, placenum);
-                uploadReview.enqueue(new Callback<UploadReviewResult>() {
-                    @Override
-                    public void onResponse(Call<UploadReviewResult> call, Response<UploadReviewResult> response) {
-                        Log.d(TAG, "통신 전");
-                        if (editTextViewReviewTitle.getText().toString().equals("")) {
-                            Toast.makeText(getBaseContext(), "제목을 입력해주세요.", Toast.LENGTH_SHORT).show();
-                        } else if (editTextReviewContent.getText().toString().equals("")) {
-                            Toast.makeText(getBaseContext(), "내용을 입력해주세요.", Toast.LENGTH_SHORT).show();
-                        } else {
-                            if (response.isSuccessful()) {
-                                Log.d(TAG, "통신 후");
-                                if (response.body().msg.equals("5")) {
-                                    Log.d(TAG, "성공");
-                                    Log.d(TAG,"placeimage : "+ placeimage);
-                                    Intent intent = new Intent(WriteReviewActivity.this, SearchInfoActivity.class);
-                                    startActivity(intent);
-                                    Toast.makeText(getBaseContext(), "성공", Toast.LENGTH_SHORT).show();
-                                }
-                            } else {
-                                Log.d(TAG, "실패");
-                                Toast.makeText(getBaseContext(), "실패", Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<UploadReviewResult> call, Throwable t) {
-                        Toast.makeText(getBaseContext(), "onFailure", Toast.LENGTH_SHORT).show();
-                    }
-                });
+                reviwDialogShow();
             }
         });
     }
@@ -209,15 +194,16 @@ public class WriteReviewActivity extends AppCompatActivity {
         if (resultCode == RESULT_OK) {
             if (requestCode == TAKE_GALLERY) {
                 try {
-
                     //이미지 데이터를 비트맵으로 받아온다.
                     Bitmap image_bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), data.getData());
 
                     //imageViewProfile에 이미지 세팅
                     imageViewWriteReviewImg.setImageBitmap(image_bitmap);
-                    imageViewWriteReviewImg.setVisibility(View.VISIBLE);
-                    textViewWriteReviewPhotoUpload.setVisibility(View.GONE);
-                    btnWriteReviewImageUpload.setVisibility(View.GONE);
+
+                    linearLayoutWriteReviewPhotoUpload.setVisibility(View.GONE);    // "사진을 첨부하시겠습니까?" 버튼,텍스트 가림
+                    imageViewWriteReviewImg.setVisibility(View.VISIBLE);            //이미지사진 보임
+                    btnWriteReviewPictureCancel.setVisibility(View.VISIBLE);        //이미지사진 삭제버튼(x) 보임
+                    textViewWriteReviewModifyPhoto.setVisibility(View.VISIBLE);     //사진편집 텍스트뷰 보임
                     this.imgUri = data.getData();
                     imgUrl = this.imgUri.getPath();
 
@@ -270,5 +256,103 @@ public class WriteReviewActivity extends AppCompatActivity {
         cursor.moveToFirst();
         return cursor.getString(column_index);
 
+    }
+
+    void reviwDialogShow()
+    {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("저장");
+        builder.setMessage("후기를 저장하시겠습니까?");
+        builder.setPositiveButton("예",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        //Toast.makeText(getApplicationContext(),"예를 선택했습니다.",Toast.LENGTH_LONG).show();
+                        // MultipartBody.Part
+                        if (placeimage != null) {
+                            placeimage = MultipartBody.Part.createFormData("placeimage", photo.getName(), photoBody);
+                        }
+                        token = LoginUserInfo.getInstance().getUserInfo().token;
+
+                        RequestBody title = RequestBody.create(MediaType.parse("multipart/form-data"),editTextViewReviewTitle.getText().toString());
+                        RequestBody content = RequestBody.create(MediaType.parse("multipart/form-data"),editTextReviewContent.getText().toString());
+                        RequestBody placenum = RequestBody.create(MediaType.parse("multipart/form-data"),num);
+
+
+                        Call<UploadReviewResult> uploadReview = service.uploadReview(placeimage, token, title, content, placenum);
+                        uploadReview.enqueue(new Callback<UploadReviewResult>() {
+                            @Override
+                            public void onResponse(Call<UploadReviewResult> call, Response<UploadReviewResult> response) {
+                                Log.d(TAG, "통신 전");
+                                if (editTextViewReviewTitle.getText().toString().equals("")) {
+                                    Toast.makeText(getBaseContext(), "제목을 입력해주세요.", Toast.LENGTH_SHORT).show();
+                                } else if (editTextReviewContent.getText().toString().equals("")) {
+                                    Toast.makeText(getBaseContext(), "내용을 입력해주세요.", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    if (response.isSuccessful()) {
+                                        Log.d(TAG, "통신 후");
+                                        if (response.body().msg.equals("5")) {
+                                            Log.d(TAG, "성공");
+                                            Log.d(TAG,"placeimage : "+ placeimage);
+                                            Intent intent = new Intent(WriteReviewActivity.this, SearchInfoActivity.class);
+                                            startActivity(intent);
+                                            Toast.makeText(getBaseContext(), "성공", Toast.LENGTH_SHORT).show();
+                                        }
+                                    } else {
+                                        Log.d(TAG, "실패");
+                                        Toast.makeText(getBaseContext(), "실패", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<UploadReviewResult> call, Throwable t) {
+                                Toast.makeText(getBaseContext(), "onFailure", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                });
+        builder.setNegativeButton("아니오",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        //Toast.makeText(getApplicationContext(),"아니오를 선택했습니다.",Toast.LENGTH_LONG).show();
+                        dialog.dismiss();
+                    }
+                });
+        builder.show();
+    }
+
+    void modifyPhotoDiologShow()
+    {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        // builder.setTitle("AlertDialog Title");
+        builder.setMessage("사진을 편집하시겠습니까?");
+        builder.setPositiveButton("예",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        //Toast.makeText(getApplicationContext(),"예를 선택했습니다.",Toast.LENGTH_LONG).show();
+                        int permissionCheck = ContextCompat.checkSelfPermission(WriteReviewActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE);
+                        if (permissionCheck == PackageManager.PERMISSION_DENIED) {
+                            //권한없음
+                            ActivityCompat.requestPermissions(WriteReviewActivity.this,
+                                    new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                                    TAKE_GALLERY);
+                        } else {
+                            // 권한 있음
+                            Intent intent = new Intent();
+                            intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
+                            intent.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                            intent.setAction(Intent.ACTION_GET_CONTENT);
+                            startActivityForResult(intent, TAKE_GALLERY);
+                        }
+                    }
+                });
+        builder.setNegativeButton("아니오",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        //Toast.makeText(getApplicationContext(),"아니오를 선택했습니다.",Toast.LENGTH_LONG).show();
+                        dialog.dismiss();
+                    }
+                });
+        builder.show();
     }
 }

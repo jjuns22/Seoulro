@@ -59,14 +59,6 @@ public class ReviewFragment extends Fragment {
         mrecyclerview.setLayoutManager(linearLayoutManager);
 
 
-        /*itemdatas = new ArrayList<ItemDataReview>();
-        itemdatas.add(new ItemDataReview(R.drawable.login_bg, "1번", "내용","이상준","2017.10.29"));
-        itemdatas.add(new ItemDataReview(R.drawable.login_bg, "2번", "내용","김지희","2017.10.29"));
-        itemdatas.add(new ItemDataReview(R.drawable.login_bg, "3번", "내용","김다혜","2017.10.29"));
-        itemdatas.add(new ItemDataReview(R.drawable.login_bg, "4번", "내용","박성준","2017.10.29"));
-        itemdatas.add(new ItemDataReview(R.drawable.login_bg, "5번", "내용","정승후","2017.10.29"));
-        itemdatas.add(new ItemDataReview(R.drawable.login_bg, "6번", "내용","배지원","2017.10.29")); */
-
         //각 배열에 모델 개체를 가지는 ArrayList 초기화
         itemDataReview = new ArrayList<ReviewInfo>();
         adapter = new ReviewRecyclerAdapter(itemDataReview, clickEvent);

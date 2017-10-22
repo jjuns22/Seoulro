@@ -22,7 +22,7 @@ public class SplashActivity extends AppCompatActivity {
 
         Handler handler = new Handler() {
             public void handleMessage(Message msg) {
-                Intent intent = new Intent(getBaseContext(), MainActivity.class); //LoginActivity 로 다시 바꿔야함
+                Intent intent = new Intent(getBaseContext(), LoginActivity.class); //LoginActivity 로 다시 바꿔야함
                 startActivity(intent);
                 finish();
             }
