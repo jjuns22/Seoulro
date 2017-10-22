@@ -1,6 +1,7 @@
 package com.seoulsi.client.seoulro.search;
 
 import android.content.Intent;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -17,8 +18,8 @@ import butterknife.ButterKnife;
 
 public class SearchInfoActivity extends AppCompatActivity {
 
-    @BindView(R.id.btn_review_write_button)
-    Button btnReviewWriteButton;
+    @BindView(R.id.fab)
+    FloatingActionButton fab;
     @BindView(R.id.btn_search_info_details)
     Button btnSearchInfoDetails;
     @BindView(R.id.btn_search_info_review)
@@ -48,13 +49,13 @@ public class SearchInfoActivity extends AppCompatActivity {
                     case 0:
                         btnSearchInfoDetails.setBackgroundResource(R.drawable.mypage_menu_green);
                         btnSearchInfoReview.setBackgroundResource(R.drawable.mypage_menu_white);
-                        btnReviewWriteButton.setVisibility(View.GONE);
+                        fab.setVisibility(View.GONE);
                         break;
 
                     case 1:
-                        btnSearchInfoDetails.setBackgroundResource(R.drawable.mypage_menu_green);
-                        btnSearchInfoReview.setBackgroundResource(R.drawable.mypage_menu_white);
-                        btnReviewWriteButton.setVisibility(View.VISIBLE);
+                        btnSearchInfoDetails.setBackgroundResource(R.drawable.mypage_menu_white);
+                        btnSearchInfoReview.setBackgroundResource(R.drawable.mypage_menu_green);
+                        fab.setVisibility(View.VISIBLE);
                 }
             }
 
@@ -71,7 +72,7 @@ public class SearchInfoActivity extends AppCompatActivity {
         btnSearchInfoReview.setOnClickListener(movePageListener);
         btnSearchInfoReview.setTag(1);
 
-        btnReviewWriteButton.setOnClickListener(new View.OnClickListener() {
+        fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(SearchInfoActivity.this, WriteReviewActivity.class);

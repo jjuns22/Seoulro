@@ -118,17 +118,30 @@
                 android:textColor="#cacaca" />
         </LinearLayout>
 
-        <android.support.v4.view.ViewPager
-            android:id="@+id/view_pager_search_info"
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent">
+
+            <android.support.v4.view.ViewPager
+                android:id="@+id/view_pager_search_info"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <RelativeLayout
+                android:gravity="end|bottom"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <android.support.design.widget.FloatingActionButton
+                    android:id="@+id/fab"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/information_review_write_button"
+                    android:layout_marginBottom="30dp"
+                    android:layout_marginEnd="30dp"
+                    android:visibility="gone"
+                    android:backgroundTint="@color/colorGreen"></android.support.design.widget.FloatingActionButton>
+            </RelativeLayout>
+        </FrameLayout>
     </LinearLayout>
 
-    <Button
-        android:id="@+id/btn_review_write_button"
-        android:layout_width="match_parent"
-        android:layout_height="52dp"
-        android:layout_gravity="center|bottom"
-        android:background="@drawable/information_review_write_button"
-        android:visibility="gone"></Button>
 </LinearLayout>

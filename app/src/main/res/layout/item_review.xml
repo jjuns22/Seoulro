@@ -17,7 +17,9 @@
             android:id="@+id/imageview_review_image"
             android:layout_width="100dp"
             android:layout_height="100dp" />
-
+<View
+    android:layout_width="20dp"
+    android:layout_height="20dp"></View>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
