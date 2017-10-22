@@ -69,6 +69,7 @@ public class WriteReviewActivity extends AppCompatActivity {
     private File photo;
     private RequestBody photoBody;
     private String token;
+    private int aricle_id = 0;
 
     @BindView(R.id.btn_write_review_image_upload)
     Button btnWriteReviewImageUpload;

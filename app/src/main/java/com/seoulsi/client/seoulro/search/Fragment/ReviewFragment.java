@@ -1,5 +1,6 @@
 package com.seoulsi.client.seoulro.search.Fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -17,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.seoulsi.client.seoulro.R;
+import com.seoulsi.client.seoulro.search.ReviewDetailsActivity;
 import com.seoulsi.client.seoulro.search.recyclerview.ItemDataReview;
 import com.seoulsi.client.seoulro.search.recyclerview.ReviewRecyclerAdapter;
 import com.seoulsi.client.seoulro.search.review.ReviewInfo;
@@ -94,8 +96,14 @@ public class ReviewFragment extends Fragment {
     public View.OnClickListener clickEvent = new View.OnClickListener() {
         public void onClick(View v) {
             final int itemPosition = mrecyclerview.getChildPosition(v);
-            Toast.makeText(getContext(), itemPosition + "번 리스트 클릭", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getContext(), itemPosition + "번 리스트 클릭", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(getContext(), ReviewDetailsActivity.class);
+            intent.putExtra("writer",itemDataReview.get(itemPosition).nickname);
+            intent.putExtra("title",itemDataReview.get(itemPosition).title);
+            intent.putExtra("content",itemDataReview.get(itemPosition).content);
+            intent.putExtra("placePicture",itemDataReview.get(itemPosition).place_picture);
 
+            startActivity(intent);
         }
     };
 
