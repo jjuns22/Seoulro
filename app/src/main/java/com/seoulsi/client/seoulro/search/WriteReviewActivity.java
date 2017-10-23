@@ -38,6 +38,8 @@ import com.seoulsi.client.seoulro.application.ApplicationController;
 import com.seoulsi.client.seoulro.login.LoginUserInfo;
 import com.seoulsi.client.seoulro.network.NetworkService;
 
+import org.w3c.dom.Text;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -69,7 +71,6 @@ public class WriteReviewActivity extends AppCompatActivity {
     private File photo;
     private RequestBody photoBody;
     private String token;
-    private int aricle_id = 0;
 
     @BindView(R.id.btn_write_review_image_upload)
     Button btnWriteReviewImageUpload;
@@ -90,6 +91,8 @@ public class WriteReviewActivity extends AppCompatActivity {
     LinearLayout linearLayoutWriteReviewPhotoUpload;
     @BindView(R.id.textview_write_review_modify_photo)
     TextView textViewWriteReviewModifyPhoto;
+    @BindView(R.id.textview_write_review_writer)
+    TextView textViewWriteReviewWriter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,7 +103,7 @@ public class WriteReviewActivity extends AppCompatActivity {
 
         //서비스 객체 초기화
         service = ApplicationController.getInstance().getNetworkService();
-
+        textViewWriteReviewWriter.setText(LoginUserInfo.getInstance().getUserInfo().nickname);
 
         btnWriteReviewImageUpload.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.M)
@@ -273,7 +276,6 @@ public class WriteReviewActivity extends AppCompatActivity {
                             placeimage = MultipartBody.Part.createFormData("placeimage", photo.getName(), photoBody);
                         }
                         token = LoginUserInfo.getInstance().getUserInfo().token;
-
                         RequestBody title = RequestBody.create(MediaType.parse("multipart/form-data"),editTextViewReviewTitle.getText().toString());
                         RequestBody content = RequestBody.create(MediaType.parse("multipart/form-data"),editTextReviewContent.getText().toString());
                         RequestBody placenum = RequestBody.create(MediaType.parse("multipart/form-data"),num);

@@ -46,6 +46,6 @@ public interface NetworkService {
                                           @Part("content") RequestBody content,
                                           @Part("placenum") RequestBody placenum);
     @GET("/place/review")
-    Call<ReviewResult> getReview(@Query("placenum") String placenum, @Query("id") int id);
+    Call<ReviewResult> getReview(@Query("placenum") int placenum, @Query("id") int id);
 
 }

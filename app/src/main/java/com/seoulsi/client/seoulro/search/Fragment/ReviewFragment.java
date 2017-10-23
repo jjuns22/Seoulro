@@ -36,19 +36,23 @@ import retrofit2.Response;
 
 public class ReviewFragment extends Fragment {
     final String TAG = "ReviewFragment";
-    private int id = 10000;
-    private String placenum = "1";
+    private int id = Integer.MAX_VALUE;
+    private int placenum = 1;
     private RecyclerView mrecyclerview;
     private ReviewRecyclerAdapter adapter;
     private LinearLayoutManager linearLayoutManager;
-    private ArrayList<ReviewInfo> itemDataReview; //데이터 생기면 받아올 배열
-    //private ArrayList<ItemDataReview> itemdatas;  //임시데이터 저장
+    private ArrayList<ReviewInfo> itemDataReview =  new ArrayList<>(); //데이터 생기면 받아올 배열
+
+    private boolean listIsEnd = false;
+    private boolean isListViewAppending = false;
+    private boolean isListExpandable = true;
     private NetworkService service;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_review, null);
+
         mrecyclerview = (RecyclerView) view.findViewById(R.id.recyclerview_review);
         mrecyclerview.setHasFixedSize(true);
 
@@ -60,27 +64,52 @@ public class ReviewFragment extends Fragment {
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mrecyclerview.setLayoutManager(linearLayoutManager);
 
+        mrecyclerview.setOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                int visibleItemCount = linearLayoutManager.getChildCount();
+                int totalItemCount = linearLayoutManager.getItemCount();
+                int firstVisibleItems = linearLayoutManager.findFirstVisibleItemPosition();
+                int lastVisibleItemPosition = linearLayoutManager.findLastVisibleItemPosition();
+
+                if (!listIsEnd && lastVisibleItemPosition == itemDataReview.size() - 1
+                        && !isListViewAppending && totalItemCount > 0 && isListExpandable) {
+                    isListViewAppending = true;
+                    callAppendList();
+                }
+            }
+        });
 
         //각 배열에 모델 개체를 가지는 ArrayList 초기화
-        itemDataReview = new ArrayList<ReviewInfo>();
         adapter = new ReviewRecyclerAdapter(itemDataReview, clickEvent);
         mrecyclerview.setAdapter(adapter);
 
-        NetWorking();
+        callAppendList();
         return view;
     }
-    public void NetWorking(){
-        Call<ReviewResult> getReview = service.getReview(placenum, id);
+    private void callAppendList(){
+        Call<ReviewResult> getReview = service.getReview(placenum,id);
         getReview.enqueue(new Callback<ReviewResult>() {
             @Override
             public void onResponse(Call<ReviewResult> call, Response<ReviewResult> response) {
                 Log.d(TAG, "response");
                 if (response.isSuccessful()) {
                     if(response.body().msg.equals("3")) {
-                        itemDataReview = new ArrayList<ReviewInfo>();
-                        itemDataReview = response.body().result;
-                        adapter.setAdapter(itemDataReview);
+                       // itemDataReview = new ArrayList<ReviewInfo>();
+                        //itemDataReview = response.body().result;
+                        //adapter.setAdapter(itemDataReview);
                         //Log.d(TAG, "길이 : " +itemDataTabHome.size());
+                        if (response.body().result.size() == 0) {
+                            isListExpandable = false;
+                        }
+                        itemDataReview.addAll(response.body().result);
+                        adapter.notifyDataSetChanged();
+                        try {
+                            id = itemDataReview.get(itemDataReview.size() - 1).article_id;
+                        } catch (Exception e) {
+                            id = Integer.MAX_VALUE;
+                        }
+                        isListViewAppending = false;
                     }
                 } else{
                     Toast.makeText(getContext(),"커넥팅 에러",Toast.LENGTH_SHORT).show();
@@ -115,6 +144,5 @@ public class ReviewFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        NetWorking();
     }
 }

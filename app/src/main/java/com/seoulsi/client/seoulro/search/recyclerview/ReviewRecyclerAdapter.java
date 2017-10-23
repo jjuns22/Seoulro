@@ -28,6 +28,7 @@ public class ReviewRecyclerAdapter extends RecyclerView.Adapter<ReviewViewHolder
         this.reviewDatas = reviewDatas;
         this.clickListener = clickListener;
     }
+
     public void setAdapter(ArrayList<ReviewInfo> reviewDatas) {
         this.reviewDatas = reviewDatas;
         notifyDataSetChanged();
