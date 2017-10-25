@@ -12,13 +12,20 @@ import android.widget.Toast;
 
 import com.seoulsi.client.seoulro.R;
 import com.seoulsi.client.seoulro.application.ApplicationController;
+import com.seoulsi.client.seoulro.login.LoginUserInfo;
 import com.seoulsi.client.seoulro.mypage.ItemDataMyReview;
 import com.seoulsi.client.seoulro.mypage.MyReviewRecyclerAdapter;
+import com.seoulsi.client.seoulro.mypage.MyReviewResult;
+import com.seoulsi.client.seoulro.mypage.MyseoulloResult;
 import com.seoulsi.client.seoulro.network.NetworkService;
 import com.seoulsi.client.seoulro.search.recyclerview.ItemDataReview;
 import com.seoulsi.client.seoulro.search.recyclerview.ReviewRecyclerAdapter;
 
 import java.util.ArrayList;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by SanJuku on 2017-10-15.
@@ -31,6 +38,9 @@ public class MyReviewFragment extends Fragment{
     //private ArrayList<WorryInfo> itemDataTabHome; //나중에 데이터 생기면 받아올 배열
     private ArrayList<ItemDataMyReview> itemdatas;
     private NetworkService service;
+    String token;
+    int id;
+
 
 
     public MyReviewFragment()
@@ -60,16 +70,29 @@ public class MyReviewFragment extends Fragment{
             linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
             myReviewRecyclerview.setLayoutManager(linearLayoutManager);
 
-            itemdatas = new ArrayList<ItemDataMyReview>();
-            itemdatas.add(new ItemDataMyReview(R.drawable.mypage_review_picture, "1번", "내용","이상준","2017.10.29"));
-            itemdatas.add(new ItemDataMyReview(R.drawable.mypage_review_picture, "2번", "내용","김지희","2017.10.29"));
-            itemdatas.add(new ItemDataMyReview(R.drawable.mypage_review_picture, "3번", "내용","김다혜","2017.10.29"));
-            itemdatas.add(new ItemDataMyReview(R.drawable.mypage_review_picture, "4번", "내용","박성준","2017.10.29"));
-            itemdatas.add(new ItemDataMyReview(R.drawable.mypage_review_picture, "5번", "내용","정승후","2017.10.29"));
-            itemdatas.add(new ItemDataMyReview(R.drawable.mypage_review_picture, "6번", "내용","배지원","2017.10.29"));
-
             adapter = new MyReviewRecyclerAdapter(itemdatas,clickEvent);
             myReviewRecyclerview.setAdapter(adapter);
+
+            id = Integer.MAX_VALUE;
+            token = LoginUserInfo.getInstance().getUserInfo().token;
+            itemdatas = new ArrayList<ItemDataMyReview>();
+            Call<MyReviewResult> MyReviewListData = service.getMyReviewDataResult(token, id);
+            MyReviewListData.enqueue(new Callback<MyReviewResult>() {
+                @Override
+                public void onResponse(Call<MyReviewResult> call, Response<MyReviewResult> response) {
+                    if (response.isSuccessful()) {
+                        MyReviewResult myReviewList = response.body();
+                        itemdatas.addAll(myReviewList.result);
+                        adapter.notifyDataSetChanged();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<MyReviewResult> call, Throwable t) {
+                    Toast.makeText(getActivity(), "서비스 연결을 확인하세요.", Toast.LENGTH_SHORT).show();
+                }
+            });
+
 
 
             return view;

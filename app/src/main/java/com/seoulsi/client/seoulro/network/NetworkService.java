@@ -3,6 +3,8 @@ package com.seoulsi.client.seoulro.network;
 
 import com.seoulsi.client.seoulro.login.LoginInfo;
 import com.seoulsi.client.seoulro.login.LoginResult;
+import com.seoulsi.client.seoulro.mypage.MyReviewResult;
+import com.seoulsi.client.seoulro.mypage.MyseoulloResult;
 import com.seoulsi.client.seoulro.search.UploadReviewResult;
 import com.seoulsi.client.seoulro.search.review.ReviewResult;
 import com.seoulsi.client.seoulro.signup.DupResult;
@@ -45,7 +47,13 @@ public interface NetworkService {
                                           @Part("title") RequestBody title,
                                           @Part("content") RequestBody content,
                                           @Part("placenum") RequestBody placenum);
-    @GET("/place/review")
-    Call<ReviewResult> getReview(@Query("placenum") int placenum, @Query("id") int id);
+
+    @GET("/mypage/myseoullo/{id}")
+    Call<MyseoulloResult> getMyseouloDataResult(@Header("Authorization") String token, @Path("id") int id);
+
+    @GET("/mypage/myarticle/{id}")
+    Call<MyReviewResult> getMyReviewDataResult(@Header("Authorization") String token, @Path("id") int id);
+
+
 
 }

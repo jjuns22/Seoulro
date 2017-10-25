@@ -88,40 +88,40 @@ public class ReviewFragment extends Fragment {
         return view;
     }
     private void callAppendList(){
-        Call<ReviewResult> getReview = service.getReview(placenum,id);
-        getReview.enqueue(new Callback<ReviewResult>() {
-            @Override
-            public void onResponse(Call<ReviewResult> call, Response<ReviewResult> response) {
-                Log.d(TAG, "response");
-                if (response.isSuccessful()) {
-                    if(response.body().msg.equals("3")) {
-                       // itemDataReview = new ArrayList<ReviewInfo>();
-                        //itemDataReview = response.body().result;
-                        //adapter.setAdapter(itemDataReview);
-                        //Log.d(TAG, "길이 : " +itemDataTabHome.size());
-                        if (response.body().result.size() == 0) {
-                            isListExpandable = false;
-                        }
-                        itemDataReview.addAll(response.body().result);
-                        adapter.notifyDataSetChanged();
-                        try {
-                            id = itemDataReview.get(itemDataReview.size() - 1).article_id;
-                        } catch (Exception e) {
-                            id = Integer.MAX_VALUE;
-                        }
-                        isListViewAppending = false;
-                    }
-                } else{
-                    Toast.makeText(getContext(),"커넥팅 에러",Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ReviewResult> call, Throwable t) {
-                Log.i("fail", t.getMessage());
-            }
-        });
-    }
+//        Call<ReviewResult> getReview = service.getReview(placenum,id);
+//        getReview.enqueue(new Callback<ReviewResult>() {
+//            @Override
+//            public void onResponse(Call<ReviewResult> call, Response<ReviewResult> response) {
+//                Log.d(TAG, "response");
+//                if (response.isSuccessful()) {
+//                    if(response.body().msg.equals("3")) {
+//                       // itemDataReview = new ArrayList<ReviewInfo>();
+//                        //itemDataReview = response.body().result;
+//                        //adapter.setAdapter(itemDataReview);
+//                        //Log.d(TAG, "길이 : " +itemDataTabHome.size());
+//                        if (response.body().result.size() == 0) {
+//                            isListExpandable = false;
+//                        }
+//                        itemDataReview.addAll(response.body().result);
+//                        adapter.notifyDataSetChanged();
+//                        try {
+//                            id = itemDataReview.get(itemDataReview.size() - 1).article_id;
+//                        } catch (Exception e) {
+//                            id = Integer.MAX_VALUE;
+//                        }
+//                        isListViewAppending = false;
+//                    }
+//                } else{
+//                    Toast.makeText(getContext(),"커넥팅 에러",Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<ReviewResult> call, Throwable t) {
+//                Log.i("fail", t.getMessage());
+//            }
+//        });
+   }
     public View.OnClickListener clickEvent = new View.OnClickListener() {
         public void onClick(View v) {
             final int itemPosition = mrecyclerview.getChildPosition(v);

@@ -46,9 +46,9 @@ public class MyseoulloAdapter extends RecyclerView.Adapter<MyseoulloViewHolder> 
         if (String.valueOf(mySeoulloDatas.get(position).getimage_url()).equals("")) {
              holder.seoulloImg.setImageResource(R.drawable.mypage_review_picture);
         } else {
-            holder.seoulloImg.setImageResource(mySeoulloDatas.get(position).getimage_url());
+            //holder.seoulloImg.setImageResource(mySeoulloDatas.get(position).getimage_url());
             //이미지 받아오면
-            //Glide.with(parent.getContext()).load(mySeoulloDatas.get(position).image_url).into(holder.seoulloImg);
+            Glide.with(parent.getContext()).load(mySeoulloDatas.get(position).place_picture).into(holder.seoulloImg);
             //holder.symbolImage.setImageResource(R.drawable.none);
         }
 
