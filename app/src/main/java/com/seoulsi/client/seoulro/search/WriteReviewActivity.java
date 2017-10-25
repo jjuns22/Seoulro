@@ -151,11 +151,11 @@ public class WriteReviewActivity extends AppCompatActivity {
                 modifyPhotoDiologShow();
             }
         });
-        //사진등록 버튼 클릭시
+        //저장하기 버튼 클릭시
         btnWriteReviewEnrollment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                reviwDialogShow();
+               reviwDialogShow();
             }
         });
 
@@ -219,7 +219,7 @@ public class WriteReviewActivity extends AppCompatActivity {
 
                     //imageViewProfile에 이미지 세팅
                     imageViewWriteReviewImg.setImageBitmap(image_bitmap);
-
+                    imageViewWriteReviewImg.setScaleType(ImageView.ScaleType.FIT_XY);
                     linearLayoutWriteReviewPhotoUpload.setVisibility(View.GONE);    // "사진을 첨부하시겠습니까?" 버튼,텍스트 가림
                     imageViewWriteReviewImg.setVisibility(View.VISIBLE);            //이미지사진 보임
                     btnWriteReviewPictureCancel.setVisibility(View.VISIBLE);        //이미지사진 삭제버튼(x) 보임
@@ -287,10 +287,10 @@ public class WriteReviewActivity extends AppCompatActivity {
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         //Toast.makeText(getApplicationContext(),"예를 선택했습니다.",Toast.LENGTH_LONG).show();
+
                         // MultipartBody.Part
-                        if (placeimage != null) {
-                            placeimage = MultipartBody.Part.createFormData("placeimage", photo.getName(), photoBody);
-                        }
+
+                        placeimage = MultipartBody.Part.createFormData("placeimage", photo.getName(), photoBody);
                         token = LoginUserInfo.getInstance().getUserInfo().token;
                         RequestBody title = RequestBody.create(MediaType.parse("multipart/form-data"),editTextViewReviewTitle.getText().toString());
                         RequestBody content = RequestBody.create(MediaType.parse("multipart/form-data"),editTextReviewContent.getText().toString());

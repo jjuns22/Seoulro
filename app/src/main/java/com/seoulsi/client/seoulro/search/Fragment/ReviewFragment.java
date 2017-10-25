@@ -37,7 +37,7 @@ import retrofit2.Response;
 public class ReviewFragment extends Fragment {
     final String TAG = "ReviewFragment";
     private int id = Integer.MAX_VALUE;
-    private int placeid = 0;
+    private int placeid = 1;
     private RecyclerView mrecyclerview;
     private ReviewRecyclerAdapter adapter;
     private LinearLayoutManager linearLayoutManager;
