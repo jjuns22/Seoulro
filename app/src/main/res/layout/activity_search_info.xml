@@ -7,6 +7,7 @@
     android:orientation="vertical"
     tools:context="com.seoulsi.client.seoulro.search.SearchInfoActivity">
 
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="200dp"
@@ -42,22 +43,12 @@
             android:layout_height="20dp"></View>
 
         <TextView
+            android:id="@+id/textview_search_info_placename"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="정원교실"
+            android:text=""
             android:textSize="23dp" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=" / "
-            android:textSize="23dp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="담쟁이극장"
-            android:textSize="23dp" />
     </LinearLayout>
 
     <View
@@ -79,9 +70,10 @@
             android:text="위치 : " />
 
         <TextView
+            android:id="@+id/textview_search_info_place_address"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="서울특별시 어쩌구 저쩌구" />
+            android:text="" />
     </LinearLayout>
 
     <View
@@ -118,30 +110,12 @@
                 android:textColor="#cacaca" />
         </LinearLayout>
 
-        <FrameLayout
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/view_pager_search_info"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent" />
 
-            <android.support.v4.view.ViewPager
-                android:id="@+id/view_pager_search_info"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-
-            <RelativeLayout
-                android:gravity="end|bottom"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-                <android.support.design.widget.FloatingActionButton
-                    android:id="@+id/fab"
-                    android:background="@drawable/mypage_home"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="15dp"
-                    android:layout_marginEnd="15dp"
-                    android:visibility="gone"
-                    android:backgroundTint="@color/colorGreen"></android.support.design.widget.FloatingActionButton>
-            </RelativeLayout>
-        </FrameLayout>
     </LinearLayout>
 
 </LinearLayout>

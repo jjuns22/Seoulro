@@ -63,10 +63,11 @@ public class WriteReviewActivity extends AppCompatActivity {
     private final int TAKE_CAMERA = 0;
     private final int TAKE_GALLERY = 1;
 
+    private String placeName;
     private String imgUrl = "";
     private Uri imgUri;
     private NetworkService service;
-    private String num = "1";
+    private String placeId;
     private MultipartBody.Part placeimage;
     private File photo;
     private RequestBody photoBody;
@@ -93,6 +94,10 @@ public class WriteReviewActivity extends AppCompatActivity {
     TextView textViewWriteReviewModifyPhoto;
     @BindView(R.id.textview_write_review_writer)
     TextView textViewWriteReviewWriter;
+    @BindView(R.id.textview_write_review_placename)
+    TextView textViewWriteReviewPlaceName;
+    @BindView(R.id.btn_toolBar_write_review_cancel)
+    Button btnToolBarWriteReviewCancel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,10 +106,13 @@ public class WriteReviewActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
 
+        Intent getData = getIntent();
+        placeName = getData.getStringExtra("placename");
+        placeId = String.valueOf(getData.getIntExtra("placeid",-1));
         //서비스 객체 초기화
         service = ApplicationController.getInstance().getNetworkService();
         textViewWriteReviewWriter.setText(LoginUserInfo.getInstance().getUserInfo().nickname);
-
+        textViewWriteReviewPlaceName.setText(placeName);
         btnWriteReviewImageUpload.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
@@ -143,11 +151,19 @@ public class WriteReviewActivity extends AppCompatActivity {
                 modifyPhotoDiologShow();
             }
         });
-        //사진등록 버튼 클릭시
+        //저장하기 버튼 클릭시
         btnWriteReviewEnrollment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                reviwDialogShow();
+               reviwDialogShow();
+            }
+        });
+
+        //x버튼 클릭시
+        btnToolBarWriteReviewCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                writeReviewCancelDialog();
             }
         });
     }
@@ -203,7 +219,7 @@ public class WriteReviewActivity extends AppCompatActivity {
 
                     //imageViewProfile에 이미지 세팅
                     imageViewWriteReviewImg.setImageBitmap(image_bitmap);
-
+                    imageViewWriteReviewImg.setScaleType(ImageView.ScaleType.FIT_XY);
                     linearLayoutWriteReviewPhotoUpload.setVisibility(View.GONE);    // "사진을 첨부하시겠습니까?" 버튼,텍스트 가림
                     imageViewWriteReviewImg.setVisibility(View.VISIBLE);            //이미지사진 보임
                     btnWriteReviewPictureCancel.setVisibility(View.VISIBLE);        //이미지사진 삭제버튼(x) 보임
@@ -271,17 +287,17 @@ public class WriteReviewActivity extends AppCompatActivity {
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         //Toast.makeText(getApplicationContext(),"예를 선택했습니다.",Toast.LENGTH_LONG).show();
+
                         // MultipartBody.Part
-                        if (placeimage != null) {
-                            placeimage = MultipartBody.Part.createFormData("placeimage", photo.getName(), photoBody);
-                        }
+
+                        placeimage = MultipartBody.Part.createFormData("placeimage", photo.getName(), photoBody);
                         token = LoginUserInfo.getInstance().getUserInfo().token;
                         RequestBody title = RequestBody.create(MediaType.parse("multipart/form-data"),editTextViewReviewTitle.getText().toString());
                         RequestBody content = RequestBody.create(MediaType.parse("multipart/form-data"),editTextReviewContent.getText().toString());
-                        RequestBody placenum = RequestBody.create(MediaType.parse("multipart/form-data"),num);
+                        RequestBody placeid = RequestBody.create(MediaType.parse("multipart/form-data"),placeId);
 
 
-                        Call<UploadReviewResult> uploadReview = service.uploadReview(placeimage, token, title, content, placenum);
+                        Call<UploadReviewResult> uploadReview = service.uploadReview(placeimage, token, title, content, placeid);
                         uploadReview.enqueue(new Callback<UploadReviewResult>() {
                             @Override
                             public void onResponse(Call<UploadReviewResult> call, Response<UploadReviewResult> response) {
@@ -295,10 +311,23 @@ public class WriteReviewActivity extends AppCompatActivity {
                                         Log.d(TAG, "통신 후");
                                         if (response.body().msg.equals("5")) {
                                             Log.d(TAG, "성공");
-                                            Log.d(TAG,"placeimage : "+ placeimage);
-                                            Intent intent = new Intent(WriteReviewActivity.this, SearchInfoActivity.class);
-                                            startActivity(intent);
                                             Toast.makeText(getBaseContext(), "성공", Toast.LENGTH_SHORT).show();
+                                            //Log.d(TAG,"placeimage : "+ placeimage);
+                                           // Intent intent = new Intent(getBaseContext(), SearchInfoActivity.class);
+                                            //activity stack 비우고 새로 시작하기
+                                          /*  if (Build.VERSION.SDK_INT > Build.VERSION_CODES.GINGERBREAD_MR1) {
+                                                //안드로이드 버전이 진저브레드가 아니면,
+                                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                            } else {
+                                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                            }*/
+                                            //startActivity(intent);
+                                            Intent returnIntent = new Intent();
+                                           // returnIntent.putExtra("placeImg",imgUrl);
+                                            //returnIntent.putExtra("title",editTextViewReviewTitle.getText().toString());
+                                            //returnIntent.putExtra("content",editTextReviewContent.getText().toString());
+                                            setResult(RESULT_OK, returnIntent);
+                                            finish();
                                         }
                                     } else {
                                         Log.d(TAG, "실패");
@@ -347,6 +376,28 @@ public class WriteReviewActivity extends AppCompatActivity {
                             intent.setAction(Intent.ACTION_GET_CONTENT);
                             startActivityForResult(intent, TAKE_GALLERY);
                         }
+                    }
+                });
+        builder.setNegativeButton("아니오",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        //Toast.makeText(getApplicationContext(),"아니오를 선택했습니다.",Toast.LENGTH_LONG).show();
+                        dialog.dismiss();
+                    }
+                });
+        builder.show();
+    }
+
+    void writeReviewCancelDialog()
+    {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("취소");
+        builder.setMessage("취소하시겠습니까?");
+        builder.setPositiveButton("예",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        //Toast.makeText(getApplicationContext(),"예를 선택했습니다.",Toast.LENGTH_LONG).show();
+                        finish();
                     }
                 });
         builder.setNegativeButton("아니오",

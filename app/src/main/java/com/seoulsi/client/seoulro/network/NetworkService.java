@@ -6,6 +6,7 @@ import com.seoulsi.client.seoulro.login.LoginResult;
 import com.seoulsi.client.seoulro.mypage.MyReviewResult;
 import com.seoulsi.client.seoulro.mypage.MyseoulloResult;
 import com.seoulsi.client.seoulro.search.UploadReviewResult;
+import com.seoulsi.client.seoulro.search.details.DetailsResult;
 import com.seoulsi.client.seoulro.search.review.ReviewResult;
 import com.seoulsi.client.seoulro.signup.DupResult;
 import com.seoulsi.client.seoulro.signup.JoinInfo;
@@ -55,5 +56,11 @@ public interface NetworkService {
     Call<MyReviewResult> getMyReviewDataResult(@Header("Authorization") String token, @Path("id") int id);
 
 
+    //@Part("placeid") RequestBody placeid);
+    @GET("/place/review")
+    Call<ReviewResult> getReview(@Query("placeid") int placeid, @Query("id") int id);
 
+
+    @GET("/place/placeInfo/{placeid}")
+    Call<DetailsResult> getDetailsResult(@Header("Authorization") String token, @Path("placeid") int placeid);
 }

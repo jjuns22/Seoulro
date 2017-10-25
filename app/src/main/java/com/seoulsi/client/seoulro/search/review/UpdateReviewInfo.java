@@ -1,11 +1,10 @@
 package com.seoulsi.client.seoulro.search.review;
 
-
 /**
- * Created by SanJuku on 2017-10-20.
+ * Created by SanJuku on 2017-10-26.
  */
 
-public class ReviewInfo {
+public class UpdateReviewInfo {
     public int article_id;
     public int user_id;
     public String title;

@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import com.bumptech.glide.Glide;
 import com.seoulsi.client.seoulro.R;
 import com.seoulsi.client.seoulro.search.review.ReviewInfo;
+import com.seoulsi.client.seoulro.search.review.UpdateReviewInfo;
 import com.seoulsi.client.seoulro.util.TimeUtil;
 
 import java.io.ByteArrayInputStream;
@@ -29,11 +30,12 @@ public class ReviewRecyclerAdapter extends RecyclerView.Adapter<ReviewViewHolder
         this.clickListener = clickListener;
     }
 
-    public void setAdapter(ArrayList<ReviewInfo> reviewDatas) {
-        this.reviewDatas = reviewDatas;
+    public void updateAdapter(ArrayList<ReviewInfo> reviewDatas){
+        this.reviewDatas = new ArrayList<>();
+        this.reviewDatas.clear();
+        this.reviewDatas.addAll(reviewDatas);
         notifyDataSetChanged();
     }
-
     @Override
     public ReviewViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_review,parent,false);
@@ -53,7 +55,6 @@ public class ReviewRecyclerAdapter extends RecyclerView.Adapter<ReviewViewHolder
         holder.textViewReviewWriter.setText(itemdatas.get(position).writer);
         */
        //base64String 데이터 -> stream 데이터 -> image 데이터
-        String pictureString = currentReviewData.place_picture;
 
         //이미지 뷰에 이미지 보이게 하기
         if(currentReviewData.place_picture !=null) {
@@ -68,14 +69,6 @@ public class ReviewRecyclerAdapter extends RecyclerView.Adapter<ReviewViewHolder
         holder.textViewReviewDate.setText(TimeUtil.getTimeToPastString(currentReviewData.written_time));
     }
 
-    private Bitmap ChangeBitmap(String pictureString){
-        String data = pictureString;
-        byte[] bytePlainOrg = Base64.decode(data,0);
-        //byte[] 데이터 stream 데이터로 변환 후 bitemapFactory로 이미지 생성
-        ByteArrayInputStream inputStream = new ByteArrayInputStream(bytePlainOrg);
-        Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
-        return bitmap;
-    }
     @Override
     public int getItemCount() {
         return reviewDatas != null ? reviewDatas.size() : 0;
