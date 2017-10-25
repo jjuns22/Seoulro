@@ -1,5 +1,6 @@
 package com.seoulsi.client.seoulro.main;
 
+import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.annotation.Nullable;
@@ -13,6 +14,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.seoulsi.client.seoulro.R;
 
 import com.seoulsi.client.seoulro.application.ApplicationController;
@@ -48,7 +55,7 @@ import retrofit2.http.Path;
 import static com.seoulsi.client.seoulro.R.id.btn_toolBar_mypage;
 import static com.seoulsi.client.seoulro.R.id.btn_toolBar_search;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     private final String TAG = "MainActivity";
     private String htmlPageUrl = "http://www.seoul.go.kr/v2012/news/list.html?tr_code=gnb_news";
@@ -84,7 +91,27 @@ public class MainActivity extends AppCompatActivity {
         BtnToolBarMypage.setOnClickListener(onClickListener);
         BtnToolBarSearch.setOnClickListener(onClickListener);
 
+        FragmentManager fragmentManager = getFragmentManager();
+        MapFragment mapFragment = (MapFragment)fragmentManager
+                .findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
     }
+
+    @Override
+    public void onMapReady(final GoogleMap map) {
+
+        LatLng SEOUL = new LatLng(37.556, 126.97);
+
+        MarkerOptions markerOptions = new MarkerOptions();
+        markerOptions.position(SEOUL);
+        markerOptions.title("서울");
+        markerOptions.snippet("한국의 수도");
+        map.addMarker(markerOptions);
+
+        map.moveCamera(CameraUpdateFactory.newLatLng(SEOUL));
+        map.animateCamera(CameraUpdateFactory.zoomTo(15));
+    }
+
 
     private class NewsAsyncTask extends AsyncTask<Void, Void, Void> {
 
