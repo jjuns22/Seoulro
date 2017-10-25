@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
     public ArrayList<String> news_link = new ArrayList<>();
     private ArrayList<DetailsInfo> detailsDatas;
     private String token;
-    private int placeid = 1;
+    private int placeid = 2;
     private NetworkService service;
 
     @BindView(btn_toolBar_mypage)
@@ -164,6 +164,7 @@ public class MainActivity extends AppCompatActivity {
                         detailsDatas = response.body().result;
 
                         Intent intent = new Intent(MainActivity.this, SearchInfoActivity.class);
+                        intent.putExtra("placeid",placeid);
                         intent.putExtra("place_name",detailsDatas.get(0).place_name);
                         intent.putExtra("place_address",detailsDatas.get(0).place_address);
                         intent.putExtra("place_info",detailsDatas.get(0).place_info);

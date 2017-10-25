@@ -22,8 +22,6 @@ import butterknife.ButterKnife;
 
 public class SearchInfoActivity extends AppCompatActivity {
 
-    @BindView(R.id.fab)
-    FloatingActionButton fab;
     @BindView(R.id.btn_search_info_details)
     Button btnSearchInfoDetails;
     @BindView(R.id.btn_search_info_review)
@@ -42,6 +40,7 @@ public class SearchInfoActivity extends AppCompatActivity {
     public String placeTel;
     private String placeName;
     private String placeAddress;
+    private int placeId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +52,7 @@ public class SearchInfoActivity extends AppCompatActivity {
 
 
         Intent getData = getIntent();
+        placeId = getData.getIntExtra("placeid",-1);
         placeName = getData.getStringExtra("place_name");
         placeAddress = getData.getStringExtra("place_address");
 
@@ -67,7 +67,7 @@ public class SearchInfoActivity extends AppCompatActivity {
         textViewSearchInfoPlaceName.setText(placeName);
         textViewSearchInfoPlaceAddress.setText(placeAddress);
 
-        vp.setAdapter(new pagerAdapter(getSupportFragmentManager(), placeInfo, placeTel, placeOpenTime, placeIntroduce));
+        vp.setAdapter(new pagerAdapter(getSupportFragmentManager(), placeName, placeInfo, placeTel, placeOpenTime, placeIntroduce, placeId));
         vp.setCurrentItem(0);
 
         vp.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -82,7 +82,7 @@ public class SearchInfoActivity extends AppCompatActivity {
                     case 0:
                         btnSearchInfoDetails.setBackgroundResource(R.drawable.mypage_menu_green);
                         btnSearchInfoReview.setBackgroundResource(R.drawable.mypage_menu_white);
-                        fab.setVisibility(View.GONE);
+
 
                         //SearchInfoActivity에서 DetailsFragment로 데이터 전송
 
@@ -99,7 +99,6 @@ public class SearchInfoActivity extends AppCompatActivity {
                     case 1:
                         btnSearchInfoDetails.setBackgroundResource(R.drawable.mypage_menu_white);
                         btnSearchInfoReview.setBackgroundResource(R.drawable.mypage_menu_green);
-                        fab.setVisibility(View.VISIBLE);
                 }
             }
 
@@ -115,15 +114,6 @@ public class SearchInfoActivity extends AppCompatActivity {
         btnSearchInfoDetails.setTag(0);
         btnSearchInfoReview.setOnClickListener(movePageListener);
         btnSearchInfoReview.setTag(1);
-
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getBaseContext(), WriteReviewActivity.class);
-                intent.putExtra("placename", placeName);
-                startActivity(intent);
-            }
-        });
 
     }
 
@@ -146,36 +136,45 @@ public class SearchInfoActivity extends AppCompatActivity {
     };
 
     private class pagerAdapter extends FragmentStatePagerAdapter {
+        private String placeName;
         private String location;
         private String tel;
         private String openTime;
         private String introduce;
+        private int placeId;
 
         public pagerAdapter(android.support.v4.app.FragmentManager fm) {
             super(fm);
         }
 
-        public pagerAdapter(android.support.v4.app.FragmentManager fm, String placeLocation, String placeTel, String placeOpenTime, String placeIntroduce) {
+        public pagerAdapter(android.support.v4.app.FragmentManager fm, String placeName, String placeLocation, String placeTel, String placeOpenTime, String placeIntroduce, int placeId) {
             super(fm);
+            this.placeName = placeName;
             location = placeLocation;
             tel = placeTel;
             openTime = placeOpenTime;
             introduce = placeIntroduce;
+            this.placeId = placeId;
         }
         @Override
         public android.support.v4.app.Fragment getItem(int position) {
             switch (position) {
                 case 0:
                     DetailsFragment detailsFragment = new DetailsFragment();
-                    Bundle bundle = new Bundle();
-                    bundle.putString("place_location",location);
-                    bundle.putString("place_tel",tel);
-                    bundle.putString("place_opentime",openTime);
-                    bundle.putString("place_introduce",introduce);
-                    detailsFragment.setArguments(bundle);
+                    Bundle bundleDetails = new Bundle();
+                    bundleDetails.putString("place_location",location);
+                    bundleDetails.putString("place_tel",tel);
+                    bundleDetails.putString("place_opentime",openTime);
+                    bundleDetails.putString("place_introduce",introduce);
+                    detailsFragment.setArguments(bundleDetails);
                     return detailsFragment;
                 case 1:
-                    return new ReviewFragment();
+                    ReviewFragment reviewFragment = new ReviewFragment();
+                    Bundle bundleReview = new Bundle();
+                    bundleReview.putString("placeName",placeName);
+                    bundleReview.putInt("placeid",placeId);
+                    reviewFragment.setArguments(bundleReview);
+                    return reviewFragment;
 
                 default:
                     return null;

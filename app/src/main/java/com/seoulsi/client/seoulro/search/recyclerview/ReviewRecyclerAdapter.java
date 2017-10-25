@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import com.bumptech.glide.Glide;
 import com.seoulsi.client.seoulro.R;
 import com.seoulsi.client.seoulro.search.review.ReviewInfo;
+import com.seoulsi.client.seoulro.search.review.UpdateReviewInfo;
 import com.seoulsi.client.seoulro.util.TimeUtil;
 
 import java.io.ByteArrayInputStream;
@@ -29,11 +30,12 @@ public class ReviewRecyclerAdapter extends RecyclerView.Adapter<ReviewViewHolder
         this.clickListener = clickListener;
     }
 
-    public void setAdapter(ArrayList<ReviewInfo> reviewDatas) {
-        this.reviewDatas = reviewDatas;
+    public void updateAdapter(ArrayList<ReviewInfo> reviewDatas){
+        this.reviewDatas = new ArrayList<>();
+        this.reviewDatas.clear();
+        this.reviewDatas.addAll(reviewDatas);
         notifyDataSetChanged();
     }
-
     @Override
     public ReviewViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_review,parent,false);

@@ -67,7 +67,7 @@ public class WriteReviewActivity extends AppCompatActivity {
     private String imgUrl = "";
     private Uri imgUri;
     private NetworkService service;
-    private String placeId = "1";
+    private String placeId;
     private MultipartBody.Part placeimage;
     private File photo;
     private RequestBody photoBody;
@@ -108,7 +108,7 @@ public class WriteReviewActivity extends AppCompatActivity {
 
         Intent getData = getIntent();
         placeName = getData.getStringExtra("placename");
-
+        placeId = String.valueOf(getData.getIntExtra("placeid",-1));
         //서비스 객체 초기화
         service = ApplicationController.getInstance().getNetworkService();
         textViewWriteReviewWriter.setText(LoginUserInfo.getInstance().getUserInfo().nickname);
@@ -311,10 +311,23 @@ public class WriteReviewActivity extends AppCompatActivity {
                                         Log.d(TAG, "통신 후");
                                         if (response.body().msg.equals("5")) {
                                             Log.d(TAG, "성공");
-                                            Log.d(TAG,"placeimage : "+ placeimage);
-                                            Intent intent = new Intent(WriteReviewActivity.this, SearchInfoActivity.class);
-                                            startActivity(intent);
                                             Toast.makeText(getBaseContext(), "성공", Toast.LENGTH_SHORT).show();
+                                            //Log.d(TAG,"placeimage : "+ placeimage);
+                                           // Intent intent = new Intent(getBaseContext(), SearchInfoActivity.class);
+                                            //activity stack 비우고 새로 시작하기
+                                          /*  if (Build.VERSION.SDK_INT > Build.VERSION_CODES.GINGERBREAD_MR1) {
+                                                //안드로이드 버전이 진저브레드가 아니면,
+                                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                            } else {
+                                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                            }*/
+                                            //startActivity(intent);
+                                            Intent returnIntent = new Intent();
+                                           // returnIntent.putExtra("placeImg",imgUrl);
+                                            //returnIntent.putExtra("title",editTextViewReviewTitle.getText().toString());
+                                            //returnIntent.putExtra("content",editTextReviewContent.getText().toString());
+                                            setResult(RESULT_OK, returnIntent);
+                                            finish();
                                         }
                                     } else {
                                         Log.d(TAG, "실패");
@@ -378,8 +391,8 @@ public class WriteReviewActivity extends AppCompatActivity {
     void writeReviewCancelDialog()
     {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("저장");
-        builder.setMessage("후기를 저장하시겠습니까?");
+        builder.setTitle("취소");
+        builder.setMessage("취소하시겠습니까?");
         builder.setPositiveButton("예",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
