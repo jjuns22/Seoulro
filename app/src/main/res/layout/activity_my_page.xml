@@ -192,6 +192,7 @@
         </LinearLayout>
 
         <Button
+            android:id="@+id/btn_home"
             android:layout_width="54dp"
             android:layout_height="54dp"
             android:layout_alignParentBottom="true"

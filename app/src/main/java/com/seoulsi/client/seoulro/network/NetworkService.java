@@ -3,6 +3,7 @@ package com.seoulsi.client.seoulro.network;
 
 import com.seoulsi.client.seoulro.login.LoginInfo;
 import com.seoulsi.client.seoulro.login.LoginResult;
+import com.seoulsi.client.seoulro.mypage.MyInfoResult;
 import com.seoulsi.client.seoulro.mypage.MyReviewResult;
 import com.seoulsi.client.seoulro.mypage.MyseoulloResult;
 import com.seoulsi.client.seoulro.search.UploadReviewResult;
@@ -54,6 +55,9 @@ public interface NetworkService {
 
     @GET("/mypage/myarticle/{id}")
     Call<MyReviewResult> getMyReviewDataResult(@Header("Authorization") String token, @Path("id") int id);
+
+    @GET("/mypage/myinfo")
+    Call<MyInfoResult> getMyInformation(@Header("Authorization") String token);
 
 
     //@Part("placeid") RequestBody placeid);

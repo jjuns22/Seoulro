@@ -82,9 +82,15 @@ public class MySeoulroFragment extends Fragment {
             public void onResponse(Call<MyseoulloResult> call, Response<MyseoulloResult> response) {
                 if (response.isSuccessful()) {
                     MyseoulloResult myseoulloList = response.body();
-                    myseoulloDatas.addAll(myseoulloList.result);
-                    Log.i("data", myseoulloList.result.get(0).getimage_url()+" 랑 " +myseoulloList.result.get(0).getPlace_name());
-                    adapter.notifyDataSetChanged();
+                    if(myseoulloList.msg.equals("6")){
+
+                    }else{
+                        myseoulloDatas.addAll(myseoulloList.result);
+                        Log.i("data", myseoulloList.result.get(0).getimage_url()+" 랑 " +myseoulloList.result.get(0).getPlace_name());
+                        adapter.notifyDataSetChanged();
+                    }
+
+
                 }
             }
 
