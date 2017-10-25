@@ -63,10 +63,11 @@ public class WriteReviewActivity extends AppCompatActivity {
     private final int TAKE_CAMERA = 0;
     private final int TAKE_GALLERY = 1;
 
+    private String placeName;
     private String imgUrl = "";
     private Uri imgUri;
     private NetworkService service;
-    private String num = "1";
+    private String placeId = "1";
     private MultipartBody.Part placeimage;
     private File photo;
     private RequestBody photoBody;
@@ -93,6 +94,10 @@ public class WriteReviewActivity extends AppCompatActivity {
     TextView textViewWriteReviewModifyPhoto;
     @BindView(R.id.textview_write_review_writer)
     TextView textViewWriteReviewWriter;
+    @BindView(R.id.textview_write_review_placename)
+    TextView textViewWriteReviewPlaceName;
+    @BindView(R.id.btn_toolBar_write_review_cancel)
+    Button btnToolBarWriteReviewCancel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,10 +106,13 @@ public class WriteReviewActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
 
+        Intent getData = getIntent();
+        placeName = getData.getStringExtra("placename");
+
         //서비스 객체 초기화
         service = ApplicationController.getInstance().getNetworkService();
         textViewWriteReviewWriter.setText(LoginUserInfo.getInstance().getUserInfo().nickname);
-
+        textViewWriteReviewPlaceName.setText(placeName);
         btnWriteReviewImageUpload.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
@@ -148,6 +156,14 @@ public class WriteReviewActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 reviwDialogShow();
+            }
+        });
+
+        //x버튼 클릭시
+        btnToolBarWriteReviewCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                writeReviewCancelDialog();
             }
         });
     }
@@ -278,10 +294,10 @@ public class WriteReviewActivity extends AppCompatActivity {
                         token = LoginUserInfo.getInstance().getUserInfo().token;
                         RequestBody title = RequestBody.create(MediaType.parse("multipart/form-data"),editTextViewReviewTitle.getText().toString());
                         RequestBody content = RequestBody.create(MediaType.parse("multipart/form-data"),editTextReviewContent.getText().toString());
-                        RequestBody placenum = RequestBody.create(MediaType.parse("multipart/form-data"),num);
+                        RequestBody placeid = RequestBody.create(MediaType.parse("multipart/form-data"),placeId);
 
 
-                        Call<UploadReviewResult> uploadReview = service.uploadReview(placeimage, token, title, content, placenum);
+                        Call<UploadReviewResult> uploadReview = service.uploadReview(placeimage, token, title, content, placeid);
                         uploadReview.enqueue(new Callback<UploadReviewResult>() {
                             @Override
                             public void onResponse(Call<UploadReviewResult> call, Response<UploadReviewResult> response) {
@@ -347,6 +363,28 @@ public class WriteReviewActivity extends AppCompatActivity {
                             intent.setAction(Intent.ACTION_GET_CONTENT);
                             startActivityForResult(intent, TAKE_GALLERY);
                         }
+                    }
+                });
+        builder.setNegativeButton("아니오",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        //Toast.makeText(getApplicationContext(),"아니오를 선택했습니다.",Toast.LENGTH_LONG).show();
+                        dialog.dismiss();
+                    }
+                });
+        builder.show();
+    }
+
+    void writeReviewCancelDialog()
+    {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("저장");
+        builder.setMessage("후기를 저장하시겠습니까?");
+        builder.setPositiveButton("예",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        //Toast.makeText(getApplicationContext(),"예를 선택했습니다.",Toast.LENGTH_LONG).show();
+                        finish();
                     }
                 });
         builder.setNegativeButton("아니오",

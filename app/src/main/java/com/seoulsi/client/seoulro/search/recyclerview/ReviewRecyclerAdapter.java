@@ -53,7 +53,6 @@ public class ReviewRecyclerAdapter extends RecyclerView.Adapter<ReviewViewHolder
         holder.textViewReviewWriter.setText(itemdatas.get(position).writer);
         */
        //base64String 데이터 -> stream 데이터 -> image 데이터
-        String pictureString = currentReviewData.place_picture;
 
         //이미지 뷰에 이미지 보이게 하기
         if(currentReviewData.place_picture !=null) {
@@ -68,14 +67,6 @@ public class ReviewRecyclerAdapter extends RecyclerView.Adapter<ReviewViewHolder
         holder.textViewReviewDate.setText(TimeUtil.getTimeToPastString(currentReviewData.written_time));
     }
 
-    private Bitmap ChangeBitmap(String pictureString){
-        String data = pictureString;
-        byte[] bytePlainOrg = Base64.decode(data,0);
-        //byte[] 데이터 stream 데이터로 변환 후 bitemapFactory로 이미지 생성
-        ByteArrayInputStream inputStream = new ByteArrayInputStream(bytePlainOrg);
-        Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
-        return bitmap;
-    }
     @Override
     public int getItemCount() {
         return reviewDatas != null ? reviewDatas.size() : 0;

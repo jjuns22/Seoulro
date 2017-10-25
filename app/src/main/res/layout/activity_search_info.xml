@@ -7,6 +7,7 @@
     android:orientation="vertical"
     tools:context="com.seoulsi.client.seoulro.search.SearchInfoActivity">
 
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="200dp"
@@ -31,7 +32,6 @@
                 android:layout_height="30dp"></View>
         </LinearLayout>
     </LinearLayout>
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -42,24 +42,13 @@
             android:layout_height="20dp"></View>
 
         <TextView
+            android:id="@+id/textview_search_info_placename"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="정원교실"
+            android:text=""
             android:textSize="23dp" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=" / "
-            android:textSize="23dp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="담쟁이극장"
-            android:textSize="23dp" />
     </LinearLayout>
-
     <View
         android:layout_width="15dp"
         android:layout_height="15dp"></View>
@@ -79,9 +68,10 @@
             android:text="위치 : " />
 
         <TextView
+            android:id="@+id/textview_search_info_place_address"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="서울특별시 어쩌구 저쩌구" />
+            android:text="" />
     </LinearLayout>
 
     <View

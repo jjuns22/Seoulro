@@ -37,7 +37,7 @@ import retrofit2.Response;
 public class ReviewFragment extends Fragment {
     final String TAG = "ReviewFragment";
     private int id = Integer.MAX_VALUE;
-    private int placenum = 1;
+    private int placeid = 0;
     private RecyclerView mrecyclerview;
     private ReviewRecyclerAdapter adapter;
     private LinearLayoutManager linearLayoutManager;
@@ -88,17 +88,15 @@ public class ReviewFragment extends Fragment {
         return view;
     }
     private void callAppendList(){
-        Call<ReviewResult> getReview = service.getReview(placenum,id);
+        Call<ReviewResult> getReview = service.getReview(placeid,id);
         getReview.enqueue(new Callback<ReviewResult>() {
             @Override
             public void onResponse(Call<ReviewResult> call, Response<ReviewResult> response) {
                 Log.d(TAG, "response");
                 if (response.isSuccessful()) {
                     if(response.body().msg.equals("3")) {
-                       // itemDataReview = new ArrayList<ReviewInfo>();
-                        //itemDataReview = response.body().result;
-                        //adapter.setAdapter(itemDataReview);
-                        //Log.d(TAG, "길이 : " +itemDataTabHome.size());
+                        Log.d(TAG,"통신성공");
+
                         if (response.body().result.size() == 0) {
                             isListExpandable = false;
                         }
@@ -112,6 +110,7 @@ public class ReviewFragment extends Fragment {
                         isListViewAppending = false;
                     }
                 } else{
+                    Log.d(TAG,"통신실패");
                     Toast.makeText(getContext(),"커넥팅 에러",Toast.LENGTH_SHORT).show();
                 }
             }

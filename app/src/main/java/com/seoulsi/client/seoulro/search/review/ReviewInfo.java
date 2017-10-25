@@ -10,7 +10,7 @@ public class ReviewInfo {
     public int user_id;
     public String title;
     public String content;
-    public int place_num;
+    public int placeid;
     public String place_picture;
     public String profile_picture;
     public String nickname;
