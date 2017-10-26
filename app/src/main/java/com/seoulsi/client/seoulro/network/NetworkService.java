@@ -48,7 +48,7 @@ public interface NetworkService {
                                           @Header("Authorization") String token,
                                           @Part("title") RequestBody title,
                                           @Part("content") RequestBody content,
-                                          @Part("placenum") RequestBody placenum);
+                                          @Part("placeid") RequestBody placeid);
 
     @GET("/mypage/myseoullo/{id}")
     Call<MyseoulloResult> getMyseouloDataResult(@Header("Authorization") String token, @Path("id") int id);

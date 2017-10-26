@@ -215,10 +215,13 @@ public class WriteReviewActivity extends AppCompatActivity {
             if (requestCode == TAKE_GALLERY) {
                 try {
                     //이미지 데이터를 비트맵으로 받아온다.
-                    Bitmap image_bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), data.getData());
+                    //Bitmap image_bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), data.getData());
 
                     //imageViewProfile에 이미지 세팅
-                    imageViewWriteReviewImg.setImageBitmap(image_bitmap);
+                    //imageViewWriteReviewImg.setImageBitmap(image_bitmap);
+                    Glide.with(getBaseContext())
+                            .load(data.getData())
+                            .into(imageViewWriteReviewImg);
                     imageViewWriteReviewImg.setScaleType(ImageView.ScaleType.FIT_XY);
                     linearLayoutWriteReviewPhotoUpload.setVisibility(View.GONE);    // "사진을 첨부하시겠습니까?" 버튼,텍스트 가림
                     imageViewWriteReviewImg.setVisibility(View.VISIBLE);            //이미지사진 보임
@@ -253,11 +256,6 @@ public class WriteReviewActivity extends AppCompatActivity {
                         photoBody = RequestBody.create(MediaType.parse("image/png"), baos.toByteArray());
                         photo = new File(imgUrl);
                     }
-
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
