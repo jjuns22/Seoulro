@@ -7,6 +7,7 @@ import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.seoulsi.client.seoulro.R;
@@ -63,7 +64,7 @@ public class ReviewRecyclerAdapter extends RecyclerView.Adapter<ReviewViewHolder
         Glide.with(holder.itemView.getContext())
                 .load(currentReviewData.place_picture)
                 .into(holder.imageViewReviewImg);
-
+        holder.imageViewReviewImg.setScaleType(ImageView.ScaleType.FIT_XY);
         holder.textViewReviewWriter.setText(currentReviewData.nickname);
         holder.textViewReviewTitle.setText(currentReviewData.title);
         holder.textViewReviewContent.setText(currentReviewData.content);

@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     public ArrayList<String> news_link = new ArrayList<>();
     private ArrayList<DetailsInfo> detailsDatas;
     private String token;
-    private int placeid = 2;
+    private int placeid = 1;
     private NetworkService service;
 
     @BindView(btn_toolBar_mypage)

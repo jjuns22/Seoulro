@@ -50,11 +50,10 @@ public class ReviewDetailsActivity extends AppCompatActivity {
         content = intent.getStringExtra("content");
         placePicture = intent.getStringExtra("placePicture");
 
-        if(imageViewDetailsReviewImage != null) {
-            Glide.with(getBaseContext())
-                    .load(placePicture)
-                    .into(imageViewDetailsReviewImage);
-        }
+        Glide.with(getBaseContext())
+                .load(placePicture)
+                .into(imageViewDetailsReviewImage);
+        imageViewDetailsReviewImage.setScaleType(ImageView.ScaleType.FIT_XY);
         textViewDetailsReviewWriter.setText(writer);
         textViewDetailsReviewTitle.setText(title);
         textViewDetailsReviewContent.setText(content);
