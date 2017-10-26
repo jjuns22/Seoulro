@@ -1,6 +1,7 @@
 package com.seoulsi.client.seoulro.mypage.Fragment;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -33,7 +34,8 @@ import retrofit2.Response;
  * Created by SanJuku on 2017-10-15.
  */
 
-public class MyReviewFragment extends Fragment{
+public class MyReviewFragment extends Fragment {
+    private final String TAG = "MyReviewFragment";
     private RecyclerView myReviewRecyclerview;
     private MyReviewRecyclerAdapter adapter;
     private LinearLayoutManager linearLayoutManager;
@@ -46,76 +48,65 @@ public class MyReviewFragment extends Fragment{
     private boolean isListViewAppending = false;
     private boolean isListExpandable = true;
 
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        final View view = inflater.inflate(R.layout.fragment_myreview, null);
 
-    public MyReviewFragment()
-        {
-        }
-        @Override
-        public void onCreate(Bundle savedInstanceState)
-        {
-            super.onCreate(savedInstanceState);
+        myReviewRecyclerview = (RecyclerView) view.findViewById(R.id.recyclerview_review_mypage);
+        myReviewRecyclerview.setHasFixedSize(true);
 
+        //서비스 객체 초기화
+        service = ApplicationController.getInstance().getNetworkService();
 
+        token = LoginUserInfo.getInstance().getUserInfo().token;
 
-        }
+        //레이아웃 매니저 설정
+        linearLayoutManager = new LinearLayoutManager(this.getContext());
+        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        myReviewRecyclerview.setLayoutManager(linearLayoutManager);
 
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
-        {
-            final View view = inflater.inflate(R.layout.fragment_myreview, null);
-            myReviewRecyclerview = (RecyclerView)view.findViewById(R.id.recyclerview_review_mypage);
-            myReviewRecyclerview.setHasFixedSize(true);
+        myReviewRecyclerview.setOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                int visibleItemCount = linearLayoutManager.getChildCount();
+                int totalItemCount = linearLayoutManager.getItemCount();
+                int firstVisibleItems = linearLayoutManager.findFirstVisibleItemPosition();
+                int lastVisibleItemPosition = linearLayoutManager.findLastVisibleItemPosition();
 
-            //서비스 객체 초기화
-            service = ApplicationController.getInstance().getNetworkService();
-
-            token = LoginUserInfo.getInstance().getUserInfo().token;
-
-            //레이아웃 매니저 설정
-            linearLayoutManager = new LinearLayoutManager(this.getContext());
-            linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-            myReviewRecyclerview.setLayoutManager(linearLayoutManager);
-
-            myReviewRecyclerview.setOnScrollListener(new RecyclerView.OnScrollListener() {
-                @Override
-                public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                    int visibleItemCount = linearLayoutManager.getChildCount();
-                    int totalItemCount = linearLayoutManager.getItemCount();
-                    int firstVisibleItems = linearLayoutManager.findFirstVisibleItemPosition();
-                    int lastVisibleItemPosition = linearLayoutManager.findLastVisibleItemPosition();
-
-                    if (!listIsEnd && lastVisibleItemPosition == itemdatas.size() - 1
-                            && !isListViewAppending && totalItemCount > 0 && isListExpandable) {
-                        isListViewAppending = true;
-                        callAppendList();
-                    }
+                if (!listIsEnd && lastVisibleItemPosition == itemdatas.size() - 1
+                        && !isListViewAppending && totalItemCount > 0 && isListExpandable) {
+                    isListViewAppending = true;
+                    callAppendList();
                 }
-            });
-            adapter = new MyReviewRecyclerAdapter(itemdatas,clickEvent);
-            myReviewRecyclerview.setAdapter(adapter);
+            }
+        });
+        adapter = new MyReviewRecyclerAdapter(itemdatas, clickEvent);
+        myReviewRecyclerview.setAdapter(adapter);
 
-            callAppendList();
+        callAppendList();
 
-            return view;
-        }
+        return view;
+    }
+
     public View.OnClickListener clickEvent = new View.OnClickListener() {
         public void onClick(View v) {
             final int itemPosition = myReviewRecyclerview.getChildPosition(v);
-            Toast.makeText(getContext(),itemPosition+"번 리스트 클릭!!",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), itemPosition + "번 리스트 클릭!!", Toast.LENGTH_SHORT).show();
 
         }
     };
 
     private void callAppendList() {
 
-        Call<MyReviewResult> MyReviewListData = service.getMyReviewDataResult(token, id);
-        MyReviewListData.enqueue(new Callback<MyReviewResult>() {
+        Call<MyReviewResult> getMyReviewDataResult = service.getMyReviewDataResult(token, id);
+        getMyReviewDataResult.enqueue(new Callback<MyReviewResult>() {
             @Override
             public void onResponse(Call<MyReviewResult> call, Response<MyReviewResult> response) {
-                //Log.d(TAG, "response");
+                Log.d(TAG, "response");
                 if (response.isSuccessful()) {
                     if (response.body().msg.equals("6")) {
-                       // Log.d(TAG, "통신성공");
+                         Log.d(TAG, "통신성공");
 
                         if (response.body().result.size() == 0) {
                             isListExpandable = false;
@@ -128,11 +119,11 @@ public class MyReviewFragment extends Fragment{
                             id = Integer.MAX_VALUE;
                         }
                         isListViewAppending = false;
-                    }else {
-                        Toast.makeText(getContext(),"토큰전송에러",Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getContext(), "토큰전송에러", Toast.LENGTH_SHORT).show();
                     }
                 } else {
-                    //Log.d(TAG, "통신실패");
+                    Log.d(TAG, "통신실패");
                     Toast.makeText(getContext(), "커넥팅 에러", Toast.LENGTH_SHORT).show();
                 }
             }

@@ -4,6 +4,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.seoulsi.client.seoulro.R;
@@ -49,6 +50,7 @@ public class MyseoulloAdapter extends RecyclerView.Adapter<MyseoulloViewHolder> 
             //holder.seoulloImg.setImageResource(mySeoulloDatas.get(position).getimage_url());
             //이미지 받아오면
             Glide.with(parent.getContext()).load(mySeoulloDatas.get(position).place_picture).into(holder.seoulloImg);
+            holder.seoulloImg.setScaleType(ImageView.ScaleType.FIT_XY);
             //holder.symbolImage.setImageResource(R.drawable.none);
         }
 

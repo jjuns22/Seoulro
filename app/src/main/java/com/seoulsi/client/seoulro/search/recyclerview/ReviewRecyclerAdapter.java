@@ -61,9 +61,13 @@ public class ReviewRecyclerAdapter extends RecyclerView.Adapter<ReviewViewHolder
         //이미지 뷰에 이미지 보이게 하기
 
         //holder.imageViewReviewImg.setImageBitmap(ChangeBitmap(pictureString));
-        Glide.with(holder.itemView.getContext())
-                .load(currentReviewData.place_picture)
-                .into(holder.imageViewReviewImg);
+        if (String.valueOf(reviewDatas.get(position).place_picture).equals("")) {
+            holder.imageViewReviewImg.setImageResource(R.drawable.mypage_review_picture);
+        } else {
+            Glide.with(holder.itemView.getContext())
+                    .load(currentReviewData.place_picture)
+                    .into(holder.imageViewReviewImg);
+        }
         holder.imageViewReviewImg.setScaleType(ImageView.ScaleType.FIT_XY);
         holder.textViewReviewWriter.setText(currentReviewData.nickname);
         holder.textViewReviewTitle.setText(currentReviewData.title);
