@@ -124,6 +124,7 @@ public class ReviewFragment extends Fragment {
     }
 
 
+
     private void callAppendList() {
         Call<ReviewResult> getReview = service.getReview(placeid, id);
         getReview.enqueue(new Callback<ReviewResult>() {
@@ -158,6 +159,7 @@ public class ReviewFragment extends Fragment {
             }
         });
     }
+
 
     public View.OnClickListener clickEvent = new View.OnClickListener() {
         public void onClick(View v) {

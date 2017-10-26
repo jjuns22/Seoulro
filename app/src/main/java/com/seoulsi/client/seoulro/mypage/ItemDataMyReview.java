@@ -5,17 +5,32 @@ package com.seoulsi.client.seoulro.mypage;
  */
 
 public class ItemDataMyReview {
-    public int img;
+    int article_id;
+    int user_id;
     public String title;
     public String content;
-    public String writer;
-    public String date;
+    int place_id;
+    String place_picture;
+    String nickname;
+    int written_time;
 
-    public ItemDataMyReview(int img, String title, String content, String writer, String date) {
-        this.img = img;
+    public ItemDataMyReview(
+            int article_id,
+            int user_id,
+            String title,
+            String content,
+            int place_id,
+            String place_picture,
+            String nickname,
+            int written_time
+    ) {
+        this.article_id = article_id;
+        this.user_id = user_id;
         this.title = title;
         this.content = content;
-        this.writer = writer;
-        this.date = date;
+        this.place_id = place_id;
+        this.place_picture = place_picture;
+        this.nickname = nickname;
+        this.written_time = written_time;
     }
 }

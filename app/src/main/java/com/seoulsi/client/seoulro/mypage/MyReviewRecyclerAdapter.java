@@ -5,11 +5,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.bumptech.glide.Glide;
 import com.seoulsi.client.seoulro.R;
 import com.seoulsi.client.seoulro.search.recyclerview.ItemDataReview;
 import com.seoulsi.client.seoulro.search.recyclerview.ReviewViewHolder;
 
 import java.util.ArrayList;
+
+import static java.security.AccessController.getContext;
 
 /**
  * Created by user on 2017-10-19.
@@ -34,11 +37,18 @@ public class MyReviewRecyclerAdapter extends RecyclerView.Adapter<MyReviewViewHo
 
     @Override
     public void onBindViewHolder(MyReviewViewHolder holder, int position) {
-        holder.img_reviewpicture_mypage.setImageResource(itemdatas.get(position).img);
+        if (String.valueOf(itemdatas.get(position).place_picture).equals("")) {
+            holder.img_reviewpicture_mypage.setImageResource(R.drawable.mypage_review_picture);
+        } else {
+            //이미지 받아오면
+            //Glide.with(getContext()).load(itemdatas.get(position).place_picture).into(holder.img_reviewpicture_mypage);
+            //holder.symbolImage.setImageResource(R.drawable.none);
+        }
+
         holder.text_titleRV_mypage.setText(itemdatas.get(position).title);
         holder.text_contextRV_mypage.setText(itemdatas.get(position).content);
-        holder.text_dateRV_mypage.setText(itemdatas.get(position).date);
-        holder.text_dateRV_mypage.setText(itemdatas.get(position).writer);
+        holder.text_dateRV_mypage.setText(itemdatas.get(position).written_time);
+        holder.text_nameRV_mypage.setText(itemdatas.get(position).nickname);
     }
 
     @Override

@@ -3,6 +3,9 @@ package com.seoulsi.client.seoulro.network;
 
 import com.seoulsi.client.seoulro.login.LoginInfo;
 import com.seoulsi.client.seoulro.login.LoginResult;
+import com.seoulsi.client.seoulro.mypage.MyInfoResult;
+import com.seoulsi.client.seoulro.mypage.MyReviewResult;
+import com.seoulsi.client.seoulro.mypage.MyseoulloResult;
 import com.seoulsi.client.seoulro.search.UploadReviewResult;
 import com.seoulsi.client.seoulro.search.details.DetailsResult;
 import com.seoulsi.client.seoulro.search.review.ReviewResult;
@@ -45,9 +48,22 @@ public interface NetworkService {
                                           @Header("Authorization") String token,
                                           @Part("title") RequestBody title,
                                           @Part("content") RequestBody content,
-                                          @Part("placeid") RequestBody placeid);
+                                          @Part("placenum") RequestBody placenum);
+
+    @GET("/mypage/myseoullo/{id}")
+    Call<MyseoulloResult> getMyseouloDataResult(@Header("Authorization") String token, @Path("id") int id);
+
+    @GET("/mypage/myarticle/{id}")
+    Call<MyReviewResult> getMyReviewDataResult(@Header("Authorization") String token, @Path("id") int id);
+
+    @GET("/mypage/myinfo")
+    Call<MyInfoResult> getMyInformation(@Header("Authorization") String token);
+
+
+    //@Part("placeid") RequestBody placeid);
     @GET("/place/review")
     Call<ReviewResult> getReview(@Query("placeid") int placeid, @Query("id") int id);
+
 
     @GET("/place/placeInfo/{placeid}")
     Call<DetailsResult> getDetailsResult(@Header("Authorization") String token, @Path("placeid") int placeid);
