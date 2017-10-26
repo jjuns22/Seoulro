@@ -5,14 +5,14 @@ package com.seoulsi.client.seoulro.mypage;
  */
 
 public class ItemDataMyReview {
-    int article_id;
-    int user_id;
+    public int article_id;
+    public int user_id;
     public String title;
     public String content;
-    int place_id;
-    String place_picture;
-    String nickname;
-    int written_time;
+    public int place_id;
+    public String place_picture;
+    public String nickname;
+    public int written_time;
 
     public ItemDataMyReview(
             int article_id,
