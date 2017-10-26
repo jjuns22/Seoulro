@@ -11,8 +11,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.seoulsi.client.seoulro.R;
 import com.seoulsi.client.seoulro.search.Fragment.DetailsFragment;
 import com.seoulsi.client.seoulro.search.Fragment.ReviewFragment;
@@ -32,9 +34,11 @@ public class SearchInfoActivity extends AppCompatActivity {
     TextView textViewSearchInfoPlaceName;
     @BindView(R.id.textview_search_info_place_address)
     TextView textViewSearchInfoPlaceAddress;
-
+    @BindView(R.id.imageview_search_info_img)
+    ImageView imageViewSearchInfoImg;
 
     public String placeInfo;
+    private String placePicture;
     public String placeIntroduce;
     public String placeOpenTime;
     public String placeTel;
@@ -55,7 +59,7 @@ public class SearchInfoActivity extends AppCompatActivity {
         placeId = getData.getIntExtra("placeid",-1);
         placeName = getData.getStringExtra("place_name");
         placeAddress = getData.getStringExtra("place_address");
-
+        placePicture = getData.getStringExtra("place_picture");
         placeInfo = getData.getStringExtra("place_info");
         placeIntroduce = getData.getStringExtra("place_introduce");
         placeOpenTime = getData.getStringExtra("place_opentime");
@@ -66,7 +70,10 @@ public class SearchInfoActivity extends AppCompatActivity {
 
         textViewSearchInfoPlaceName.setText(placeName);
         textViewSearchInfoPlaceAddress.setText(placeAddress);
-
+        Glide.with(this)
+                .load(placePicture)
+                .into(imageViewSearchInfoImg);
+        imageViewSearchInfoImg.setScaleType(ImageView.ScaleType.FIT_XY);
         vp.setAdapter(new pagerAdapter(getSupportFragmentManager(), placeName, placeInfo, placeTel, placeOpenTime, placeIntroduce, placeId));
         vp.setCurrentItem(0);
 

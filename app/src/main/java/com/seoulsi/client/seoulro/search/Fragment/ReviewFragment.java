@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.seoulsi.client.seoulro.R;
@@ -46,6 +47,7 @@ public class ReviewFragment extends Fragment {
 
     @BindView(R.id.fab)
     FloatingActionButton fab;
+
 
     final static int REQUEST_WRITE_REVIEW = 1004;
     final String TAG = "ReviewFragment";
@@ -184,6 +186,7 @@ public class ReviewFragment extends Fragment {
     public void onResume() {
         super.onResume();
     }
+
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {

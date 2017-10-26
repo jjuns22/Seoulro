@@ -192,6 +192,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
                         Intent intent = new Intent(MainActivity.this, SearchInfoActivity.class);
                         intent.putExtra("placeid",placeid);
+                        intent.putExtra("place_picture",detailsDatas.get(0).place_picture);
                         intent.putExtra("place_name",detailsDatas.get(0).place_name);
                         intent.putExtra("place_address",detailsDatas.get(0).place_address);
                         intent.putExtra("place_info",detailsDatas.get(0).place_info);

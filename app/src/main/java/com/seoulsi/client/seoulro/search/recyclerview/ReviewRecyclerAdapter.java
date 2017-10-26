@@ -63,7 +63,7 @@ public class ReviewRecyclerAdapter extends RecyclerView.Adapter<ReviewViewHolder
         Glide.with(holder.itemView.getContext())
                 .load(currentReviewData.place_picture)
                 .into(holder.imageViewReviewImg);
-        
+
         holder.textViewReviewWriter.setText(currentReviewData.nickname);
         holder.textViewReviewTitle.setText(currentReviewData.title);
         holder.textViewReviewContent.setText(currentReviewData.content);
