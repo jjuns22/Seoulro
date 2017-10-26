@@ -21,7 +21,7 @@ import java.util.ArrayList;
  * Created by SanJuku on 2017-10-18.
  */
 
-public class ReviewRecyclerAdapter extends RecyclerView.Adapter<ReviewViewHolder>{
+public class ReviewRecyclerAdapter extends RecyclerView.Adapter<ReviewViewHolder> {
     ArrayList<ReviewInfo> reviewDatas;
     View.OnClickListener clickListener;
 
@@ -30,15 +30,16 @@ public class ReviewRecyclerAdapter extends RecyclerView.Adapter<ReviewViewHolder
         this.clickListener = clickListener;
     }
 
-    public void updateAdapter(ArrayList<ReviewInfo> reviewDatas){
+    public void updateAdapter(ArrayList<ReviewInfo> reviewDatas) {
         this.reviewDatas = new ArrayList<>();
         this.reviewDatas.clear();
         this.reviewDatas.addAll(reviewDatas);
         notifyDataSetChanged();
     }
+
     @Override
     public ReviewViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_review,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_review, parent, false);
         ReviewViewHolder viewHolder = new ReviewViewHolder(view);
         view.setOnClickListener(clickListener);
         return viewHolder;
@@ -54,15 +55,15 @@ public class ReviewRecyclerAdapter extends RecyclerView.Adapter<ReviewViewHolder
         holder.textViewReviewDate.setText(itemdatas.get(position).date);
         holder.textViewReviewWriter.setText(itemdatas.get(position).writer);
         */
-       //base64String 데이터 -> stream 데이터 -> image 데이터
+        //base64String 데이터 -> stream 데이터 -> image 데이터
 
         //이미지 뷰에 이미지 보이게 하기
-        if(currentReviewData.place_picture !=null) {
-            //holder.imageViewReviewImg.setImageBitmap(ChangeBitmap(pictureString));
-            Glide.with(holder.itemView.getContext())
-                    .load(currentReviewData.place_picture)
-                    .into(holder.imageViewReviewImg);
-        }
+
+        //holder.imageViewReviewImg.setImageBitmap(ChangeBitmap(pictureString));
+        Glide.with(holder.itemView.getContext())
+                .load(currentReviewData.place_picture)
+                .into(holder.imageViewReviewImg);
+        
         holder.textViewReviewWriter.setText(currentReviewData.nickname);
         holder.textViewReviewTitle.setText(currentReviewData.title);
         holder.textViewReviewContent.setText(currentReviewData.content);
