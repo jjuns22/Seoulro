@@ -95,12 +95,29 @@
                     android:layout_height="wrap_content"
                     android:text="이름"
                     android:textSize="13sp"/>
-                <TextView
-                    android:id="@+id/text_introduce_mypage"
+                <LinearLayout
                     android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                <TextView
+                    android:layout_gravity="center"
+                    android:id="@+id/text_introduce_mypage"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="공모전/알바힘들다"
                     android:textSize="12sp"/>
+                    <LinearLayout
+                        android:gravity="end"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                    <Button
+                        android:id="@+id/btn_logout"
+                        android:gravity="center"
+                        android:text="로그아웃"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                    </LinearLayout>
+                </LinearLayout>
 
             </LinearLayout>
 
