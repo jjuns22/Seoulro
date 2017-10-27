@@ -237,8 +237,8 @@ public class WriteReviewActivity extends AppCompatActivity {
                     this.imgUri = data.getData();
                     imgUrl = this.imgUri.getPath();
 
-                    if (imgUrl == "") {
-                        placeimage = null;
+                    if (imgUrl.equals("")) {
+                        photo = null;
                     } else {
 
                         /**
@@ -295,8 +295,9 @@ public class WriteReviewActivity extends AppCompatActivity {
 
                         // MultipartBody.Part
 
-//                        placeimage = MultipartBody.Part.createFormData("placeimage", photo.getName(), photoBody);
-                        placeimage = null;
+                        if (photo != null) {
+                            placeimage = MultipartBody.Part.createFormData("placeimage", photo.getName(), photoBody);
+                        }
                         token = LoginUserInfo.getInstance().getUserInfo().token;
                         RequestBody title = RequestBody.create(MediaType.parse("multipart/form-data"),editTextViewReviewTitle.getText().toString());
                         RequestBody content = RequestBody.create(MediaType.parse("multipart/form-data"),editTextReviewContent.getText().toString());
