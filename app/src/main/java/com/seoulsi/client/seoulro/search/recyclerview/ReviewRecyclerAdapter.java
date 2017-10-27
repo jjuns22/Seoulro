@@ -17,22 +17,27 @@ import com.seoulsi.client.seoulro.util.TimeUtil;
 
 import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 /**
  * Created by SanJuku on 2017-10-18.
  */
 
 public class ReviewRecyclerAdapter extends RecyclerView.Adapter<ReviewViewHolder> {
-    ArrayList<ReviewInfo> reviewDatas;
+    ArrayList<ReviewInfo> reviewDatas = new ArrayList<>();
     View.OnClickListener clickListener;
 
     public ReviewRecyclerAdapter(ArrayList<ReviewInfo> reviewDatas, View.OnClickListener clickListener) {
         this.reviewDatas = reviewDatas;
         this.clickListener = clickListener;
+        notifyDataSetChanged();
+    }
+    public ReviewRecyclerAdapter(ArrayList<ReviewInfo> reviewDatas) {
+        this.reviewDatas = reviewDatas;
+        notifyDataSetChanged();
     }
 
     public void updateAdapter(ArrayList<ReviewInfo> reviewDatas) {
-        this.reviewDatas = new ArrayList<>();
         this.reviewDatas.clear();
         this.reviewDatas.addAll(reviewDatas);
         notifyDataSetChanged();

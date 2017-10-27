@@ -37,6 +37,10 @@ import com.seoulsi.client.seoulro.R;
 import com.seoulsi.client.seoulro.application.ApplicationController;
 import com.seoulsi.client.seoulro.login.LoginUserInfo;
 import com.seoulsi.client.seoulro.network.NetworkService;
+import com.seoulsi.client.seoulro.search.Fragment.ReviewFragment;
+import com.seoulsi.client.seoulro.search.recyclerview.ReviewRecyclerAdapter;
+import com.seoulsi.client.seoulro.search.review.ReviewInfo;
+import com.seoulsi.client.seoulro.search.review.UpdateReviewInfo;
 
 import org.w3c.dom.Text;
 
@@ -46,6 +50,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.logging.Handler;
 import java.util.logging.LogRecord;
 
@@ -62,7 +67,9 @@ public class WriteReviewActivity extends AppCompatActivity {
     private final String TAG = "WriteReviewActivity";
     private final int TAKE_CAMERA = 0;
     private final int TAKE_GALLERY = 1;
-
+    private ArrayList<ReviewInfo> itemDataReview = new ArrayList<>();
+    private LinkedList<ReviewInfo> linkedListReviewData = new LinkedList<>();
+    private ReviewRecyclerAdapter adapter;
     private String placeName;
     private String imgUrl = "";
     private Uri imgUri;
@@ -307,7 +314,7 @@ public class WriteReviewActivity extends AppCompatActivity {
                                 } else {
                                     if (response.isSuccessful()) {
                                         Log.d(TAG, "통신 후");
-                                        if (response.body().msg.equals("5")) {
+                                        if (response.body().msg.equals("6")) {
                                             Log.d(TAG, "성공");
                                             Toast.makeText(getBaseContext(), "성공", Toast.LENGTH_SHORT).show();
                                             //Log.d(TAG,"placeimage : "+ placeimage);
@@ -320,11 +327,13 @@ public class WriteReviewActivity extends AppCompatActivity {
                                                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                             }*/
                                             //startActivity(intent);
+                                            itemDataReview.addAll(response.body().result);
+                                            adapter = new ReviewRecyclerAdapter(itemDataReview);
+                                            //reviewRecyclerAdapter.updateAdapter(itemDataReview);
                                             Intent returnIntent = new Intent();
-                                           // returnIntent.putExtra("placeImg",imgUrl);
-                                            //returnIntent.putExtra("title",editTextViewReviewTitle.getText().toString());
-                                            //returnIntent.putExtra("content",editTextReviewContent.getText().toString());
+                                            returnIntent.putParcelableArrayListExtra("itemDataReview",itemDataReview);
                                             setResult(RESULT_OK, returnIntent);
+                                            //ReviewFragment.flag = true;
                                             finish();
                                         }
                                     } else {

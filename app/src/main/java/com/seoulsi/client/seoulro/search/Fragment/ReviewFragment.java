@@ -28,7 +28,9 @@ import com.seoulsi.client.seoulro.search.review.ReviewInfo;
 import com.seoulsi.client.seoulro.search.review.ReviewResult;
 import com.seoulsi.client.seoulro.search.review.UpdateReviewInfo;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -53,14 +55,14 @@ public class ReviewFragment extends Fragment {
     final String TAG = "ReviewFragment";
     private int id = Integer.MAX_VALUE;
     private int placeid;
+    //public static boolean flag = false;
     private String placeName;
     private String userNickName;
-
     private RecyclerView mrecyclerview;
     private ReviewRecyclerAdapter adapter;
     private LinearLayoutManager linearLayoutManager;
     private ArrayList<ReviewInfo> itemDataReview = new ArrayList<>(); //데이터 생기면 받아올 배열
-
+    //private ArrayList<ReviewInfo> updateItemDataReview = new ArrayList<>();
     private boolean listIsEnd = false;
     private boolean isListViewAppending = false;
     private boolean isListExpandable = true;
@@ -95,7 +97,7 @@ public class ReviewFragment extends Fragment {
                 Intent intent = new Intent(getContext(), WriteReviewActivity.class);
                 intent.putExtra("placename", placeName);
                 intent.putExtra("placeid", placeid);
-                startActivityForResult(intent,REQUEST_WRITE_REVIEW);
+                startActivityForResult(intent, REQUEST_WRITE_REVIEW);
                 //startActivity(intent);
 
             }
@@ -104,6 +106,7 @@ public class ReviewFragment extends Fragment {
         mrecyclerview.setOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                Log.d(TAG, "스크롤함");
                 int visibleItemCount = linearLayoutManager.getChildCount();
                 int totalItemCount = linearLayoutManager.getItemCount();
                 int firstVisibleItems = linearLayoutManager.findFirstVisibleItemPosition();
@@ -126,7 +129,6 @@ public class ReviewFragment extends Fragment {
     }
 
 
-
     private void callAppendList() {
         Call<ReviewResult> getReview = service.getReview(placeid, id);
         getReview.enqueue(new Callback<ReviewResult>() {
@@ -144,8 +146,14 @@ public class ReviewFragment extends Fragment {
                         adapter.notifyDataSetChanged();
                         try {
                             id = itemDataReview.get(itemDataReview.size() - 1).article_id;
+                            Log.i(TAG,"id = "+ id);
                         } catch (Exception e) {
-                            id = Integer.MAX_VALUE;
+                            //if(!flag){
+                            //id = Integer.MAX_VALUE;
+                           // } else {
+                                id = itemDataReview.get(itemDataReview.size() - 1).article_id;
+                            //   flag = false;
+                           // }
                         }
                         isListViewAppending = false;
                     }
@@ -184,6 +192,7 @@ public class ReviewFragment extends Fragment {
 
     @Override
     public void onResume() {
+        Log.d(TAG, "onResume");
         super.onResume();
     }
 
@@ -191,24 +200,36 @@ public class ReviewFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode != RESULT_OK) {
-            Log.i(TAG,"startActivityForResult 값 전달 실패");
-        }
+        if (resultCode == RESULT_OK) {
+            if (requestCode == REQUEST_WRITE_REVIEW) {
+                Log.i(TAG, "ReviewFragment로 돌아옴");
 
-        if (requestCode == REQUEST_WRITE_REVIEW) {
-            Log.i(TAG,"ReviewFragment로 돌아옴");
-            /*String placeImgUrl = data.getStringExtra("imgUrl");
-            String title = data.getStringExtra("title");
-            String content = data.getStringExtra("content");
+                //callAppendList();
+                itemDataReview = data.getParcelableArrayListExtra("itemDataReview");
+                Log.d(TAG, "itemDataReview : " + itemDataReview.get(0).title);
+                adapter.updateAdapter(itemDataReview);
+                adapter.notifyDataSetChanged();
+                mrecyclerview.setOnScrollListener(new RecyclerView.OnScrollListener() {
+                    @Override
+                    public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                        int visibleItemCount = linearLayoutManager.getChildCount();
+                        int totalItemCount = linearLayoutManager.getItemCount();
+                        int firstVisibleItems = linearLayoutManager.findFirstVisibleItemPosition();
+                        int lastVisibleItemPosition = linearLayoutManager.findLastVisibleItemPosition();
 
-            itemDataReview = new ArrayList<>();
-            itemDataReview.get(0).nickname = LoginUserInfo.getInstance().getUserInfo().nickname;
-            itemDataReview.get(0).title = title;
-            Log.i(TAG, "title = " + itemDataReview.get(0).title);
-            itemDataReview.get(0).content = content;
-            itemDataReview.get(0).place_picture = placeImgUrl;
-            adapter.updateAdapter(itemDataReview);*/
-            callAppendList();
+                        if (!listIsEnd && lastVisibleItemPosition == itemDataReview.size() - 1
+                                && !isListViewAppending && totalItemCount > 0 && isListExpandable) {
+                            isListViewAppending = true;
+                            callAppendList();
+                        }
+                    }
+                });
+                adapter = new ReviewRecyclerAdapter(itemDataReview);
+                mrecyclerview.setAdapter(adapter);
+               // callAppendList();
+            }
+        } else {
+            Log.i(TAG,"반환 값 없음");
         }
     }
 }
