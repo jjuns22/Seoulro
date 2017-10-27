@@ -24,17 +24,15 @@ import java.util.LinkedList;
  */
 
 public class ReviewRecyclerAdapter extends RecyclerView.Adapter<ReviewViewHolder> {
-    ArrayList<ReviewInfo> reviewDatas = new ArrayList<>();
-    View.OnClickListener clickListener;
+    private ArrayList<ReviewInfo> reviewDatas = new ArrayList<>();
+    private View.OnClickListener clickListener;
 
     public ReviewRecyclerAdapter(ArrayList<ReviewInfo> reviewDatas, View.OnClickListener clickListener) {
-        this.reviewDatas = reviewDatas;
+        this.reviewDatas.addAll(reviewDatas);
         this.clickListener = clickListener;
-        notifyDataSetChanged();
     }
     public ReviewRecyclerAdapter(ArrayList<ReviewInfo> reviewDatas) {
-        this.reviewDatas = reviewDatas;
-        notifyDataSetChanged();
+        this.reviewDatas.addAll(reviewDatas);
     }
 
     public void updateAdapter(ArrayList<ReviewInfo> reviewDatas) {
