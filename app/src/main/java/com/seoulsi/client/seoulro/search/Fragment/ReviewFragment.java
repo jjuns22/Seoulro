@@ -139,11 +139,8 @@ public class ReviewFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-
         if (resultCode == RESULT_OK) {
             if (requestCode == REQUEST_WRITE_REVIEW) {
-                Log.i(TAG, "ReviewFragment로 돌아옴");
-
                 isListViewAppending = false;
                 flag = true;
                 id = Integer.MAX_VALUE;
@@ -160,27 +157,24 @@ public class ReviewFragment extends Fragment {
             @Override
             public void onResponse(Call<ReviewResult> call, Response<ReviewResult> response) {
                 Log.d(TAG, "response");
-                if (response.isSuccessful()) {
-                    if (response.body().msg.equals("3")) {
-                        Log.d(TAG, "통신성공");
+                if (response.isSuccessful() && response.body().msg.equals("3")) {
+                    Log.d(TAG, "통신성공");
 
-                        if (response.body().result.size() == 0) {
-                            isListExpandable = false;
-                            return;
-                        }
-
-                        if (!isListViewAppending) {
-                            isListViewAppending = true;
-                            itemDataReview.clear();
-                        }
-
-                        itemDataReview.addAll(response.body().result);
-                        adapter.updateAdapter(itemDataReview);
-                        Log.d(TAG, "리스트 인덱스 : " +itemDataReview.size());
-                        id = itemDataReview.get(itemDataReview.size() - 1).article_id;
-
-                        flag = false;
+                    if (response.body().result.size() == 0) {
+                        isListExpandable = false;
+                        return;
                     }
+
+                    if (!isListViewAppending) {
+                        isListViewAppending = true;
+                        itemDataReview.clear();
+                    }
+
+                    itemDataReview.addAll(response.body().result);
+                    adapter.updateAdapter(itemDataReview);
+                    id = itemDataReview.get(itemDataReview.size() - 1).article_id;
+
+                    flag = false;
                 } else {
                     Log.d(TAG, "통신실패");
                     Toast.makeText(getContext(), "커넥팅 에러", Toast.LENGTH_SHORT).show();
