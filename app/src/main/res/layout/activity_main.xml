@@ -21,13 +21,11 @@
             android:layout_marginLeft="10dp"
             android:background="@drawable/main_mypage" />
 
-        <TextView
+        <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="1km, 서울로 7017"
-            android:textColor="#008600"
-            android:textSize="19sp" />
+            android:src="@drawable/mypage_bar_logoicon" />
 
         <Button
             android:id="@+id/btn_toolBar_search"
@@ -51,19 +49,24 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
 
+
     </LinearLayout>
 
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="6">
 
     <LinearLayout
         android:id="@+id/main_news"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:layout_weight="6">
+        >
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="3"
+            android:layout_weight="8"
             android:text="서울 이모저모"
             android:textColor="#008600"
             android:gravity="center"
@@ -71,7 +74,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1">
+            android:layout_weight="4">
             <ImageView
                 android:id="@+id/img_main_news1"
                 android:layout_width="wrap_content"
@@ -89,8 +92,66 @@
 
 
         </LinearLayout>
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="8">
+
+
+
+            <RelativeLayout
+                android:layout_gravity="bottom"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                >
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1.5"/>
+                    <Button
+                        android:id="@+id/tab_information"
+                        android:layout_weight="1.5"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/mypage_tab_information"/>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"/>
+                    <Button
+                        android:layout_weight="1.63"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/mypage_tab_camera"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1.46"/>
+
+                </LinearLayout>
+
+
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+
 
 
     </LinearLayout>
+        <Button
+            android:id="@+id/btn_home"
+            android:layout_width="54dp"
+            android:layout_height="54dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerInParent="true"
+            android:background="@drawable/mypage_home"/>
+    </RelativeLayout>
+
 
 </LinearLayout>

@@ -237,8 +237,8 @@ public class WriteReviewActivity extends AppCompatActivity {
                     this.imgUri = data.getData();
                     imgUrl = this.imgUri.getPath();
 
-                    if (imgUrl == "") {
-                        placeimage = null;
+                    if (imgUrl.equals("")) {
+                        photo = null;
                     } else {
 
                         /**
@@ -295,7 +295,9 @@ public class WriteReviewActivity extends AppCompatActivity {
 
                         // MultipartBody.Part
 
-                        placeimage = MultipartBody.Part.createFormData("placeimage", photo.getName(), photoBody);
+                        if (photo != null) {
+                            placeimage = MultipartBody.Part.createFormData("placeimage", photo.getName(), photoBody);
+                        }
                         token = LoginUserInfo.getInstance().getUserInfo().token;
                         RequestBody title = RequestBody.create(MediaType.parse("multipart/form-data"),editTextViewReviewTitle.getText().toString());
                         RequestBody content = RequestBody.create(MediaType.parse("multipart/form-data"),editTextReviewContent.getText().toString());
@@ -327,11 +329,8 @@ public class WriteReviewActivity extends AppCompatActivity {
                                                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                             }*/
                                             //startActivity(intent);
-                                            itemDataReview.addAll(response.body().result);
-                                            adapter = new ReviewRecyclerAdapter(itemDataReview);
                                             //reviewRecyclerAdapter.updateAdapter(itemDataReview);
                                             Intent returnIntent = new Intent();
-                                            returnIntent.putParcelableArrayListExtra("itemDataReview",itemDataReview);
                                             setResult(RESULT_OK, returnIntent);
                                             //ReviewFragment.flag = true;
                                             finish();

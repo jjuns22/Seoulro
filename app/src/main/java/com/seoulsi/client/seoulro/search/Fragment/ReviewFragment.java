@@ -55,7 +55,7 @@ public class ReviewFragment extends Fragment {
     final String TAG = "ReviewFragment";
     private int id = Integer.MAX_VALUE;
     private int placeid;
-    //public static boolean flag = false;
+    public boolean flag = false;
     private String placeName;
     private String userNickName;
     private RecyclerView mrecyclerview;
@@ -99,7 +99,6 @@ public class ReviewFragment extends Fragment {
                 intent.putExtra("placeid", placeid);
                 startActivityForResult(intent, REQUEST_WRITE_REVIEW);
                 //startActivity(intent);
-
             }
         });
 
@@ -107,14 +106,11 @@ public class ReviewFragment extends Fragment {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 Log.d(TAG, "스크롤함");
-                int visibleItemCount = linearLayoutManager.getChildCount();
                 int totalItemCount = linearLayoutManager.getItemCount();
-                int firstVisibleItems = linearLayoutManager.findFirstVisibleItemPosition();
                 int lastVisibleItemPosition = linearLayoutManager.findLastVisibleItemPosition();
 
                 if (!listIsEnd && lastVisibleItemPosition == itemDataReview.size() - 1
                         && !isListViewAppending && totalItemCount > 0 && isListExpandable) {
-                    isListViewAppending = true;
                     callAppendList();
                 }
             }
@@ -128,6 +124,32 @@ public class ReviewFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+    }
+
+    @Override
+    public void onResume() {
+        Log.d(TAG, "onResume");
+        super.onResume();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == RESULT_OK) {
+            if (requestCode == REQUEST_WRITE_REVIEW) {
+                isListViewAppending = false;
+                flag = true;
+                id = Integer.MAX_VALUE;
+                callAppendList();
+            }
+        } else {
+            Log.i(TAG,"반환 값 없음");
+        }
+    }
 
     private void callAppendList() {
         Call<ReviewResult> getReview = service.getReview(placeid, id);
@@ -135,28 +157,24 @@ public class ReviewFragment extends Fragment {
             @Override
             public void onResponse(Call<ReviewResult> call, Response<ReviewResult> response) {
                 Log.d(TAG, "response");
-                if (response.isSuccessful()) {
-                    if (response.body().msg.equals("3")) {
-                        Log.d(TAG, "통신성공");
+                if (response.isSuccessful() && response.body().msg.equals("3")) {
+                    Log.d(TAG, "통신성공");
 
-                        if (response.body().result.size() == 0) {
-                            isListExpandable = false;
-                        }
-                        itemDataReview.addAll(response.body().result);
-                        adapter.notifyDataSetChanged();
-                        try {
-                            id = itemDataReview.get(itemDataReview.size() - 1).article_id;
-                            Log.i(TAG,"id = "+ id);
-                        } catch (Exception e) {
-                            //if(!flag){
-                            //id = Integer.MAX_VALUE;
-                           // } else {
-                                id = itemDataReview.get(itemDataReview.size() - 1).article_id;
-                            //   flag = false;
-                           // }
-                        }
-                        isListViewAppending = false;
+                    if (response.body().result.size() == 0) {
+                        isListExpandable = false;
+                        return;
                     }
+
+                    if (!isListViewAppending) {
+                        isListViewAppending = true;
+                        itemDataReview.clear();
+                    }
+
+                    itemDataReview.addAll(response.body().result);
+                    adapter.updateAdapter(itemDataReview);
+                    id = itemDataReview.get(itemDataReview.size() - 1).article_id;
+
+                    flag = false;
                 } else {
                     Log.d(TAG, "통신실패");
                     Toast.makeText(getContext(), "커넥팅 에러", Toast.LENGTH_SHORT).show();
@@ -169,7 +187,6 @@ public class ReviewFragment extends Fragment {
             }
         });
     }
-
 
     public View.OnClickListener clickEvent = new View.OnClickListener() {
         public void onClick(View v) {
@@ -184,52 +201,4 @@ public class ReviewFragment extends Fragment {
             startActivity(intent);
         }
     };
-
-    @Override
-    public void onPause() {
-        super.onPause();
-    }
-
-    @Override
-    public void onResume() {
-        Log.d(TAG, "onResume");
-        super.onResume();
-    }
-
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK) {
-            if (requestCode == REQUEST_WRITE_REVIEW) {
-                Log.i(TAG, "ReviewFragment로 돌아옴");
-
-                //callAppendList();
-                itemDataReview = data.getParcelableArrayListExtra("itemDataReview");
-                Log.d(TAG, "itemDataReview : " + itemDataReview.get(0).title);
-                adapter.updateAdapter(itemDataReview);
-                adapter.notifyDataSetChanged();
-                mrecyclerview.setOnScrollListener(new RecyclerView.OnScrollListener() {
-                    @Override
-                    public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                        int visibleItemCount = linearLayoutManager.getChildCount();
-                        int totalItemCount = linearLayoutManager.getItemCount();
-                        int firstVisibleItems = linearLayoutManager.findFirstVisibleItemPosition();
-                        int lastVisibleItemPosition = linearLayoutManager.findLastVisibleItemPosition();
-
-                        if (!listIsEnd && lastVisibleItemPosition == itemDataReview.size() - 1
-                                && !isListViewAppending && totalItemCount > 0 && isListExpandable) {
-                            isListViewAppending = true;
-                            callAppendList();
-                        }
-                    }
-                });
-                adapter = new ReviewRecyclerAdapter(itemDataReview);
-                mrecyclerview.setAdapter(adapter);
-               // callAppendList();
-            }
-        } else {
-            Log.i(TAG,"반환 값 없음");
-        }
-    }
 }
