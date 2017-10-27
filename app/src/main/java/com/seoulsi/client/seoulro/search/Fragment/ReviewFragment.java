@@ -110,7 +110,7 @@ public class ReviewFragment extends Fragment {
                 int lastVisibleItemPosition = linearLayoutManager.findLastVisibleItemPosition();
 
                 if (!listIsEnd && lastVisibleItemPosition == itemDataReview.size() - 1
-                        && !isListViewAppending && totalItemCount > 0 && isListExpandable) {
+                        && totalItemCount > 0 && isListExpandable) {
                     callAppendList();
                 }
             }
@@ -142,6 +142,7 @@ public class ReviewFragment extends Fragment {
         if (resultCode == RESULT_OK) {
             if (requestCode == REQUEST_WRITE_REVIEW) {
                 isListViewAppending = false;
+                isListExpandable = true;
                 flag = true;
                 id = Integer.MAX_VALUE;
                 callAppendList();
