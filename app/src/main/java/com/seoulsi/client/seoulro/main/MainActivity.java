@@ -18,7 +18,11 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.GroundOverlay;
+import com.google.android.gms.maps.model.GroundOverlayOptions;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.seoulsi.client.seoulro.R;
 
@@ -95,6 +99,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         MapFragment mapFragment = (MapFragment)fragmentManager
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+
     }
 
     @Override
@@ -110,6 +116,22 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         map.moveCamera(CameraUpdateFactory.newLatLng(SEOUL));
         map.animateCamera(CameraUpdateFactory.zoomTo(15));
+
+//        LatLng NEWARK = new LatLng(37.556, 126.97);
+//
+//        //GroundOverlayOptions newarkMap = new GroundOverlayOptions()
+//        //        .image(BitmapDescriptorFactory.fromResource(R.drawable.newark_nj_1922))
+//        //        .position(NEWARK, 8600f, 6500f);
+//
+//// Add an overlay to the map, retaining a handle to the GroundOverlay object.
+//        GroundOverlay imageOverlay = map.addGroundOverlay(newarkMap);
+//
+//        LatLngBounds newarkBounds = new LatLngBounds(
+//                new LatLng(40.712216, -74.22655),       // South west corner
+//                new LatLng(40.773941, -74.12544));      // North east corner
+//        GroundOverlayOptions newarkMap = new GroundOverlayOptions()
+//                .image(BitmapDescriptorFactory.fromResource(R.drawable.newark_nj_1922))
+//                .positionFromBounds(newarkBounds);
     }
 
 
