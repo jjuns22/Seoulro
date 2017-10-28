@@ -53,6 +53,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
 
+
         //서비스 객체 초기화
         service = ApplicationController.getInstance().getNetworkService();
 
