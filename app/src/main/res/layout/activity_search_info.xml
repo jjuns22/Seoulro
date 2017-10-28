@@ -8,9 +8,9 @@
 
 
     <FrameLayout
-        android:background="@drawable/information_bg_opacity"
         android:layout_width="match_parent"
         android:layout_height="200dp"
+        android:background="@drawable/information_bg_opacity"
         android:orientation="vertical">
 
         <ImageView
@@ -24,14 +24,13 @@
             android:gravity="end">
 
             <Button
-                android:layout_gravity="bottom"
                 android:id="@+id/btn_search_info_like"
-                android:background="@drawable/information_button_good_off"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
+                android:layout_gravity="bottom"
                 android:layout_marginRight="20dp"
                 android:layout_marginTop="20dp"
-                 />
+                android:background="@drawable/information_button_good_off" />
 
         </LinearLayout>
     </FrameLayout>
@@ -41,54 +40,65 @@
         android:layout_height="5dp"></View>
 
     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
         android:background="@drawable/information_name_bg"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <View
+                android:layout_width="20dp"
+                android:layout_height="20dp"></View>
+
+            <TextView
+                android:id="@+id/textview_search_info_placename"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text=""
+                android:textSize="23dp" />
+
+        </LinearLayout>
 
         <View
-            android:layout_width="20dp"
-            android:layout_height="20dp"></View>
+            android:layout_width="15dp"
+            android:layout_height="15dp"></View>
 
-        <TextView
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:id="@+id/textview_search_info_placename"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=""
-            android:textSize="23dp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="18dp"
+            android:orientation="horizontal">
 
+            <View
+                android:layout_width="20dp"
+                android:layout_height="20dp"></View>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="위치 : " />
+
+            <TextView
+                android:id="@+id/textview_search_info_place_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="5dp"></View>
     </LinearLayout>
 
     <View
-        android:layout_width="15dp"
-        android:layout_height="15dp"></View>
-
-    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <View
-            android:layout_width="20dp"
-            android:layout_height="20dp"></View>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="위치 : " />
-
-        <TextView
-            android:id="@+id/textview_search_info_place_address"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="" />
-    </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="40dp"></View>
+        android:layout_height="5dp"></View>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -120,6 +130,9 @@
                 android:textColor="#cacaca" />
         </LinearLayout>
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="5dp"></View>
 
         <android.support.v4.view.ViewPager
             android:id="@+id/view_pager_search_info"

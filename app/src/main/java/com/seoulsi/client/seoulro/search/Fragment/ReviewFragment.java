@@ -17,6 +17,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -48,8 +49,8 @@ import static android.app.Activity.RESULT_OK;
 
 public class ReviewFragment extends Fragment {
 
-    @BindView(R.id.fab)
-    FloatingActionButton fab;
+    @BindView(R.id.btn_write_review)
+    Button btnWriteReview;
 
 
     final static int REQUEST_WRITE_REVIEW = 1004;
@@ -92,7 +93,7 @@ public class ReviewFragment extends Fragment {
         mrecyclerview.setLayoutManager(linearLayoutManager);
 
         //플로팅버튼 누르면
-        fab.setOnClickListener(new View.OnClickListener() {
+        btnWriteReview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), WriteReviewActivity.class);
