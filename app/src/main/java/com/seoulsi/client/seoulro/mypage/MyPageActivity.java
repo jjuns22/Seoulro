@@ -86,7 +86,7 @@ public class MyPageActivity extends AppCompatActivity {
                 alertDialogBuilder
                         .setMessage("정말 로그아웃 하시겠습니까?")
                         .setCancelable(false)
-                        .setPositiveButton("종료",
+                        .setPositiveButton("예",
                                 new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int id) {
                                         Intent intent = new Intent(MyPageActivity.this, LoginActivity.class);

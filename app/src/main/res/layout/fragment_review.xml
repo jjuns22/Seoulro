@@ -20,6 +20,8 @@
 
             <android.support.design.widget.FloatingActionButton
                 android:id="@+id/fab"
+                android:backgroundTint="@color/colorGreen"
+                android:src="@drawable/information_button_write"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end|bottom"

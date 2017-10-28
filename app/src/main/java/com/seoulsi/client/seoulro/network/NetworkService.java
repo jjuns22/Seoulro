@@ -8,6 +8,8 @@ import com.seoulsi.client.seoulro.mypage.MyReviewResult;
 import com.seoulsi.client.seoulro.mypage.MyseoulloResult;
 import com.seoulsi.client.seoulro.search.UploadReviewResult;
 import com.seoulsi.client.seoulro.search.details.DetailsResult;
+import com.seoulsi.client.seoulro.search.like.IsLikeInfo;
+import com.seoulsi.client.seoulro.search.like.IsLikeResult;
 import com.seoulsi.client.seoulro.search.review.ReviewResult;
 import com.seoulsi.client.seoulro.signup.DupResult;
 import com.seoulsi.client.seoulro.signup.JoinInfo;
@@ -64,6 +66,8 @@ public interface NetworkService {
     @GET("/place/review")
     Call<ReviewResult> getReview(@Query("placeid") int placeid, @Query("id") int id);
 
+    @POST("/place/updatelike")
+    Call<IsLikeResult> getIsLike(@Header("Authorization") String token, @Body IsLikeInfo isLikeInfo);
 
     @GET("/place/placeInfo/{placeid}")
     Call<DetailsResult> getDetailsResult(@Header("Authorization") String token, @Path("placeid") int placeid);
