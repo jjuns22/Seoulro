@@ -144,8 +144,11 @@ public class ReviewFragment extends Fragment {
 
         if (resultCode == RESULT_OK) {
             if (requestCode == REQUEST_WRITE_REVIEW) {
+
                 Log.i(TAG,"onActivityResult 들어옴");
-                itemDataReview = data.getParcelableArrayListExtra("itemDataReview");
+//                itemDataReview = data.getParcelableArrayListExtra("itemDataReview");
+//                itemDataReview.clear();
+                id = Integer.MAX_VALUE;
                 //Log.i(TAG,"onActivityResult 최신글 : "+ itemDataReview.get(0).title);
                 adapter.updateAdapter(itemDataReview);
                 Log.i(TAG,"id : "+ id);

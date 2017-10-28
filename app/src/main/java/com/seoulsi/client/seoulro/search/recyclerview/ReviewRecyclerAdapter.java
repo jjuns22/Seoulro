@@ -35,9 +35,6 @@ public class ReviewRecyclerAdapter extends RecyclerView.Adapter<ReviewViewHolder
         //this.reviewDatas = reviewDatas;
         this.clickListener = clickListener;
     }
-    public ReviewRecyclerAdapter(ArrayList<ReviewInfo> reviewDatas) {
-        this.reviewDatas.addAll(reviewDatas);
-    }
 
     public void updateAdapter(ArrayList<ReviewInfo> reviewDatas) {
         Log.i("ReviewFragment","updateAdapter 발동");
