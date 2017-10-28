@@ -9,7 +9,9 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Camera;
 import android.graphics.Matrix;
+import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -80,6 +82,7 @@ public class WriteReviewActivity extends AppCompatActivity {
     private RequestBody photoBody;
     private String token;
 
+
     @BindView(R.id.btn_write_review_image_upload)
     Button btnWriteReviewImageUpload;
     @Nullable
@@ -115,7 +118,7 @@ public class WriteReviewActivity extends AppCompatActivity {
 
         Intent getData = getIntent();
         placeName = getData.getStringExtra("placename");
-        placeId = String.valueOf(getData.getIntExtra("placeid",-1));
+        placeId = String.valueOf(getData.getIntExtra("placeid", -1));
         //서비스 객체 초기화
         service = ApplicationController.getInstance().getNetworkService();
         textViewWriteReviewWriter.setText(LoginUserInfo.getInstance().getUserInfo().nickname);
@@ -162,7 +165,7 @@ public class WriteReviewActivity extends AppCompatActivity {
         btnWriteReviewEnrollment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               reviwDialogShow();
+                reviwDialogShow();
             }
         });
 
@@ -237,7 +240,7 @@ public class WriteReviewActivity extends AppCompatActivity {
                     this.imgUri = data.getData();
                     imgUrl = this.imgUri.getPath();
 
-                    if (imgUrl.equals("")) {
+                    if (imgUrl.equals("") || imgUrl == null) {
                         photo = null;
                     } else {
 
@@ -257,8 +260,7 @@ public class WriteReviewActivity extends AppCompatActivity {
                         }
 
                         Bitmap bitmap = BitmapFactory.decodeStream(in, null, options); // InputStream 으로부터 Bitmap 을 만들어 준다.
-
-                        if(bitmap.getHeight() < bitmap.getWidth()){
+                        if (bitmap.getHeight() < bitmap.getWidth()) {
                             bitmap = imgRotate(bitmap);
                         }
 
@@ -277,10 +279,34 @@ public class WriteReviewActivity extends AppCompatActivity {
             }
         }
 
+
     }
 
-    //화면 비율 때문에 회전된 이미지 바로잡기
-    private Bitmap imgRotate(Bitmap bmp){
+    //    public static int getImageOrientation(String path){
+//
+//        int rotation =0;
+//        try {
+//            ExifInterface exif = new ExifInterface(path);
+//            int rot= exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
+//
+//            if(rot == ExifInterface.ORIENTATION_ROTATE_90){
+//                rotation = 90;
+//            }else if(rot == ExifInterface.ORIENTATION_ROTATE_180){
+//                rotation = 180;
+//            }else if(rot == ExifInterface.ORIENTATION_ROTATE_270){
+//                rotation = 270;
+//            }else{
+//                rotation = 0;
+//            }
+//        } catch (IOException e) {
+//            // TODO Auto-generated catch block
+//            e.printStackTrace();
+//        }
+//
+//        return rotation;
+//    }
+    //  화면 비율 때문에 회전된 이미지 바로잡기
+    private Bitmap imgRotate(Bitmap bmp) {
         int width = bmp.getWidth();
         int height = bmp.getHeight();
 
@@ -293,7 +319,18 @@ public class WriteReviewActivity extends AppCompatActivity {
         return resizedBitmap;
     }
 
-
+//    public static Bitmap imgRotate(Bitmap bmp, int orientation){
+//        int width = bmp.getWidth();
+//        int height = bmp.getHeight();
+//
+//        Matrix matrix = new Matrix();
+//        matrix.postRotate(orientation);
+//
+//        Bitmap resizedBitmap = Bitmap.createBitmap(bmp, 0, 0, width, height, matrix, true);
+//        bmp.recycle();
+//
+//        return resizedBitmap;
+//    }
 
     public String getRealPathFromURI(Uri contentUri) {
         String[] proj = {MediaStore.Images.Media.DATA};
@@ -304,8 +341,7 @@ public class WriteReviewActivity extends AppCompatActivity {
 
     }
 
-    void reviwDialogShow()
-    {
+    void reviwDialogShow() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("저장");
         builder.setMessage("후기를 저장하시겠습니까?");
@@ -320,9 +356,9 @@ public class WriteReviewActivity extends AppCompatActivity {
                             placeimage = MultipartBody.Part.createFormData("placeimage", photo.getName(), photoBody);
                         }
                         token = LoginUserInfo.getInstance().getUserInfo().token;
-                        RequestBody title = RequestBody.create(MediaType.parse("multipart/form-data"),editTextViewReviewTitle.getText().toString());
-                        RequestBody content = RequestBody.create(MediaType.parse("multipart/form-data"),editTextReviewContent.getText().toString());
-                        RequestBody placeid = RequestBody.create(MediaType.parse("multipart/form-data"),placeId);
+                        RequestBody title = RequestBody.create(MediaType.parse("multipart/form-data"), editTextViewReviewTitle.getText().toString());
+                        RequestBody content = RequestBody.create(MediaType.parse("multipart/form-data"), editTextReviewContent.getText().toString());
+                        RequestBody placeid = RequestBody.create(MediaType.parse("multipart/form-data"), placeId);
 
 
                         Call<UploadReviewResult> uploadReview = service.uploadReview(placeimage, token, title, content, placeid);
@@ -343,8 +379,8 @@ public class WriteReviewActivity extends AppCompatActivity {
                                             Intent returnIntent = new Intent();
                                             //Log.i(TAG,"받은최신글 : "+ response.body().result.get(0).title);
                                             itemDataReview.addAll(response.body().result);
-                                            returnIntent.putParcelableArrayListExtra("itemDataReview",itemDataReview);
-                                           // Log.i(TAG,"최신글 : "+ itemDataReview.get(0).title);
+                                            returnIntent.putParcelableArrayListExtra("itemDataReview", itemDataReview);
+                                            // Log.i(TAG,"최신글 : "+ itemDataReview.get(0).title);
                                             setResult(RESULT_OK, returnIntent);
                                             //ReviewFragment.flag = true;
                                             finish();
@@ -373,8 +409,7 @@ public class WriteReviewActivity extends AppCompatActivity {
         builder.show();
     }
 
-    void modifyPhotoDiologShow()
-    {
+    void modifyPhotoDiologShow() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         // builder.setTitle("AlertDialog Title");
         builder.setMessage("사진을 편집하시겠습니까?");
@@ -408,8 +443,7 @@ public class WriteReviewActivity extends AppCompatActivity {
         builder.show();
     }
 
-    void writeReviewCancelDialog()
-    {
+    void writeReviewCancelDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("취소");
         builder.setMessage("취소하시겠습니까?");
