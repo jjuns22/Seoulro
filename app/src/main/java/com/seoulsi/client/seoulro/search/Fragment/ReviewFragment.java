@@ -108,9 +108,12 @@ public class ReviewFragment extends Fragment {
                 Log.d(TAG, "스크롤함");
                 int totalItemCount = linearLayoutManager.getItemCount();
                 int lastVisibleItemPosition = linearLayoutManager.findLastVisibleItemPosition();
-
+                Log.i(TAG,"totalItemCount, lastVisibleItemPosition " + totalItemCount + "     "+ lastVisibleItemPosition);
+                Log.i(TAG,"isListViewAppending : " + isListViewAppending);
+                Log.i(TAG,"isListExpandable : " + isListExpandable);
                 if (!listIsEnd && lastVisibleItemPosition == itemDataReview.size() - 1
-                        && totalItemCount > 0 && isListExpandable) {
+                        && !isListViewAppending && totalItemCount > 0 && isListExpandable) {
+                    isListViewAppending = true;
                     callAppendList();
                 }
             }
@@ -141,11 +144,13 @@ public class ReviewFragment extends Fragment {
 
         if (resultCode == RESULT_OK) {
             if (requestCode == REQUEST_WRITE_REVIEW) {
-                isListViewAppending = false;
-                isListExpandable = true;
-                flag = true;
-                id = Integer.MAX_VALUE;
+                Log.i(TAG,"onActivityResult 들어옴");
+                itemDataReview = data.getParcelableArrayListExtra("itemDataReview");
+                //Log.i(TAG,"onActivityResult 최신글 : "+ itemDataReview.get(0).title);
+                adapter.updateAdapter(itemDataReview);
+                Log.i(TAG,"id : "+ id);
                 callAppendList();
+
             }
         } else {
             Log.i(TAG,"반환 값 없음");
@@ -153,33 +158,29 @@ public class ReviewFragment extends Fragment {
     }
 
     private void callAppendList() {
+        Log.i(TAG,"callAppendList 들어옴");
         Call<ReviewResult> getReview = service.getReview(placeid, id);
         getReview.enqueue(new Callback<ReviewResult>() {
             @Override
             public void onResponse(Call<ReviewResult> call, Response<ReviewResult> response) {
-                Log.d(TAG, "response");
                 if (response.isSuccessful() && response.body().msg.equals("3")) {
-                    Log.d(TAG, "통신성공");
 
                     if (response.body().result.size() == 0) {
                         isListExpandable = false;
-                        return;
                     }
-
-                    if (!isListViewAppending) {
-                        isListViewAppending = true;
-                        itemDataReview.clear();
-                    }
-
                     itemDataReview.addAll(response.body().result);
-                    adapter.updateAdapter(itemDataReview);
-                    id = itemDataReview.get(itemDataReview.size() - 1).article_id;
-
-                    flag = false;
+                    adapter.notifyDataSetChanged();
+                    try {
+                        id = itemDataReview.get(itemDataReview.size() - 1).article_id;
+                    } catch (Exception e) {
+                        id = Integer.MAX_VALUE;
+                    }
+                        isListViewAppending = false;
                 } else {
                     Log.d(TAG, "통신실패");
                     Toast.makeText(getContext(), "커넥팅 에러", Toast.LENGTH_SHORT).show();
                 }
+
             }
 
             @Override

@@ -68,7 +68,6 @@ public class WriteReviewActivity extends AppCompatActivity {
     private final int TAKE_CAMERA = 0;
     private final int TAKE_GALLERY = 1;
     private ArrayList<ReviewInfo> itemDataReview = new ArrayList<>();
-    private LinkedList<ReviewInfo> linkedListReviewData = new LinkedList<>();
     private ReviewRecyclerAdapter adapter;
     private String placeName;
     private String imgUrl = "";
@@ -319,18 +318,11 @@ public class WriteReviewActivity extends AppCompatActivity {
                                         if (response.body().msg.equals("6")) {
                                             Log.d(TAG, "성공");
                                             Toast.makeText(getBaseContext(), "성공", Toast.LENGTH_SHORT).show();
-                                            //Log.d(TAG,"placeimage : "+ placeimage);
-                                           // Intent intent = new Intent(getBaseContext(), SearchInfoActivity.class);
-                                            //activity stack 비우고 새로 시작하기
-                                          /*  if (Build.VERSION.SDK_INT > Build.VERSION_CODES.GINGERBREAD_MR1) {
-                                                //안드로이드 버전이 진저브레드가 아니면,
-                                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                                            } else {
-                                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                            }*/
-                                            //startActivity(intent);
-                                            //reviewRecyclerAdapter.updateAdapter(itemDataReview);
                                             Intent returnIntent = new Intent();
+                                            //Log.i(TAG,"받은최신글 : "+ response.body().result.get(0).title);
+                                            itemDataReview.addAll(response.body().result);
+                                            returnIntent.putParcelableArrayListExtra("itemDataReview",itemDataReview);
+                                           // Log.i(TAG,"최신글 : "+ itemDataReview.get(0).title);
                                             setResult(RESULT_OK, returnIntent);
                                             //ReviewFragment.flag = true;
                                             finish();

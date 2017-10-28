@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.v7.widget.RecyclerView;
 import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.seoulsi.client.seoulro.R;
+import com.seoulsi.client.seoulro.search.Fragment.ReviewFragment;
 import com.seoulsi.client.seoulro.search.review.ReviewInfo;
 import com.seoulsi.client.seoulro.search.review.UpdateReviewInfo;
 import com.seoulsi.client.seoulro.util.TimeUtil;
@@ -28,7 +30,9 @@ public class ReviewRecyclerAdapter extends RecyclerView.Adapter<ReviewViewHolder
     private View.OnClickListener clickListener;
 
     public ReviewRecyclerAdapter(ArrayList<ReviewInfo> reviewDatas, View.OnClickListener clickListener) {
-        this.reviewDatas.addAll(reviewDatas);
+        Log.i("ReviewFragment","어댑터 생성자 발동");
+        this.reviewDatas = reviewDatas;
+        //this.reviewDatas = reviewDatas;
         this.clickListener = clickListener;
     }
     public ReviewRecyclerAdapter(ArrayList<ReviewInfo> reviewDatas) {
@@ -36,6 +40,7 @@ public class ReviewRecyclerAdapter extends RecyclerView.Adapter<ReviewViewHolder
     }
 
     public void updateAdapter(ArrayList<ReviewInfo> reviewDatas) {
+        Log.i("ReviewFragment","updateAdapter 발동");
         this.reviewDatas.clear();
         this.reviewDatas.addAll(reviewDatas);
         notifyDataSetChanged();
