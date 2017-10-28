@@ -48,6 +48,8 @@ public class SearchInfoActivity extends AppCompatActivity {
     TextView textViewSearchInfoPlaceAddress;
     @BindView(R.id.imageview_search_info_img)
     ImageView imageViewSearchInfoImg;
+    @BindView(R.id.btn_search_info_back)
+    Button btnSearchInfoBack;
 
     private IsLikeInfo isLikeInfo;
     public String placeInfo;
@@ -129,6 +131,12 @@ public class SearchInfoActivity extends AppCompatActivity {
         });
         // Set up the ViewPager with the sections adapter.
 
+        btnSearchInfoBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         //좋아요 버튼
         btnSearchInfoLike.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -15,108 +15,110 @@
         android:background="#fff">
 
         <Button
-            android:id="@+id/btn_toolBar_mypage"
+            android:id="@+id/btn_mypage_back"
             android:layout_width="19dp"
             android:layout_height="20dp"
             android:layout_alignParentLeft="true"
             android:layout_centerInParent="true"
             android:layout_marginLeft="10dp"
-            android:background="@drawable/main_mypage" />
+            android:background="@drawable/review_picture_cancel" />
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:src="@drawable/mypage_bar_logoicon"/>
+            android:src="@drawable/mypage_bar_logoicon" />
 
-        <Button
-            android:id="@+id/btn_toolBar_search"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_alignParentRight="true"
-            android:layout_centerInParent="true"
-            android:layout_marginRight="10dp"
-            android:background="@drawable/main_search" />
     </RelativeLayout>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <ImageView
+            android:id="@+id/img_backbround_mypage"
             android:layout_width="match_parent"
             android:layout_height="158dp"
-            android:src="@drawable/mypage_group321"
-            android:id="@+id/img_backbround_mypage"/>
+            android:src="@drawable/mypage_group321" />
+
         <RelativeLayout
             android:id="@+id/view1"
             android:layout_width="match_parent"
             android:layout_height="70dp"
             android:layout_below="@+id/img_backbround_mypage"
             android:background="#fff" />
+
         <ImageView
             android:id="@+id/img_profile_mypage"
             android:layout_width="80dp"
             android:layout_height="80dp"
-            android:layout_marginTop="126dp"
             android:layout_marginBottom="22dp"
             android:layout_marginLeft="20dp"
+            android:layout_marginTop="126dp"
             android:background="#fff"
             android:src="@drawable/mypage_profile" />
+
         <Button
             android:layout_width="23dp"
             android:layout_height="23dp"
-            android:background="@drawable/mypage_profilecamera"
             android:layout_alignBottom="@id/img_profile_mypage"
-            android:layout_alignRight="@id/img_profile_mypage"/>
+            android:layout_alignRight="@id/img_profile_mypage"
+            android:background="@drawable/mypage_profilecamera" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="70dp"
-            android:layout_below="@+id/img_backbround_mypage"
-            >
+            android:layout_below="@+id/img_backbround_mypage">
+
             <LinearLayout
-                android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
                 android:layout_below="@+id/img_backbround_mypage"
-                android:layout_weight="6">
+                android:layout_weight="6"
+                android:orientation="vertical">
 
             </LinearLayout>
+
             <LinearLayout
-                android:layout_weight="2.5"
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
                 android:layout_below="@+id/img_backbround_mypage"
+                android:layout_weight="2.5"
                 android:orientation="vertical">
 
                 <TextView
-                    android:layout_marginTop="20dp"
                     android:id="@+id/text_name_mypage"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
                     android:text="이름"
-                    android:textSize="13sp"/>
+                    android:textSize="13sp" />
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
-                <TextView
-                    android:layout_gravity="center"
-                    android:id="@+id/text_introduce_mypage"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="공모전/알바힘들다"
-                    android:textSize="12sp"/>
-                    <LinearLayout
-                        android:gravity="end|top"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-                    <Button
-                        android:id="@+id/btn_logout"
-                        android:gravity="center"
-                        android:text="로그아웃"
-                        android:textSize="10dp"
+
+                    <TextView
+                        android:id="@+id/text_introduce_mypage"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="공모전/알바힘들다"
+                        android:textSize="12sp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="end|top">
+
+                        <Button
+                            android:id="@+id/btn_logout"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="로그아웃"
+                            android:textSize="10dp" />
                     </LinearLayout>
                 </LinearLayout>
 
@@ -126,82 +128,92 @@
 
 
     </RelativeLayout>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
 
             <LinearLayout
-                android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_weight="1"
                 android:background="#e2e2e2"
-                android:layout_weight="1">
+                android:orientation="vertical">
+
                 <LinearLayout
-                    android:layout_marginTop="5dp"
-                    android:layout_marginBottom="5dp"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
-                    >
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginTop="5dp">
+
                     <Button
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:text="나의 서울로"
                         android:id="@+id/btn_myseoul_mypage"
-                        android:textColor="#cacaca"
-                        android:background="@drawable/mypage_menu_green"/>
-                    <Button
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:textColor="#cacaca"
-                        android:text="내가 쓴 후기"
+                        android:background="@drawable/mypage_menu_green"
+                        android:text="나의 서울로"
+                        android:textColor="#cacaca" />
+
+                    <Button
                         android:id="@+id/btn_myreview_mypage"
-                        android:background="@drawable/mypage_menu_white"/>
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/mypage_menu_white"
+                        android:text="내가 쓴 후기"
+                        android:textColor="#cacaca" />
                 </LinearLayout>
+
                 <android.support.v4.view.ViewPager
                     android:id="@+id/viewpager_mypage"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginBottom="5dp">
-                </android.support.v4.view.ViewPager>
+                    android:layout_marginBottom="5dp"></android.support.v4.view.ViewPager>
             </LinearLayout>
+
             <RelativeLayout
 
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="6.5">
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1.5"/>
-                    <Button
-                        android:layout_weight="1.5"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@drawable/mypage_tab_information"/>
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"/>
-                    <Button
-                        android:layout_weight="1.63"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@drawable/mypage_tab_camera"/>
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_weight="1.46"/>
+                        android:layout_weight="1.5" />
+
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1.5"
+                        android:background="@drawable/mypage_tab_information" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1" />
+
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1.63"
+                        android:background="@drawable/mypage_tab_camera" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1.46" />
 
                 </LinearLayout>
 
@@ -215,7 +227,7 @@
             android:layout_height="54dp"
             android:layout_alignParentBottom="true"
             android:layout_centerInParent="true"
-            android:background="@drawable/mypage_home"/>
+            android:background="@drawable/mypage_home" />
 
     </RelativeLayout>
 

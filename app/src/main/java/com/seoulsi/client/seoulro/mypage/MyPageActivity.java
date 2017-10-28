@@ -44,6 +44,8 @@ public class MyPageActivity extends AppCompatActivity {
 
     @BindView(R.id.btn_logout)
     Button btnLogout;
+    @BindView(R.id.btn_mypage_back)
+    Button btnMyPageBack;
 
     ViewPager vp;
     Button btnMyreview, btnMyseoul;
@@ -73,6 +75,13 @@ public class MyPageActivity extends AppCompatActivity {
         home.setOnClickListener(click);
         search.setOnClickListener(click);
 
+        //뒤로 가기 버튼 클릭
+        btnMyPageBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         //로그아웃 버튼
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override

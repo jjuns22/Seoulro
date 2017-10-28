@@ -15,11 +15,13 @@
         android:orientation="horizontal">
 
         <TextView
+            android:textSize="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="위치 설명 : " />
+            android:text="   위치 설명 : " />
 
         <TextView
+            android:textSize="10dp"
             android:id="@+id/textview_details_place_location"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -36,11 +38,13 @@
         android:orientation="horizontal">
 
         <TextView
+            android:textSize="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="전화 번호 : " />
+            android:text="   전화 번호 : " />
 
         <TextView
+            android:textSize="10dp"
             android:id="@+id/textview_details_place_tel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -57,11 +61,13 @@
         android:orientation="horizontal">
 
         <TextView
+            android:textSize="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="오픈 시간 : " />
+            android:text="   오픈 시간 : " />
 
         <TextView
+            android:textSize="10dp"
             android:id="@+id/textview_details_place_opentime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -78,11 +84,13 @@
         android:orientation="horizontal">
 
         <TextView
+            android:textSize="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="장소 설명 : " />
+            android:text="   장소 설명 : " />
 
         <TextView
+            android:textSize="10dp"
             android:id="@+id/textview_details_place_introduce"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
