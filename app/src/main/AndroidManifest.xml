@@ -27,6 +27,9 @@
     <meta-data
         android:name="android.support.VERSION"
         android:value="25.3.1" />
+    <meta-data
+        android:name="com.google.android.geo.API_KEY"
+        android:value="AIzaSyDrnq9C2dluXBejppwm5ohDrMMvAVsSXBc" />
 
     <!-- <meta-data android:name ="com.google.android.gms.version"    android:value = "@integer/google_play_services_version"/> -->
     <application

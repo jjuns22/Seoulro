@@ -1,6 +1,8 @@
 package com.seoulsi.client.seoulro.main;
 
+import android.app.FragmentManager;
 import android.content.Intent;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -10,6 +12,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.GroundOverlayOptions;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.seoulsi.client.seoulro.R;
 
 import com.seoulsi.client.seoulro.application.ApplicationController;
@@ -69,6 +80,8 @@ public class MainActivity extends AppCompatActivity{
         service = ApplicationController.getInstance().getNetworkService();
         BtnToolBarMypage.setOnClickListener(onClickListener);
         BtnToolBarSearch.setOnClickListener(onClickListener);
+
+
 
         viewPagerMain.setAdapter(new pagerAdapter(getSupportFragmentManager()));
         viewPagerMain.setCurrentItem(0);
@@ -154,6 +167,7 @@ public class MainActivity extends AppCompatActivity{
             }
         }
     };
+
 
     private class pagerAdapter extends FragmentStatePagerAdapter {
 
