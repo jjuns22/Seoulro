@@ -213,8 +213,6 @@ public class WriteReviewActivity extends AppCompatActivity {
         public void onPermissionDenied(ArrayList<String> deniedPermissions) {
             Toast.makeText(WriteReviewActivity.this, "권한 거부\n" + deniedPermissions.toString(), Toast.LENGTH_SHORT).show();
         }
-
-
     };
 
 
@@ -278,8 +276,6 @@ public class WriteReviewActivity extends AppCompatActivity {
                 Log.d(TAG, "CAMERA : " + getRealPathFromURI(currImageURI));
             }
         }
-
-
     }
 
     //    public static int getImageOrientation(String path){
