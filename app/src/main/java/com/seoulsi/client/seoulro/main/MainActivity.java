@@ -1,51 +1,29 @@
 package com.seoulsi.client.seoulro.main;
 
-import android.app.FragmentManager;
 import android.content.Intent;
-import android.os.AsyncTask;
-import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapFragment;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.GroundOverlay;
-import com.google.android.gms.maps.model.GroundOverlayOptions;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.LatLngBounds;
-import com.google.android.gms.maps.model.MarkerOptions;
 import com.seoulsi.client.seoulro.R;
 
 import com.seoulsi.client.seoulro.application.ApplicationController;
 import com.seoulsi.client.seoulro.login.LoginUserInfo;
+import com.seoulsi.client.seoulro.main.Fragment.FacilityFragment;
+import com.seoulsi.client.seoulro.main.Fragment.KeyPointFragment;
+import com.seoulsi.client.seoulro.main.Fragment.LandScapeFragment;
 import com.seoulsi.client.seoulro.network.NetworkService;
-import com.seoulsi.client.seoulro.search.Fragment.DetailsFragment;
 import com.seoulsi.client.seoulro.search.SearchInfoActivity;
-import com.seoulsi.client.seoulro.login.LoginActivity;
 import com.seoulsi.client.seoulro.mypage.MyPageActivity;
-import com.seoulsi.client.seoulro.search.SearchActivity;
-import com.seoulsi.client.seoulro.search.UploadReviewResult;
-import com.seoulsi.client.seoulro.search.WriteReviewActivity;
 import com.seoulsi.client.seoulro.search.details.DetailsInfo;
 import com.seoulsi.client.seoulro.search.details.DetailsResult;
 
 
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
-
-import java.io.IOException;
 import java.util.ArrayList;
 
 import butterknife.BindView;
@@ -53,19 +31,16 @@ import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.http.Header;
-import retrofit2.http.Path;
 
 import static com.seoulsi.client.seoulro.R.id.btn_toolBar_mypage;
-import static com.seoulsi.client.seoulro.R.id.btn_toolBar_search;
 
-public class MainActivity extends AppCompatActivity implements OnMapReadyCallback {
+public class MainActivity extends AppCompatActivity{
 
     private final String TAG = "MainActivity";
-    private String htmlPageUrl = "http://www.seoul.go.kr/v2012/news/list.html?tr_code=gnb_news";
+   // private String htmlPageUrl = "http://www.seoul.go.kr/v2012/news/list.html?tr_code=gnb_news";
 
-    public ImageView news1, news2;
-    public ArrayList<String> news_link = new ArrayList<>();
+   // public ImageView news1, news2;
+    //public ArrayList<String> news_link = new ArrayList<>();
     private ArrayList<DetailsInfo> detailsDatas;
     private String token;
     private int placeid = 1;
@@ -75,8 +50,14 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     Button BtnToolBarMypage;
     @BindView(R.id.btn_toolBar_search)
     Button BtnToolBarSearch;
-    @BindView(R.id.btn_main_proof_shot)
-    Button btnMainProofShot;
+    @BindView(R.id.viewPager_main)
+    ViewPager viewPagerMain;
+    @BindView(R.id.btn_main_facility)
+    Button btnMainFacility;
+    @BindView(R.id.btn_main_landScape)
+    Button btnMainLandScape;
+    @BindView(R.id.btn_main_keyPoint)
+    Button btnMainKeyPoint;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,108 +67,78 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         //서비스 객체 초기화
         service = ApplicationController.getInstance().getNetworkService();
-
-        news1 = (ImageView) findViewById(R.id.img_main_news1);
-        news2 = (ImageView) findViewById(R.id.img_main_news2);
-
-        NewsAsyncTask newsAsyncTask = new NewsAsyncTask();
-        newsAsyncTask.execute();
-
-
         BtnToolBarMypage.setOnClickListener(onClickListener);
         BtnToolBarSearch.setOnClickListener(onClickListener);
 
-        FragmentManager fragmentManager = getFragmentManager();
-        MapFragment mapFragment = (MapFragment)fragmentManager
-                .findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
+        viewPagerMain.setAdapter(new pagerAdapter(getSupportFragmentManager()));
+        viewPagerMain.setCurrentItem(0);
 
-        btnMainProofShot.setOnClickListener(new View.OnClickListener() {
+        viewPagerMain.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
-            public void onClick(View v) {
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                switch (position) {
+                    case 0:
+                        btnMainFacility.setBackgroundResource(R.drawable.mypage_menu_green);
+                        btnMainLandScape.setBackgroundResource(R.drawable.mypage_menu_white);
+                        btnMainKeyPoint.setBackgroundResource(R.drawable.mypage_menu_white);
+                        break;
+
+                    case 1:
+                        btnMainFacility.setBackgroundResource(R.drawable.mypage_menu_white);
+                        btnMainLandScape.setBackgroundResource(R.drawable.mypage_menu_green);
+                        btnMainKeyPoint.setBackgroundResource(R.drawable.mypage_menu_white);
+                        break;
+
+                    case 2:
+                        btnMainFacility.setBackgroundResource(R.drawable.mypage_menu_white);
+                        btnMainLandScape.setBackgroundResource(R.drawable.mypage_menu_white);
+                        btnMainKeyPoint.setBackgroundResource(R.drawable.mypage_menu_green);
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
 
             }
         });
+
+        btnMainFacility.setOnClickListener(movePageListener);
+        btnMainFacility.setTag(0);
+        btnMainLandScape.setOnClickListener(movePageListener);
+        btnMainLandScape.setTag(1);
+        btnMainKeyPoint.setOnClickListener(movePageListener);
+        btnMainKeyPoint.setTag(2);
     }
 
-    @Override
-    public void onMapReady(final GoogleMap map) {
-
-        LatLng SEOUL = new LatLng(37.556, 126.97);
-
-        MarkerOptions markerOptions = new MarkerOptions();
-        markerOptions.position(SEOUL);
-        markerOptions.title("서울");
-        markerOptions.snippet("한국의 수도");
-        map.addMarker(markerOptions);
-
-        map.moveCamera(CameraUpdateFactory.newLatLng(SEOUL));
-        map.animateCamera(CameraUpdateFactory.zoomTo(15));
-
-//        LatLng NEWARK = new LatLng(37.556, 126.97);
-//
-//        //GroundOverlayOptions newarkMap = new GroundOverlayOptions()
-//        //        .image(BitmapDescriptorFactory.fromResource(R.drawable.newark_nj_1922))
-//        //        .position(NEWARK, 8600f, 6500f);
-//
-//// Add an overlay to the map, retaining a handle to the GroundOverlay object.
-//        GroundOverlay imageOverlay = map.addGroundOverlay(newarkMap);
-//
-//        LatLngBounds newarkBounds = new LatLngBounds(
-//                new LatLng(40.712216, -74.22655),       // South west corner
-//                new LatLng(40.773941, -74.12544));      // North east corner
-//        GroundOverlayOptions newarkMap = new GroundOverlayOptions()
-//                .image(BitmapDescriptorFactory.fromResource(R.drawable.newark_nj_1922))
-//                .positionFromBounds(newarkBounds);
-    }
-
-
-    private class NewsAsyncTask extends AsyncTask<Void, Void, Void> {
-
+    View.OnClickListener movePageListener = new View.OnClickListener() {
         @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
-
-        @Override
-        protected Void doInBackground(Void... params) {
-            try {
-                Document doc = Jsoup.connect(htmlPageUrl).get();
-                Elements links = doc.select("ul.newsUL li dl dt a img");
-                Elements imglink = links;
-
-
-//                String imgUrl = imglink.toString();
-//
-//                String website = "";
-//                URL url = null;
-//                website = imgUrl;
-//                url = new URL(website);                  //String을 URL로 바꿔줌
-
-                //htmlContentInStringFormat +=
-
-//                myboardDatas.add(new MyboardDatas(url, link.ownText()));  //이미지, 보드이름 data저장
-//
-                Log.i("msg", links.toString());
-                for (Element link : links) {
-                    Log.i("msg", "link 있다.");
-                    news_link.add(link.attr("src"));
-
-                }
-
-
-            } catch (IOException e) {
-                e.printStackTrace();
+        public void onClick(View v) {
+            int tag = (int) v.getTag();
+            switch (tag) {
+                case 0:
+                    btnMainFacility.setBackgroundResource(R.drawable.mypage_menu_green);
+                    btnMainLandScape.setBackgroundResource(R.drawable.mypage_menu_white);
+                    btnMainKeyPoint.setBackgroundResource(R.drawable.mypage_menu_white);
+                    break;
+                case 1:
+                    btnMainFacility.setBackgroundResource(R.drawable.mypage_menu_white);
+                    btnMainLandScape.setBackgroundResource(R.drawable.mypage_menu_green);
+                    btnMainKeyPoint.setBackgroundResource(R.drawable.mypage_menu_white);
+                    break;
+                case 2:
+                    btnMainFacility.setBackgroundResource(R.drawable.mypage_menu_white);
+                    btnMainLandScape.setBackgroundResource(R.drawable.mypage_menu_white);
+                    btnMainKeyPoint.setBackgroundResource(R.drawable.mypage_menu_green);
+                    break;
             }
-            return null;
+            viewPagerMain.setCurrentItem(tag);
         }
-
-        @Override
-        protected void onPostExecute(Void result) {
-            //Glide.with(MainActivity.this).load(news_link.get(0)).into(news1);
-            // Glide.with(MainActivity.this).load(news_link.get(1)).into(news2);
-        }
-    }
+    };
 
     View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
@@ -200,11 +151,35 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 case R.id.btn_toolBar_search:
                     NetWorking();
                     break;
-
             }
         }
     };
 
+    private class pagerAdapter extends FragmentStatePagerAdapter {
+
+        public pagerAdapter(android.support.v4.app.FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public android.support.v4.app.Fragment getItem(int position) {
+            switch (position) {
+                case 0:
+                    return new FacilityFragment();
+                case 1:
+                    return new LandScapeFragment();
+                case 2:
+                    return new KeyPointFragment();
+                default:
+                    return null;
+            }
+        }
+
+        @Override
+        public int getCount() {
+            return 3;
+        }
+    }
     void NetWorking() {
         token = LoginUserInfo.getInstance().getUserInfo().token;
         detailsDatas = new ArrayList<>();

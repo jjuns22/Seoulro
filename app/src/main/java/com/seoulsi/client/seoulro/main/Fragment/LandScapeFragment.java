@@ -15,12 +15,12 @@ import butterknife.ButterKnife;
  * Created by SanJuku on 2017-10-15.
  */
 
-public class KeyPointFragment extends Fragment{
+public class LandScapeFragment extends Fragment{
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        final String TAG = "KeyPointFragment";
-        final View view = inflater.inflate(R.layout.fragment_keypoint, null);
+        final String TAG = "LandScapeFragment";
+        final View view = inflater.inflate(R.layout.fragment_landscape, null);
 
         ButterKnife.bind(this, view);
 

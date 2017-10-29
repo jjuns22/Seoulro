@@ -62,12 +62,11 @@ public interface NetworkService {
     @GET("/mypage/myinfo")
     Call<MyInfoResult> getMyInformation(@Header("Authorization") String token);
 
-    @Multipart
-    @POST("/mypage/profileupdate")
-    Call<UpdateProfileResult> getProfileResult(@Header("Authorization") String token,
-                                               @Part("profileimg") MultipartBody.Part profileImg,
-                                               @Part("introduce") RequestBody introduce);
-    //@Part("placeid") RequestBody placeid);
+//    @Multipart
+//    @POST("/mypage/profileupdate")
+//    Call<UpdateProfileResult> getProfileResult(@Header("Authorization") String token,
+//                                               @Part("profileimg") MultipartBody.Part profileImg,
+//                                               @Part("introduce") RequestBody introduce);
     @GET("/place/review")
     Call<ReviewResult> getReview(@Query("placeid") int placeid, @Query("id") int id);
 

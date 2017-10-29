@@ -90,6 +90,7 @@ public class SearchInfoActivity extends AppCompatActivity {
                 .load(placePicture)
                 .into(imageViewSearchInfoImg);
         imageViewSearchInfoImg.setScaleType(ImageView.ScaleType.FIT_XY);
+
         vp.setAdapter(new pagerAdapter(getSupportFragmentManager(), placeName, placeInfo, placeTel, placeOpenTime, placeIntroduce, placeId));
         vp.setCurrentItem(0);
 
@@ -121,6 +122,8 @@ public class SearchInfoActivity extends AppCompatActivity {
                     case 1:
                         btnSearchInfoDetails.setBackgroundResource(R.drawable.mypage_menu_white);
                         btnSearchInfoReview.setBackgroundResource(R.drawable.mypage_menu_green);
+
+                        break;
                 }
             }
 
