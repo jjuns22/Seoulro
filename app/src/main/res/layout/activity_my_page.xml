@@ -54,7 +54,14 @@
             android:layout_height="70dp"
             android:layout_below="@+id/img_backbround_mypage">
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_below="@+id/img_backbround_mypage"
+                android:layout_weight="6"
+                android:orientation="vertical">
 
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"

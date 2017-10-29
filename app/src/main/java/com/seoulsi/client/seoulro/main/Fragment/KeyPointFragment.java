@@ -6,9 +6,11 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.seoulsi.client.seoulro.R;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -16,6 +18,9 @@ import butterknife.ButterKnife;
  */
 
 public class KeyPointFragment extends Fragment{
+    @BindView(R.id.imageView_main_keyPoint)
+    ImageView imageViewMainKeyPoint;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -24,6 +29,7 @@ public class KeyPointFragment extends Fragment{
 
         ButterKnife.bind(this, view);
 
+        imageViewMainKeyPoint.setImageResource(R.drawable.main_map_keyspace);
         return view;
     }
 

@@ -7,10 +7,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.seoulsi.client.seoulro.R;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -18,6 +20,10 @@ import butterknife.ButterKnife;
  */
 
 public class FacilityFragment extends Fragment{
+
+    @BindView(R.id.imageView_main_facility)
+    ImageView imageViewMainFacility;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -25,6 +31,8 @@ public class FacilityFragment extends Fragment{
         final View view = inflater.inflate(R.layout.fragment_facility, null);
 
         ButterKnife.bind(this, view);
+
+        imageViewMainFacility.setImageResource(R.drawable.main_map_facilities);
 
         return view;
     }
