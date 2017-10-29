@@ -51,8 +51,8 @@ public class MyPageActivity extends AppCompatActivity {
     Button btnMyreview, btnMyseoul;
     private NetworkService service;
     TextView nickname, introduce;
-    ImageView profile_img;
-    Button search, home;
+    ImageView profileImg;
+    Button home;
     String token;
 
     @Override
@@ -66,20 +66,25 @@ public class MyPageActivity extends AppCompatActivity {
         btnMyseoul = (Button) findViewById(R.id.btn_myseoul_mypage);
         nickname = (TextView) findViewById(R.id.text_name_mypage);
         introduce = (TextView) findViewById(R.id.text_introduce_mypage);
-        profile_img = (ImageView) findViewById(R.id.img_profile_mypage);
-        search = (Button) findViewById(R.id.btn_toolBar_search);
+        profileImg = (ImageView) findViewById(R.id.img_profile_mypage);
         home = (Button) findViewById(R.id.btn_home);
 
         service = ApplicationController.getInstance().getNetworkService();
 
         home.setOnClickListener(click);
-        search.setOnClickListener(click);
 
         //뒤로 가기 버튼 클릭
         btnMyPageBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
+            }
+        });
+
+        profileImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
             }
         });
         //로그아웃 버튼
@@ -125,41 +130,6 @@ public class MyPageActivity extends AppCompatActivity {
                 AlertDialog alertDialog = alertDialogBuilder.create();
                 // 다이얼로그 보여주기
                 alertDialog.show();
-
-//                AlertDialog.Builder builder = new AlertDialog.Builder(getBaseContext());
-//                // builder.setTitle("AlertDialog Title");
-//                builder.setMessage("정말 로그아웃 하시겠습니까??");
-//                builder.setPositiveButton("예",
-//                        new DialogInterface.OnClickListener() {
-//                            public void onClick(DialogInterface dialog, int which) {
-//                                Intent intent = new Intent(getBaseContext(), LoginActivity.class);
-//                                if (Build.VERSION.SDK_INT > Build.VERSION_CODES.GINGERBREAD_MR1) {
-//                                    //안드로이드 버전이 진저브레드가 아니면,
-//                                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-//                                } else {
-//                                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//                                }
-//                                boolean flag = true;
-//                                intent.putExtra("logoutFlag",flag);
-//                                //activity stack 비우고 새로 시작하기
-//                                if (Build.VERSION.SDK_INT > Build.VERSION_CODES.GINGERBREAD_MR1) {
-//                                    //안드로이드 버전이 진저브레드가 아니면,
-//                                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-//                                } else {
-//                                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//                                }
-//                                startActivity(intent);
-//                            }
-//                        });
-//                builder.setNegativeButton("아니오",
-//                        new DialogInterface.OnClickListener() {
-//                            public void onClick(DialogInterface dialog, int which) {
-//                                //Toast.makeText(getApplicationContext(),"아니오를 선택했습니다.",Toast.LENGTH_LONG).show();
-//                                dialog.dismiss();
-//                            }
-//                        });
-//                builder.show();
-
             }
         });
 
@@ -174,7 +144,7 @@ public class MyPageActivity extends AppCompatActivity {
                     nickname.setText(myInfoList.result.get(0).nickname);
                     introduce.setText(myInfoList.result.get(0).introduce);
                     if (!myInfoList.result.get(0).profile_picture.equals("")) {
-                        Glide.with(getApplicationContext()).load(myInfoList.result.get(0).profile_picture).into(profile_img);
+                        Glide.with(getApplicationContext()).load(myInfoList.result.get(0).profile_picture).into(profileImg);
                     }
 
 
@@ -280,12 +250,6 @@ public class MyPageActivity extends AppCompatActivity {
                     homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | IntentCompat.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(homeIntent);
                     finish();
-
-                    break;
-                case R.id.btn_toolBar_search:
-                    Intent searchintent = new Intent(MyPageActivity.this, SearchActivity.class);
-                    startActivity(searchintent);
-
                     break;
             }
         }

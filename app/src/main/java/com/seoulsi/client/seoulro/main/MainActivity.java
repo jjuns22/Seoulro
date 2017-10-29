@@ -75,6 +75,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     Button BtnToolBarMypage;
     @BindView(R.id.btn_toolBar_search)
     Button BtnToolBarSearch;
+    @BindView(R.id.btn_main_proof_shot)
+    Button btnMainProofShot;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,7 +102,12 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
+        btnMainProofShot.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+            }
+        });
     }
 
     @Override
