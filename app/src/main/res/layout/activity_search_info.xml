@@ -25,10 +25,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:src="@drawable/mypage_bar_logoicon"/>
+            android:src="@drawable/mypage_bar_logoicon" />
 
 
     </RelativeLayout>
+
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="200dp"
@@ -45,15 +46,33 @@
             android:layout_height="match_parent"
             android:gravity="end">
 
-            <Button
-                android:id="@+id/btn_search_info_like"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
-                android:layout_marginRight="20dp"
-                android:layout_marginTop="20dp"
-                android:background="@drawable/information_button_good_off" />
+                android:orientation="horizontal">
 
+                <TextView
+                    android:id="@+id/textview_like_count"
+                    android:textColor="#FFFFFF"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="좋아요" />
+
+                <View
+                    android:layout_width="5dp"
+                    android:layout_height="5dp"></View>
+
+                <Button
+                    android:id="@+id/btn_search_info_like"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="bottom"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/information_button_good_off" />
+            </LinearLayout>
         </LinearLayout>
     </FrameLayout>
 

@@ -50,6 +50,8 @@ public class SearchInfoActivity extends AppCompatActivity {
     ImageView imageViewSearchInfoImg;
     @BindView(R.id.btn_search_info_back)
     Button btnSearchInfoBack;
+    @BindView(R.id.textview_like_count)
+    TextView textViewLikeCount;
 
     private IsLikeInfo isLikeInfo;
     public String placeInfo;
@@ -59,6 +61,8 @@ public class SearchInfoActivity extends AppCompatActivity {
     public String placeTel;
     private String placeName;
     private String placeAddress;
+    private int islike;
+    private int likeCount = 0;
     private int placeId;
     private NetworkService service;
     private String token;
@@ -79,17 +83,30 @@ public class SearchInfoActivity extends AppCompatActivity {
         placeIntroduce = getData.getStringExtra("place_introduce");
         placeOpenTime = getData.getStringExtra("place_opentime");
         placeTel = getData.getStringExtra("place_tel");
-
+        islike = getData.getIntExtra("islike",0);
+        likeCount = getData.getIntExtra("likeCount",0);
         token = LoginUserInfo.getInstance().getUserInfo().token;
         service = ApplicationController.getInstance().getNetworkService();
         // DetailsFragment detailsFragment = new DetailsFragment().newInstance(placeInfo,placeTel,placeOpenTime,placeIntroduce);
-
-        textViewSearchInfoPlaceName.setText(placeName);
-        textViewSearchInfoPlaceAddress.setText(placeAddress);
+        //이미지 띄워주기
         Glide.with(this)
                 .load(placePicture)
                 .into(imageViewSearchInfoImg);
         imageViewSearchInfoImg.setScaleType(ImageView.ScaleType.FIT_XY);
+
+        //장소이름
+        textViewSearchInfoPlaceName.setText(placeName);
+        //장소주소
+        textViewSearchInfoPlaceAddress.setText(placeAddress);
+
+        //좋아요 눌려있는지 아닌지
+        if(islike == 0) {
+            btnSearchInfoLike.setBackgroundResource(R.drawable.information_button_good_off);
+        }else{
+            btnSearchInfoLike.setBackgroundResource(R.drawable.information_button_good_on);
+        }
+        //좋아요 카운트
+        textViewLikeCount.setText(likeCount+"");
 
         vp.setAdapter(new pagerAdapter(getSupportFragmentManager(), placeName, placeInfo, placeTel, placeOpenTime, placeIntroduce, placeId));
         vp.setCurrentItem(0);
@@ -155,9 +172,17 @@ public class SearchInfoActivity extends AppCompatActivity {
                             if (response.body().msg.equals("9")) {
                                 //좋아요 눌렀을 때
                                 btnSearchInfoLike.setBackgroundResource(R.drawable.information_button_good_on);
+                                likeCount += 1;
+                                textViewLikeCount.setText(likeCount+"");
                             } else {
                                 //좋아요 취소할 때 msg = 12
                                 btnSearchInfoLike.setBackgroundResource(R.drawable.information_button_good_off);
+                                if(likeCount <= 0){
+                                    textViewLikeCount.setText(likeCount+"");
+                                }else{
+                                    likeCount -= 1;
+                                    textViewLikeCount.setText(likeCount+"");
+                                }
                             }
                         } else {
                             //Log.d(TAG, "실패");

@@ -162,7 +162,8 @@ public class FacilityFragment extends Fragment{
                         intent.putExtra("place_tel",detailsDatas.get(0).place_tel);
                         intent.putExtra("place_opentime",detailsDatas.get(0).place_opentime);
                         intent.putExtra("place_introduce",detailsDatas.get(0).place_introduce);
-
+                        intent.putExtra("islike",detailsDatas.get(0).islike);
+                        intent.putExtra("likeCount",detailsDatas.get(0).like_count);
                         startActivity(intent);
                         //Toast.makeText(getBaseContext(), "성공", Toast.LENGTH_SHORT).show();
                     } else if (response.body().msg.equals("1")) {
