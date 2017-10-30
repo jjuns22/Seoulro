@@ -66,6 +66,7 @@ public class SearchInfoActivity extends AppCompatActivity {
     private int placeId;
     private NetworkService service;
     private String token;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -83,8 +84,8 @@ public class SearchInfoActivity extends AppCompatActivity {
         placeIntroduce = getData.getStringExtra("place_introduce");
         placeOpenTime = getData.getStringExtra("place_opentime");
         placeTel = getData.getStringExtra("place_tel");
-        islike = getData.getIntExtra("islike",0);
-        likeCount = getData.getIntExtra("likeCount",0);
+        islike = getData.getIntExtra("islike", 0);
+        likeCount = getData.getIntExtra("likeCount", 0);
         token = LoginUserInfo.getInstance().getUserInfo().token;
         service = ApplicationController.getInstance().getNetworkService();
         // DetailsFragment detailsFragment = new DetailsFragment().newInstance(placeInfo,placeTel,placeOpenTime,placeIntroduce);
@@ -100,13 +101,13 @@ public class SearchInfoActivity extends AppCompatActivity {
         textViewSearchInfoPlaceAddress.setText(placeAddress);
 
         //좋아요 눌려있는지 아닌지
-        if(islike == 0) {
+        if (islike == 0) {
             btnSearchInfoLike.setBackgroundResource(R.drawable.information_button_good_off);
-        }else{
+        } else {
             btnSearchInfoLike.setBackgroundResource(R.drawable.information_button_good_on);
         }
         //좋아요 카운트
-        textViewLikeCount.setText(likeCount+"");
+        textViewLikeCount.setText(likeCount + "");
 
         vp.setAdapter(new pagerAdapter(getSupportFragmentManager(), placeName, placeInfo, placeTel, placeOpenTime, placeIntroduce, placeId));
         vp.setCurrentItem(0);
@@ -162,7 +163,7 @@ public class SearchInfoActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 isLikeInfo = new IsLikeInfo(placeId);
-                Call<IsLikeResult> getIsLike = service.getIsLike(token,isLikeInfo);
+                Call<IsLikeResult> getIsLike = service.getIsLike(token, isLikeInfo);
                 getIsLike.enqueue(new Callback<IsLikeResult>() {
                     @Override
                     public void onResponse(Call<IsLikeResult> call, Response<IsLikeResult> response) {
@@ -173,15 +174,16 @@ public class SearchInfoActivity extends AppCompatActivity {
                                 //좋아요 눌렀을 때
                                 btnSearchInfoLike.setBackgroundResource(R.drawable.information_button_good_on);
                                 likeCount += 1;
-                                textViewLikeCount.setText(likeCount+"");
+                                textViewLikeCount.setText(likeCount + "");
+
                             } else {
                                 //좋아요 취소할 때 msg = 12
                                 btnSearchInfoLike.setBackgroundResource(R.drawable.information_button_good_off);
-                                if(likeCount <= 0){
-                                    textViewLikeCount.setText(likeCount+"");
-                                }else{
+                                if (likeCount <= 0) {
+                                    textViewLikeCount.setText(likeCount + "");
+                                } else {
                                     likeCount -= 1;
-                                    textViewLikeCount.setText(likeCount+"");
+                                    textViewLikeCount.setText(likeCount + "");
                                 }
                             }
                         } else {

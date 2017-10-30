@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -49,6 +50,7 @@ public class MainActivity extends AppCompatActivity{
 
     private final String TAG = "MainActivity";
    // private String htmlPageUrl = "http://www.seoul.go.kr/v2012/news/list.html?tr_code=gnb_news";
+    private ArrayList<DetailsInfo> detailsDatas;
 
     @BindView(btn_toolBar_mypage)
     Button BtnToolBarMypage;
@@ -60,6 +62,12 @@ public class MainActivity extends AppCompatActivity{
     Button btnMainLandScape;
     @BindView(R.id.btn_main_keyPoint)
     Button btnMainKeyPoint;
+    @BindView(R.id.circleImageView_first)
+    ImageView circleImageViewFirst;
+    @BindView(R.id.circleImageView_second)
+    ImageView circleImageViewSecond;
+    @BindView(R.id.circleImageView_third)
+    ImageView circleImageViewThird;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
