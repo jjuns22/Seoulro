@@ -100,24 +100,15 @@ public class LandScapeFragment extends Fragment implements OnMapReadyCallback {
 
     @Override
     public void onMapReady(final GoogleMap googleMap) {
-//        LatLng SEOUL = new LatLng(37.56, 126.97);
-//        MarkerOptions markerOptions = new MarkerOptions();
-//        markerOptions.position(SEOUL);
-//        markerOptions.title("서울");
-//        markerOptions.snippet("수도");
-//        googleMap.addMarker(markerOptions);
-//        googleMap.moveCamera(CameraUpdateFactory.newLatLng(SEOUL));
-//        googleMap.animateCamera(CameraUpdateFactory.zoomTo(13));
-        LatLng SEOUL = new LatLng(37.556, 126.97);
-
+        LatLng SEOUL = new LatLng(37.56, 126.97);
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(SEOUL);
         markerOptions.title("서울");
-        markerOptions.snippet("한국의 수도");
+        markerOptions.snippet("수도");
         googleMap.addMarker(markerOptions);
-
         googleMap.moveCamera(CameraUpdateFactory.newLatLng(SEOUL));
-        googleMap.animateCamera(CameraUpdateFactory.zoomTo(15));
+        googleMap.animateCamera(CameraUpdateFactory.zoomTo(13));
+
 
 //        LatLng NEWARK = new LatLng(37.556, 126.97);
 //

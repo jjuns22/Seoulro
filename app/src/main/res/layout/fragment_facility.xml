@@ -1,10 +1,112 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-<ImageView
-    android:id="@+id/imageView_main_facility"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content" />
-</LinearLayout>
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/btn_landScape_roseIce"
+            android:layout_width="60dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="46dp"
+            android:layout_marginTop="65dp"
+            android:background="@drawable/map_icon_balloon" />
+
+        <Button
+            android:id="@+id/btn_landScape_roseStage"
+            android:layout_width="60dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="60dp"
+            android:layout_marginTop="104dp"
+            android:background="@drawable/map_icon_balloon" />
+
+        <Button
+            android:id="@+id/btn_landScape_seoullo_exibition"
+            android:layout_width="65dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="100dp"
+            android:layout_marginTop="66dp"
+            android:background="@drawable/map_icon_balloon" />
+
+        <Button
+            android:id="@+id/btn_landScape_bangbang_playground"
+            android:layout_width="55dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="230dp"
+            android:layout_marginTop="105dp"
+            android:background="@drawable/map_icon_balloon" />
+
+        <Button
+            android:id="@+id/btn_landScape_suguk"
+            android:layout_width="50dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="230dp"
+            android:layout_marginTop="74dp"
+            android:background="@drawable/map_icon_balloon" />
+
+        <Button
+            android:id="@+id/btn_landScape_zayeon_shimteo"
+            android:layout_width="50dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="255dp"
+            android:layout_marginTop="54dp"
+            android:background="@drawable/map_icon_balloon" />
+
+        <Button
+            android:id="@+id/btn_landScape_mocryeon_mudae"
+            android:layout_width="50dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="274dp"
+            android:layout_marginTop="95dp"
+            android:background="@drawable/map_icon_balloon" />
+
+        <Button
+            android:id="@+id/btn_landScape_mocryeon_dabang"
+            android:layout_width="50dp"
+            android:layout_height="25dp"
+            android:layout_marginLeft="297dp"
+            android:layout_marginTop="85dp"
+            android:background="@drawable/map_icon_balloon" />
+
+        <Button
+            android:id="@+id/btn_landScape_seoullo_gage"
+            android:layout_width="57dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="290dp"
+            android:layout_marginTop="45dp"
+            android:background="@drawable/map_icon_balloon" />
+
+        <Button
+            android:id="@+id/btn_landScape_hogisim_see"
+            android:layout_width="57dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="320dp"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/map_icon_balloon" />
+
+        <Button
+            android:id="@+id/btn_landScape_hogisim_hear"
+            android:layout_width="48dp"
+            android:layout_height="33dp"
+            android:layout_marginTop="174dp"
+            android:background="@drawable/map_icon_balloon" />
+        <Button
+            android:id="@+id/btn_landScape_hogisim_shinbi"
+            android:layout_width="55dp"
+            android:layout_height="33dp"
+            android:layout_marginTop="80dp"
+            android:layout_marginLeft="176dp"
+            android:background="@drawable/map_icon_balloon" />
+
+        <ImageView
+            android:id="@+id/imageView_main_facility"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/main_map_facilities" />
+
+    </FrameLayout>
+</RelativeLayout>

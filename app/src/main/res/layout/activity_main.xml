@@ -27,14 +27,6 @@
             android:layout_centerInParent="true"
             android:src="@drawable/mypage_bar_logoicon" />
 
-        <Button
-            android:id="@+id/btn_toolBar_search"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_alignParentRight="true"
-            android:layout_centerInParent="true"
-            android:layout_marginRight="10dp"
-            android:background="@drawable/main_search" />
     </RelativeLayout>
 
         <LinearLayout
