@@ -11,8 +11,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
@@ -46,11 +48,17 @@ import retrofit2.Response;
 
 import static com.seoulsi.client.seoulro.R.id.btn_toolBar_mypage;
 
-public class MainActivity extends AppCompatActivity{
+public class MainActivity extends AppCompatActivity {
 
     private final String TAG = "MainActivity";
-   // private String htmlPageUrl = "http://www.seoul.go.kr/v2012/news/list.html?tr_code=gnb_news";
+    // private String htmlPageUrl = "http://www.seoul.go.kr/v2012/news/list.html?tr_code=gnb_news";
     private ArrayList<DetailsInfo> detailsDatas;
+    private String rankFirstPicture;
+    private String rankSecondPicture;
+    private String rankThirdPicture;
+    private String rankFirstName;
+    private String rankSecondName;
+    private String rankThirdName;
 
     @BindView(btn_toolBar_mypage)
     Button BtnToolBarMypage;
@@ -68,6 +76,12 @@ public class MainActivity extends AppCompatActivity{
     ImageView circleImageViewSecond;
     @BindView(R.id.circleImageView_third)
     ImageView circleImageViewThird;
+    @BindView(R.id.textview_rank_first)
+    TextView textViewRankFirst;
+    @BindView(R.id.textview_rank_second)
+    TextView textViewRankSecond;
+    @BindView(R.id.textview_rank_third)
+    TextView textViewRankThird;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +91,27 @@ public class MainActivity extends AppCompatActivity{
 
         BtnToolBarMypage.setOnClickListener(onClickListener);
 
+        Intent getData = getIntent();
+        rankFirstPicture = getData.getStringExtra("rankFirst");
+        rankFirstName = getData.getStringExtra("rankFirstName");
+        rankSecondPicture = getData.getStringExtra("rankSecond");
+        rankSecondName = getData.getStringExtra("rankSecondName");
+        rankThirdPicture = getData.getStringExtra("rankThird");
+        rankThirdName = getData.getStringExtra("rankThirdName");
+
+        if(rankFirstPicture!=null) {
+            Glide.with(MainActivity.this).load(rankFirstPicture).into(circleImageViewFirst);
+            textViewRankFirst.setText(rankFirstName);
+        }
+        if(rankSecondPicture!=null) {
+            Glide.with(MainActivity.this).load(rankSecondPicture).into(circleImageViewSecond);
+            textViewRankSecond.setText(rankSecondName);
+        }
+
+       if(rankThirdPicture!=null){
+            Glide.with(MainActivity.this).load(rankThirdPicture).into(circleImageViewThird);
+            textViewRankThird.setText(rankThirdName);
+        }
         viewPagerMain.setAdapter(new pagerAdapter(getSupportFragmentManager()));
         viewPagerMain.setCurrentItem(0);
 

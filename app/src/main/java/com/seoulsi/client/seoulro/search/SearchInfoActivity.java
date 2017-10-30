@@ -175,7 +175,6 @@ public class SearchInfoActivity extends AppCompatActivity {
                                 btnSearchInfoLike.setBackgroundResource(R.drawable.information_button_good_on);
                                 likeCount += 1;
                                 textViewLikeCount.setText(likeCount + "");
-
                             } else {
                                 //좋아요 취소할 때 msg = 12
                                 btnSearchInfoLike.setBackgroundResource(R.drawable.information_button_good_off);

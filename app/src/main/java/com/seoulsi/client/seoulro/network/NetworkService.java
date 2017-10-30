@@ -3,6 +3,7 @@ package com.seoulsi.client.seoulro.network;
 
 import com.seoulsi.client.seoulro.login.LoginInfo;
 import com.seoulsi.client.seoulro.login.LoginResult;
+import com.seoulsi.client.seoulro.main.rank.RankResult;
 import com.seoulsi.client.seoulro.mypage.MyInfoResult;
 import com.seoulsi.client.seoulro.mypage.MyReviewResult;
 import com.seoulsi.client.seoulro.mypage.MyseoulloResult;
@@ -75,4 +76,7 @@ public interface NetworkService {
 
     @GET("/place/placeInfo/{placeid}")
     Call<DetailsResult> getDetailsResult(@Header("Authorization") String token, @Path("placeid") int placeid);
+
+    @GET("/filter/rank/{flag}")
+    Call<RankResult> getRankResult(@Path("flag") int flag);
 }

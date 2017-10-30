@@ -126,20 +126,21 @@
 
                         <de.hdodenhof.circleimageview.CircleImageView
                             android:id="@+id/circleImageView_second"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
                             android:layout_marginTop="60dp"
-                            android:background="@drawable/main_bg_ranking_second" />
+                            android:src="@drawable/main_bg_ranking_second" />
 
                         <View
                             android:layout_width="5dp"
                             android:layout_height="5dp"></View>
 
                         <TextView
+                            android:text=""
                             android:id="@+id/textview_rank_second"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="서울로여행자카페" />
+                            />
                     </LinearLayout>
 
                     <LinearLayout
@@ -151,23 +152,24 @@
 
                         <de.hdodenhof.circleimageview.CircleImageView
                             android:id="@+id/circleImageView_first"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_width="120dp"
+                            android:layout_height="120dp"
                             android:layout_marginBottom="1dp"
-                            android:background="@drawable/main_bg_ranking_first" />
+                            android:src="@drawable/main_bg_ranking_first" />
 
                         <View
                             android:layout_width="5dp"
                             android:layout_height="5dp"></View>
 
                         <TextView
+                            android:text=""
                             android:id="@+id/textview_rank_first"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="서울로여행자카페" />
+                            android:layout_height="wrap_content" />
                     </LinearLayout>
 
                     <LinearLayout
+                        android:gravity="center"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -175,21 +177,20 @@
 
                         <de.hdodenhof.circleimageview.CircleImageView
                             android:id="@+id/circleImageView_third"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="25dp"
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
                             android:layout_marginTop="60dp"
-                            android:background="@drawable/main_bg_ranking_third" />
+                            android:src="@drawable/main_bg_ranking_third" />
 
                         <View
                             android:layout_width="5dp"
                             android:layout_height="5dp"></View>
 
                         <TextView
+                            android:text=""
                             android:id="@+id/textview_rank_third"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="서울로여행자카페" />
+                            android:layout_height="wrap_content" />
 
                     </LinearLayout>
                 </LinearLayout>

@@ -15,16 +15,23 @@ import android.widget.Toast;
 import com.seoulsi.client.seoulro.main.MainActivity;
 import com.seoulsi.client.seoulro.R;
 import com.seoulsi.client.seoulro.application.ApplicationController;
+import com.seoulsi.client.seoulro.main.rank.RankResult;
 import com.seoulsi.client.seoulro.mypage.MyPageActivity;
 import com.seoulsi.client.seoulro.search.SearchInfoActivity;
+import com.seoulsi.client.seoulro.search.details.DetailsInfo;
+import com.seoulsi.client.seoulro.search.details.DetailsResult;
 import com.seoulsi.client.seoulro.signup.SignUpActivity;
 import com.seoulsi.client.seoulro.network.NetworkService;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static java.security.AccessController.getContext;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -36,12 +43,18 @@ public class LoginActivity extends AppCompatActivity {
     EditText editTextLoginEmail;
     @BindView(R.id.edittext_login_pwd)
     EditText editTextLoginPwd;
-
+    private final String TAG = "LoginActivity";
+    private String rankFirstPicture;
+    private String rankSecondPicture;
+    private String rankThirdPicture;
+    private String rankFirstName;
+    private String rankSecondName;
+    private String rankThirdName;
+    private int flag = 1;
     private NetworkService service;
     private String email;
     private String password;
-    private String sendToken;
-
+    private ArrayList<DetailsInfo> rankList = new ArrayList<>();
     //Back 키 두번 클릭 여부 확인
     private final long FINSH_INTERVAL_TIME = 2000;
     private long backPressedTime = 0;
@@ -122,10 +135,8 @@ public class LoginActivity extends AppCompatActivity {
                         Log.e("test", "nickname : " + LoginUserInfo.getInstance().getUserInfo().nickname);
                         Log.e("test", "token : " + LoginUserInfo.getInstance().getUserInfo().token);
                         editor.commit();
-                        Intent intent = new Intent(getBaseContext(), MainActivity.class);   //임시로 정보보기로
 
-                        startActivity(intent);
-                        finish();
+                        RankNetWork();
                     } else if (response.body().msg.equals("6")) {
                         Log.i("test", "비밀번호 오류");
                         //비밀번호 오류
@@ -164,5 +175,45 @@ public class LoginActivity extends AppCompatActivity {
             backPressedTime = tempTime;
             Toast.makeText(getApplicationContext(), "뒤로 가기 키를 한번 더 누르시면 종료됩니다.", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    void RankNetWork(){
+        Call<RankResult> getRankResult = service.getRankResult(flag);
+        getRankResult.enqueue(new Callback<RankResult>() {
+            @Override
+            public void onResponse(Call<RankResult> call, Response<RankResult> response) {
+                if (response.isSuccessful()) {
+                    if (response.body().msg.equals("3")) {
+                        Log.i(TAG,"랭킹통신성공");
+                        rankList.addAll(response.body().result);
+                        rankFirstPicture = rankList.get(0).place_picture;
+                        rankFirstName = rankList.get(0).place_name;
+                        rankSecondPicture = rankList.get(1).place_picture;
+                        rankSecondName = rankList.get(1).place_name;
+                        rankThirdPicture = rankList.get(2).place_picture;
+                        rankThirdName = rankList.get(2).place_name;
+
+                        Log.i(TAG,"rankFirstName : "+rankFirstName);
+                        Log.i(TAG,"rankSecondName "+rankSecondName );
+                        Intent intent = new Intent(getBaseContext(), MainActivity.class);   //임시로 정보보기로
+                        intent.putExtra("rankFirst",rankFirstPicture);
+                        intent.putExtra("rankFirstName",rankFirstName);
+                        intent.putExtra("rankSecond",rankSecondPicture);
+                        intent.putExtra("rankSecondName",rankSecondName);
+                        intent.putExtra("rankThird",rankThirdPicture);
+                        intent.putExtra("rankThirdName",rankThirdName);
+                        startActivity(intent);
+                        finish();
+                    }
+                } else {
+                    Toast.makeText(getBaseContext(), "오류", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<RankResult> call, Throwable t) {
+                Toast.makeText(getBaseContext(), "서버 오류", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }
