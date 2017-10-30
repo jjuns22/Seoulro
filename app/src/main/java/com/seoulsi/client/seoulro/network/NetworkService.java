@@ -3,6 +3,7 @@ package com.seoulsi.client.seoulro.network;
 
 import com.seoulsi.client.seoulro.login.LoginInfo;
 import com.seoulsi.client.seoulro.login.LoginResult;
+import com.seoulsi.client.seoulro.main.proofShot.ProofShotResult;
 import com.seoulsi.client.seoulro.main.rank.RankResult;
 import com.seoulsi.client.seoulro.mypage.MyInfoResult;
 import com.seoulsi.client.seoulro.mypage.MyReviewResult;
@@ -79,4 +80,7 @@ public interface NetworkService {
 
     @GET("/filter/rank/{flag}")
     Call<RankResult> getRankResult(@Path("flag") int flag);
+
+    @GET("/main/allphoto/{id}")
+    Call<ProofShotResult> getProofResult(@Path("id") int id);
 }
