@@ -5,12 +5,5 @@ package com.seoulsi.client.seoulro.main.proofShot;
  */
 
 public class ProofShotDatas {
-    String place_picture;
-    public  ProofShotDatas(String place_picture){
-        this.place_picture = place_picture;
-    }
-    public String getimage_url()
-    {
-        return place_picture;
-    }
+   public String place_picture;
 }

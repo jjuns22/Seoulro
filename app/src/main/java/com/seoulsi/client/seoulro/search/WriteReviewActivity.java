@@ -278,29 +278,7 @@ public class WriteReviewActivity extends AppCompatActivity {
         }
     }
 
-    //    public static int getImageOrientation(String path){
-//
-//        int rotation =0;
-//        try {
-//            ExifInterface exif = new ExifInterface(path);
-//            int rot= exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
-//
-//            if(rot == ExifInterface.ORIENTATION_ROTATE_90){
-//                rotation = 90;
-//            }else if(rot == ExifInterface.ORIENTATION_ROTATE_180){
-//                rotation = 180;
-//            }else if(rot == ExifInterface.ORIENTATION_ROTATE_270){
-//                rotation = 270;
-//            }else{
-//                rotation = 0;
-//            }
-//        } catch (IOException e) {
-//            // TODO Auto-generated catch block
-//            e.printStackTrace();
-//        }
-//
-//        return rotation;
-//    }
+
     //  화면 비율 때문에 회전된 이미지 바로잡기
     private Bitmap imgRotate(Bitmap bmp) {
         int width = bmp.getWidth();
@@ -315,18 +293,6 @@ public class WriteReviewActivity extends AppCompatActivity {
         return resizedBitmap;
     }
 
-//    public static Bitmap imgRotate(Bitmap bmp, int orientation){
-//        int width = bmp.getWidth();
-//        int height = bmp.getHeight();
-//
-//        Matrix matrix = new Matrix();
-//        matrix.postRotate(orientation);
-//
-//        Bitmap resizedBitmap = Bitmap.createBitmap(bmp, 0, 0, width, height, matrix, true);
-//        bmp.recycle();
-//
-//        return resizedBitmap;
-//    }
 
     public String getRealPathFromURI(Uri contentUri) {
         String[] proj = {MediaStore.Images.Media.DATA};
@@ -383,14 +349,14 @@ public class WriteReviewActivity extends AppCompatActivity {
                                         }
                                     } else {
                                         Log.d(TAG, "실패");
-                                        Toast.makeText(getBaseContext(), "실패", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(getBaseContext(), "서비스 연결 문제", Toast.LENGTH_SHORT).show();
                                     }
                                 }
                             }
 
                             @Override
                             public void onFailure(Call<UploadReviewResult> call, Throwable t) {
-                                Toast.makeText(getBaseContext(), "onFailure", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getBaseContext(), "서비스 연결 문제", Toast.LENGTH_SHORT).show();
                             }
                         });
                     }

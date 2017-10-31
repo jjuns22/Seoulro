@@ -7,4 +7,5 @@ package com.seoulsi.client.seoulro.search.like;
 public class IsLikeResult {
     public String msg;
     public int islike;
+    public int like_count;
 }

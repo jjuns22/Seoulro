@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <com.google.android.gms.maps.MapView
-        android:id="@+id/map"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <ImageView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:name="com.google.android.gms.maps.MapFragment"
-        android:apiKey="AIzaSyDriXS2CiMl53A1ho_lcT1DcVOyCtGKZu0"
-        />
+        android:layout_height="wrap_content"
+        android:background="@drawable/main_map_walkload" />
 </LinearLayout>

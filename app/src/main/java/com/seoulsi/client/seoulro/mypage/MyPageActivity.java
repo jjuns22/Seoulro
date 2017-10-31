@@ -1,20 +1,11 @@
 package com.seoulsi.client.seoulro.mypage;
 
-import android.Manifest;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Matrix;
-import android.net.Uri;
 import android.os.Build;
-import android.provider.MediaStore;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.content.IntentCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -26,33 +17,18 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-import com.gun0912.tedpermission.PermissionListener;
-import com.gun0912.tedpermission.TedPermission;
 import com.seoulsi.client.seoulro.R;
 import com.seoulsi.client.seoulro.application.ApplicationController;
 import com.seoulsi.client.seoulro.login.LoginActivity;
 import com.seoulsi.client.seoulro.login.LoginUserInfo;
 import com.seoulsi.client.seoulro.main.MainActivity;
+import com.seoulsi.client.seoulro.main.proofShot.ProofShotActivity;
 import com.seoulsi.client.seoulro.mypage.Fragment.MyReviewFragment;
 import com.seoulsi.client.seoulro.mypage.Fragment.MySeoulroFragment;
-import com.seoulsi.client.seoulro.mypage.profile.UpdateProfileResult;
 import com.seoulsi.client.seoulro.network.NetworkService;
-import com.seoulsi.client.seoulro.search.SearchActivity;
-import com.seoulsi.client.seoulro.search.UploadReviewResult;
-import com.seoulsi.client.seoulro.search.WriteReviewActivity;
-
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
-import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -61,8 +37,10 @@ public class MyPageActivity extends AppCompatActivity {
 
     @BindView(R.id.btn_logout)
     Button btnLogout;
-    @BindView(R.id.btn_mypage_back)
-    Button btnMyPageBack;
+    @BindView(R.id.imageview_mypage_back)
+    ImageView imageViewMyPageBack;
+    @BindView(R.id.btn_mypage_proofShot)
+    Button btnMypageProofShot;
 
     private final String TAG = "MyPageAcitivity";
 
@@ -100,60 +78,21 @@ public class MyPageActivity extends AppCompatActivity {
         home.setOnClickListener(click);
 
         //뒤로 가기 버튼 클릭
-        btnMyPageBack.setOnClickListener(new View.OnClickListener() {
+        imageViewMyPageBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
 
-//        //프로필 이미지 선택
-//        profileImg.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MyPageActivity.this);
-//
-//                // 제목셋팅
-//                alertDialogBuilder.setTitle("프로필");
-//
-//                // AlertDialog 셋팅
-//                alertDialogBuilder
-//                        .setMessage("프로필 사진 선택")
-//                        .setCancelable(false)
-//                        .setPositiveButton("앨범에서 사진 선택",
-//                                new DialogInterface.OnClickListener() {
-//                                    public void onClick(DialogInterface dialog, int id) {
-//                                        int permissionCheck = ContextCompat.checkSelfPermission(MyPageActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE);
-//
-//                                        if (permissionCheck == PackageManager.PERMISSION_DENIED) {
-//                                            //권한없음
-//                                            ActivityCompat.requestPermissions(MyPageActivity.this,
-//                                                    new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
-//                                                    TAKE_GALLERY);
-//                                        } else {
-//                                            // 권한 있음
-//                                            Intent intent = new Intent();
-//                                            intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
-//                                            intent.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-//                                            intent.setAction(Intent.ACTION_GET_CONTENT);
-//                                            startActivityForResult(intent, TAKE_GALLERY);
-//                                        }
-//                                    }
-//
-//                                })
-//                        .setNegativeButton("취소",
-//                                new DialogInterface.OnClickListener() {
-//                                    public void onClick(DialogInterface dialog, int id) {
-//                                        dialog.cancel();
-//                                    }
-//                                });
-//
-//                // 다이얼로그 생성
-//                AlertDialog alertDialog = alertDialogBuilder.create();
-//                // 다이얼로그 보여주기
-//                alertDialog.show();
-//            }
-//        });
+        //인즈샷 클릭
+        btnMypageProofShot.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MyPageActivity.this, ProofShotActivity.class);
+                startActivity(intent);
+            }
+        });
         //로그아웃 버튼
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -209,19 +148,15 @@ public class MyPageActivity extends AppCompatActivity {
                     MyInfoResult myInfoList = response.body();
                     nickname.setText(myInfoList.result.get(0).nickname);
                     introduce.setText(myInfoList.result.get(0).introduce);
-//                    if (!myInfoList.result.get(0).profile_picture.equals("")) {
-//                        Glide.with(getApplicationContext()).load(myInfoList.result.get(0).profile_picture).into(profileImg);
-//                    }
-
 
                 } else {
-                    Toast.makeText(getApplicationContext(), "어디가 문제지", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "서비스 연결 문제", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<MyInfoResult> call, Throwable t) {
-                Toast.makeText(getApplicationContext(), "서비스 연결을 확인하세요.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "서비스 연결 문제", Toast.LENGTH_SHORT).show();
                 Log.i("err", t.getMessage());
             }
         });
@@ -359,84 +294,4 @@ public class MyPageActivity extends AppCompatActivity {
             }
         }
     };
-
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//        if (resultCode == RESULT_OK) {
-//            if (requestCode == TAKE_GALLERY) {
-//                try {
-//                    //이미지 데이터를 비트맵으로 받아온다.
-//                    //Bitmap image_bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), data.getData());
-//
-//                    //imageViewProfile에 이미지 세팅
-//                    //imageViewWriteReviewImg.setImageBitmap(image_bitmap);
-//                    Glide.with(getBaseContext())
-//                            .load(data.getData())
-//                            .into(profileImg);
-//                    profileImg.setScaleType(ImageView.ScaleType.FIT_XY);
-//                    this.imgUri = data.getData();
-//                    imgUrl = this.imgUri.getPath();
-//
-//                    Log.i(TAG,"imgUrl : "+ imgUrl);
-//                    if (imgUrl.equals("") || imgUrl == null) {
-//                        photo = null;
-//                    } else {
-//
-//                        /**
-//                         * 비트맵 관련한 자료는 아래의 링크에서 참고
-//                         * http://mainia.tistory.com/468
-//                         */
-//
-//                        BitmapFactory.Options options = new BitmapFactory.Options();
-//                        options.inSampleSize = 4; //얼마나 줄일지 설정하는 옵션 4--> 1/4로 줄이겠다
-//
-//                        InputStream in = null;
-//                        try {
-//                            in = getContentResolver().openInputStream(imgUri);
-//                        } catch (FileNotFoundException e) {
-//                            e.printStackTrace();
-//                        }
-//
-//                        Bitmap bitmap = BitmapFactory.decodeStream(in, null, options); // InputStream 으로부터 Bitmap 을 만들어 준다.
-//                        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-//                        bitmap.compress(Bitmap.CompressFormat.JPEG, 20, baos);
-//                        // 압축 옵션( JPEG, PNG ) , 품질 설정 ( 0 - 100까지의 int형 ), 압축된 바이트 배열을 담을 스트림
-//                        photoBody = RequestBody.create(MediaType.parse("image/png"), baos.toByteArray());
-//                        photo = new File(imgUrl);
-//
-//                        if (photo != null) {
-//                            profileImgToServer = MultipartBody.Part.createFormData("profileimg", photo.getName(), photoBody);
-//                        }
-//
-//                        Call<UpdateProfileResult> getProfileResult = service.getProfileResult(token, profileImgToServer,null);
-//                        Log.d(TAG,"프로필사진 통신전");
-//                        getProfileResult.enqueue(new Callback<UpdateProfileResult>() {
-//                            @Override
-//                            public void onResponse(Call<UpdateProfileResult> call, Response<UpdateProfileResult> response) {
-//                                if (response.isSuccessful()) {
-//                                    Log.d(TAG,"프로필사진 통신 성공");
-//                                    if (response.body().msg.equals("5")) {
-//                                        Toast.makeText(getBaseContext(), "성공", Toast.LENGTH_SHORT).show();
-//                                    }
-//                                } else {
-//                                    Log.d(TAG,"프로필사진 통신 실패");
-//                                    Toast.makeText(getBaseContext(), "실패", Toast.LENGTH_SHORT).show();
-//                                }
-//                            }
-//
-//                            @Override
-//                            public void onFailure(Call<UpdateProfileResult> call, Throwable t) {
-//                                Log.d(TAG,"프로필사진 통신 실패");
-//
-//                                Toast.makeText(getBaseContext(), "onFailure", Toast.LENGTH_SHORT).show();
-//                            }
-//                        });
-//                    }
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        }
-//    }
 }

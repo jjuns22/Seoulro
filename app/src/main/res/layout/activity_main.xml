@@ -47,21 +47,21 @@
             android:layout_marginTop="5dp">
 
             <Button
-                android:id="@+id/btn_main_facility"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@drawable/mypage_menu_green"
-                android:text="시설"
-                android:textColor="#cacaca" />
-
-            <Button
                 android:id="@+id/btn_main_landScape"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@drawable/mypage_menu_white"
+                android:background="@drawable/mypage_menu_green"
                 android:text="조경"
+                android:textColor="#cacaca" />
+
+            <Button
+                android:id="@+id/btn_main_facility"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/mypage_menu_white"
+                android:text="시설"
                 android:textColor="#cacaca" />
 
             <Button
@@ -86,6 +86,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:gravity="center"
             android:orientation="vertical">
 
             <LinearLayout
@@ -100,7 +101,7 @@
 
                 <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="17dp"
                     android:background="@drawable/main_ranking_text" />
             </LinearLayout>
 
@@ -113,35 +114,51 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_alignParentStart="true"
-                    android:gravity="center_horizontal"
+                    android:gravity="center_vertical"
                     android:orientation="horizontal">
 
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="30dp"
                         android:layout_weight="1"
                         android:gravity="center"
                         android:orientation="vertical">
 
-                        <de.hdodenhof.circleimageview.CircleImageView
-                            android:id="@+id/circleImageView_second"
-                            android:layout_width="70dp"
-                            android:layout_height="70dp"
-                            android:layout_marginTop="60dp"
-                            android:src="@drawable/main_bg_ranking_second" />
+                        <FrameLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity=""
+                                android:layout_marginTop="50dp"
+                                android:text="2"
+                                android:textSize="20dp" />
+
+                            <de.hdodenhof.circleimageview.CircleImageView
+                                android:id="@+id/circleImageView_second"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="60dp"
+                                android:src="@drawable/main_ranking_second" />
+                        </FrameLayout>
 
                         <View
                             android:layout_width="5dp"
                             android:layout_height="5dp"></View>
 
                         <TextView
-                            android:text=""
                             android:id="@+id/textview_rank_second"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            />
+                            android:text="해당시설없음" />
                     </LinearLayout>
+
+                    <View
+                        android:layout_width="10dp"
+                        android:layout_height="10dp"></View>
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -150,47 +167,76 @@
                         android:gravity="center"
                         android:orientation="vertical">
 
-                        <de.hdodenhof.circleimageview.CircleImageView
-                            android:id="@+id/circleImageView_first"
-                            android:layout_width="120dp"
-                            android:layout_height="120dp"
-                            android:layout_marginBottom="1dp"
-                            android:src="@drawable/main_bg_ranking_first" />
+                        <FrameLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="10dp"
+                                android:text="1"
+                                android:textColor="@color/colorGreen"
+                                android:textSize="30dp" />
+
+                            <de.hdodenhof.circleimageview.CircleImageView
+                                android:layout_marginRight="10dp"
+                                android:id="@+id/circleImageView_first"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="1dp"
+                                android:src="@drawable/main_ranking_first" />
+                        </FrameLayout>
 
                         <View
                             android:layout_width="5dp"
                             android:layout_height="5dp"></View>
 
                         <TextView
-                            android:text=""
                             android:id="@+id/textview_rank_first"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
+                            android:layout_height="wrap_content"
+                            android:text="해당시설없음" />
                     </LinearLayout>
 
                     <LinearLayout
-                        android:gravity="center"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:gravity="center"
                         android:orientation="vertical">
 
-                        <de.hdodenhof.circleimageview.CircleImageView
-                            android:id="@+id/circleImageView_third"
-                            android:layout_width="70dp"
-                            android:layout_height="70dp"
-                            android:layout_marginTop="60dp"
-                            android:src="@drawable/main_bg_ranking_third" />
+                        <FrameLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="end"
+                                android:layout_marginRight="8dp"
+                                android:layout_marginTop="50dp"
+                                android:text="3"
+                                android:textSize="20dp" />
+
+                            <de.hdodenhof.circleimageview.CircleImageView
+                                android:id="@+id/circleImageView_third"
+                                android:layout_marginRight="20dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="60dp"
+                                android:src="@drawable/main_ranking_third" />
+                        </FrameLayout>
 
                         <View
                             android:layout_width="5dp"
                             android:layout_height="5dp"></View>
 
                         <TextView
-                            android:text=""
                             android:id="@+id/textview_rank_third"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
+                            android:layout_height="wrap_content"
+                            android:text="해당시설없음" />
 
                     </LinearLayout>
                 </LinearLayout>
@@ -212,6 +258,7 @@
                     android:layout_weight="1.5" />
 
                 <Button
+                    android:id="@+id/btn_main_info"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1.5"
@@ -223,6 +270,7 @@
                     android:layout_weight="1" />
 
                 <Button
+                    android:id="@+id/btn_main_proofShot"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1.63"

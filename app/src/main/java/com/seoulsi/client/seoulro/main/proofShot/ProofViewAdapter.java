@@ -50,7 +50,7 @@ public class ProofViewAdapter extends RecyclerView.Adapter<ProofViewHolder>{
 
     @Override
     public void onBindViewHolder(final ProofViewHolder holder, final int position) {
-        if (String.valueOf(myProofDatas.get(position).getimage_url()).equals("")) {
+        if (String.valueOf(myProofDatas.get(position).place_picture).equals("")) {
             holder.proofImg.setImageResource(R.drawable.mypage_review_picture);
         } else {
             //holder.seoulloImg.setImageResource(mySeoulloDatas.get(position).getimage_url());

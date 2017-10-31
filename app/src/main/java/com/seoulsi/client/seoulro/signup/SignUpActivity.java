@@ -147,7 +147,7 @@ public class SignUpActivity extends AppCompatActivity {
                                     editor.commit();
                                     finish();
                                 } else
-                                    Toast.makeText(getBaseContext(), "서버연결오류", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getBaseContext(), "서버 연결 문제", Toast.LENGTH_SHORT).show();
                             }
                         }
 
@@ -237,14 +237,14 @@ public class SignUpActivity extends AppCompatActivity {
                             editTextSignupNickname.requestFocus();
                         } else {
                             nickdupcount = 0;
-                            Toast.makeText(SignUpActivity.this, "서버연결오류", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(SignUpActivity.this, "서버 연결 문제", Toast.LENGTH_SHORT).show();
                         }
                     }
                 }
 
                 @Override
                 public void onFailure(Call<DupResult> call, Throwable t) {
-                    Toast.makeText(getBaseContext(), "서버연결오류", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getBaseContext(), "서버 연결 문제", Toast.LENGTH_SHORT).show();
                 }
             });
 
@@ -265,14 +265,14 @@ public class SignUpActivity extends AppCompatActivity {
                                 editTextSignupEmail.requestFocus();
                             } else {
                                 emaildupcount = 0;
-                                Toast.makeText(SignUpActivity.this, "서버연결오류", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(SignUpActivity.this, "서버 연결 문제", Toast.LENGTH_SHORT).show();
                             }
                         }
                     }
 
                     @Override
                     public void onFailure(Call<DupResult> call, Throwable t) {
-                        Toast.makeText(getBaseContext(), "서버연결오류", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getBaseContext(), "서버 연결 문제", Toast.LENGTH_SHORT).show();
                     }
                 });
             }

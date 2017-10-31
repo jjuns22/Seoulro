@@ -34,8 +34,8 @@ public class ReviewDetailsActivity extends AppCompatActivity {
     @Nullable
     @BindView(R.id.imageview_details_review_image)
     ImageView imageViewDetailsReviewImage;
-    @BindView(R.id.btn_toolBar_details_review_cancel)
-    Button btnToolBarDetailsReviewCancel;
+    @BindView(R.id.imageview_toolBar_details_review_cancel)
+    ImageView imageViewToolBarDetailsReviewCancel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +58,7 @@ public class ReviewDetailsActivity extends AppCompatActivity {
         textViewDetailsReviewTitle.setText(title);
         textViewDetailsReviewContent.setText(content);
 
-        btnToolBarDetailsReviewCancel.setOnClickListener(new View.OnClickListener() {
+        imageViewToolBarDetailsReviewCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();

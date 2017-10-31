@@ -48,8 +48,8 @@ public class SearchInfoActivity extends AppCompatActivity {
     TextView textViewSearchInfoPlaceAddress;
     @BindView(R.id.imageview_search_info_img)
     ImageView imageViewSearchInfoImg;
-    @BindView(R.id.btn_search_info_back)
-    Button btnSearchInfoBack;
+    @BindView(R.id.imageview_search_info_back)
+    ImageView imageViewSearchInfoBack;
     @BindView(R.id.textview_like_count)
     TextView textViewLikeCount;
 
@@ -152,7 +152,7 @@ public class SearchInfoActivity extends AppCompatActivity {
         });
         // Set up the ViewPager with the sections adapter.
 
-        btnSearchInfoBack.setOnClickListener(new View.OnClickListener() {
+        imageViewSearchInfoBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
@@ -173,7 +173,7 @@ public class SearchInfoActivity extends AppCompatActivity {
                             if (response.body().msg.equals("9")) {
                                 //좋아요 눌렀을 때
                                 btnSearchInfoLike.setBackgroundResource(R.drawable.information_button_good_on);
-                                likeCount += 1;
+                                likeCount = response.body().like_count;
                                 textViewLikeCount.setText(likeCount + "");
                             } else {
                                 //좋아요 취소할 때 msg = 12
@@ -181,20 +181,20 @@ public class SearchInfoActivity extends AppCompatActivity {
                                 if (likeCount <= 0) {
                                     textViewLikeCount.setText(likeCount + "");
                                 } else {
-                                    likeCount -= 1;
+                                    likeCount = response.body().like_count;
                                     textViewLikeCount.setText(likeCount + "");
                                 }
                             }
                         } else {
                             //Log.d(TAG, "실패");
-                            Toast.makeText(getBaseContext(), "실패", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getBaseContext(), "서비스 연결 문제", Toast.LENGTH_SHORT).show();
                         }
 
                     }
 
                     @Override
                     public void onFailure(Call<IsLikeResult> call, Throwable t) {
-                        Toast.makeText(getBaseContext(), "onFailure", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getBaseContext(), "onFailure", Toast.LENGTH_SHORT).show();
                     }
                 });
             }

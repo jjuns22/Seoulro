@@ -21,13 +21,12 @@
 
             <Button
                 android:id="@+id/btn_write_review"
-                android:background="@drawable/information_button_write"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_gravity="end|bottom"
                 android:layout_marginBottom="15dp"
                 android:layout_marginRight="20dp"
-                />
+                android:background="@drawable/information_button_write" />
         </FrameLayout>
     </LinearLayout>
 </LinearLayout>

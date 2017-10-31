@@ -60,6 +60,7 @@ public class KeyPointFragment extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_keypoint, null);
 
+        Log.d("TAG","주요지점 들어옴");
         ButterKnife.bind(this, view);
         token = LoginUserInfo.getInstance().getUserInfo().token;
         //서비스 객체 초기화
@@ -128,23 +129,20 @@ public class KeyPointFragment extends Fragment{
                         intent.putExtra("islike",detailsDatas.get(0).islike);
                         intent.putExtra("likeCount",detailsDatas.get(0).like_count);
                         startActivity(intent);
-                        //Toast.makeText(getBaseContext(), "성공", Toast.LENGTH_SHORT).show();
-                    } else if (response.body().msg.equals("1")) {
-                        // Toast.makeText(getBaseContext(), "유효하지 않은 토큰에러", Toast.LENGTH_SHORT).show();
-                    }else{
-                        //Toast.makeText(getBaseContext(), "해당계정이 없습니다.", Toast.LENGTH_SHORT).show();
+                    } else{
+                        Toast.makeText(getContext(), "", Toast.LENGTH_SHORT).show();
                     }
 
                 } else {
                     Log.d(TAG, "실패");
-                    Toast.makeText(getContext(), "커넥팅 에러", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "서비스 연결 문제", Toast.LENGTH_SHORT).show();
                 }
             }
 
 
             @Override
             public void onFailure(Call<DetailsResult> call, Throwable t) {
-                Toast.makeText(getContext(), "onFailure", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "서비스 연결 문제", Toast.LENGTH_SHORT).show();
             }
         });
     }

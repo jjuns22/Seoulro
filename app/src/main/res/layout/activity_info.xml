@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.seoulsi.client.seoulro.main.info.InfoActivity">
+
+    <RelativeLayout
+        android:id="@+id/toolBar_Info"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#fff">
+
+        <ImageView
+            android:id="@+id/imageview_main_info_back"
+            android:layout_width="19dp"
+            android:layout_height="20dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/back_button" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:src="@drawable/mypage_bar_logoicon" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="#e2e2e2"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp">
+
+            <Button
+                android:id="@+id/btn_main_info_event"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/mypage_menu_green"
+                android:text="이벤트"
+                android:textColor="#cacaca" />
+
+            <Button
+                android:id="@+id/btn_main_info_tour_course"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/mypage_menu_white"
+                android:text="도보관광코스"
+                android:textColor="#cacaca" />
+
+            <Button
+                android:id="@+id/btn_main_info_permanent_program"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/mypage_menu_white"
+                android:text="상설프로그램"
+                android:textColor="#cacaca" />
+        </LinearLayout>
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/viewpager_main_info"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="5dp"></android.support.v4.view.ViewPager>
+    </LinearLayout>
+</LinearLayout>

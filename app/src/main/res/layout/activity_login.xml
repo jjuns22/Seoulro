@@ -86,10 +86,11 @@
 
         <EditText
             android:id="@+id/edittext_login_pwd"
-            android:password="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@null" />
+            android:background="@null"
+            android:imeOptions="actionSearch"
+            android:password="true" />
     </LinearLayout>
 
     <View

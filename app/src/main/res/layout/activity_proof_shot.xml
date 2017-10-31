@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:orientation="vertical"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.seoulsi.client.seoulro.main.proofShot.ProofShotActivity">
 
     <RelativeLayout
@@ -14,13 +14,13 @@
         android:background="#fff">
 
         <Button
-            android:id="@+id/btn_toolBar_mypage"
+            android:id="@+id/btn_proofShot_cascel"
             android:layout_width="19dp"
             android:layout_height="20dp"
             android:layout_alignParentLeft="true"
             android:layout_centerInParent="true"
             android:layout_marginLeft="10dp"
-            android:background="@drawable/main_mypage" />
+            android:background="@drawable/review_picture_cancel" />
 
         <ImageView
             android:layout_width="wrap_content"
@@ -28,28 +28,21 @@
             android:layout_centerInParent="true"
             android:src="@drawable/mypage_bar_logoicon" />
 
-        <Button
-            android:id="@+id/btn_toolBar_search"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_alignParentRight="true"
-            android:layout_centerInParent="true"
-            android:layout_marginRight="10dp"
-            android:background="@drawable/main_search" />
     </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="30dp">
+
         <TextView
-            android:background="#fff"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="#서울로7017"
-            android:textStyle="bold"
+            android:background="#fff"
             android:gravity="center"
-            />
+            android:text="#서울로7017"
+            android:textStyle="bold" />
     </RelativeLayout>
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerview_proofshot"
         android:layout_width="match_parent"
@@ -57,14 +50,5 @@
         android:layout_weight="1">
 
     </android.support.v7.widget.RecyclerView>
-    <Button
-        android:id="@+id/btn_proof"
-        android:layout_weight="4"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#5ebf90"
-        android:text="나도 서울로 7017 인증샷 올리기"
-        android:textColor="#ffffff"
-        android:textSize="20sp"/>
 
 </LinearLayout>

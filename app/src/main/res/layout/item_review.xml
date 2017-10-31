@@ -17,7 +17,8 @@
         <ImageView
             android:id="@+id/imageview_review_image"
             android:layout_width="100dp"
-            android:layout_height="100dp" />
+            android:layout_height="100dp"
+            android:src="@drawable/mypage_review_picture" />
 
         <View
             android:layout_width="20dp"

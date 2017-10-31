@@ -19,41 +19,42 @@
             android:id="@+id/btn_keyPlace_seoul_hwaban"
             android:layout_width="45dp"
             android:layout_height="45dp"
-            android:layout_marginTop="118dp"
             android:layout_marginLeft="46dp"
+            android:layout_marginTop="118dp"
             android:background="@drawable/map_icon_balloon" />
 
         <Button
             android:id="@+id/btn_keyPlace_jeongwan_class"
             android:layout_width="45dp"
             android:layout_height="45dp"
-            android:layout_marginTop="156dp"
             android:layout_marginLeft="14dp"
+            android:layout_marginTop="156dp"
             android:background="@drawable/map_icon_balloon" />
 
         <Button
             android:id="@+id/btn_keyPlace_seoullo_tourist_cafe"
             android:layout_width="60dp"
             android:layout_height="45dp"
-            android:layout_marginTop="115dp"
             android:layout_marginLeft="210dp"
+            android:layout_marginTop="115dp"
             android:background="@drawable/map_icon_balloon" />
 
         <Button
             android:id="@+id/btn_keyPlace_seoullo_woonyeongdan"
             android:layout_width="60dp"
             android:layout_height="45dp"
-            android:layout_marginTop="103dp"
             android:layout_marginLeft="260dp"
+            android:layout_marginTop="103dp"
             android:background="@drawable/map_icon_balloon" />
 
         <Button
             android:id="@+id/btn_keyPlace_seoul_information_center"
             android:layout_width="60dp"
             android:layout_height="45dp"
-            android:layout_marginTop="31dp"
             android:layout_marginLeft="307dp"
+            android:layout_marginTop="31dp"
             android:background="@drawable/map_icon_balloon" />
+
         <ImageView
             android:id="@+id/imageView_main_keyPoint"
             android:layout_width="match_parent"

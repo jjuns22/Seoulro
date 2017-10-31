@@ -12,14 +12,14 @@
         android:layout_height="50dp"
         android:background="#fff">
 
-        <Button
-            android:id="@+id/btn_search_info_back"
+        <ImageView
+            android:id="@+id/imageview_search_info_back"
             android:layout_width="19dp"
             android:layout_height="20dp"
             android:layout_alignParentLeft="true"
             android:layout_centerInParent="true"
             android:layout_marginLeft="10dp"
-            android:background="@drawable/review_picture_cancel" />
+            android:src="@drawable/back_button" />
 
         <ImageView
             android:layout_width="wrap_content"
@@ -54,11 +54,11 @@
 
                 <TextView
                     android:id="@+id/textview_like_count"
-                    android:textColor="#FFFFFF"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="좋아요" />
+                    android:text="좋아요"
+                    android:textColor="#FFFFFF" />
 
                 <View
                     android:layout_width="5dp"

@@ -96,7 +96,7 @@ public class MySeoulroFragment extends Fragment {
 
             @Override
             public void onFailure(Call<MyseoulloResult> call, Throwable t) {
-                Toast.makeText(getActivity(), "서비스 연결을 확인하세요.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "서비스 연결 문제", Toast.LENGTH_SHORT).show();
             }
         });
 

@@ -94,12 +94,13 @@
             android:layout_height="33dp"
             android:layout_marginTop="174dp"
             android:background="@drawable/map_icon_balloon" />
+
         <Button
             android:id="@+id/btn_landScape_hogisim_shinbi"
             android:layout_width="55dp"
             android:layout_height="33dp"
-            android:layout_marginTop="80dp"
             android:layout_marginLeft="176dp"
+            android:layout_marginTop="80dp"
             android:background="@drawable/map_icon_balloon" />
 
         <ImageView

@@ -14,14 +14,14 @@
         android:layout_height="50dp"
         android:background="#fff">
 
-        <Button
-            android:id="@+id/btn_mypage_back"
+        <ImageView
+            android:id="@+id/imageview_mypage_back"
             android:layout_width="19dp"
             android:layout_height="20dp"
             android:layout_alignParentLeft="true"
             android:layout_centerInParent="true"
             android:layout_marginLeft="10dp"
-            android:background="@drawable/review_picture_cancel" />
+            android:src="@drawable/back_button" />
 
         <ImageView
             android:layout_width="wrap_content"
@@ -55,7 +55,7 @@
             android:layout_below="@+id/img_backbround_mypage">
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="30dp"
                 android:layout_height="70dp"
                 android:layout_below="@+id/img_backbround_mypage"
                 android:layout_weight="6"
@@ -88,7 +88,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:text="공모전/알바힘들다"
+                        android:text="반갑습니다"
                         android:textSize="12sp" />
 
                     <LinearLayout
@@ -189,6 +189,7 @@
                         android:layout_weight="1" />
 
                     <Button
+                        android:id="@+id/btn_mypage_proofShot"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1.63"

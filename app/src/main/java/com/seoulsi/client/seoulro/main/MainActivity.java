@@ -15,38 +15,23 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapFragment;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.GroundOverlayOptions;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.LatLngBounds;
-import com.google.android.gms.maps.model.MarkerOptions;
 import com.seoulsi.client.seoulro.R;
 
-import com.seoulsi.client.seoulro.application.ApplicationController;
-import com.seoulsi.client.seoulro.login.LoginUserInfo;
 import com.seoulsi.client.seoulro.main.Fragment.FacilityFragment;
 import com.seoulsi.client.seoulro.main.Fragment.KeyPointFragment;
 import com.seoulsi.client.seoulro.main.Fragment.LandScapeFragment;
-import com.seoulsi.client.seoulro.network.NetworkService;
-import com.seoulsi.client.seoulro.search.SearchInfoActivity;
+
+import com.seoulsi.client.seoulro.main.info.InfoActivity;
+import com.seoulsi.client.seoulro.main.proofShot.ProofShotActivity;
 import com.seoulsi.client.seoulro.mypage.MyPageActivity;
 import com.seoulsi.client.seoulro.search.details.DetailsInfo;
-import com.seoulsi.client.seoulro.search.details.DetailsResult;
-
-
 import java.util.ArrayList;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+
 
 import static com.seoulsi.client.seoulro.R.id.btn_toolBar_mypage;
+import static com.seoulsi.client.seoulro.R.id.start;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -60,6 +45,8 @@ public class MainActivity extends AppCompatActivity {
     private String rankSecondName;
     private String rankThirdName;
 
+    @BindView(R.id.btn_main_info)
+    Button btnMainInfo;
     @BindView(btn_toolBar_mypage)
     Button BtnToolBarMypage;
     @BindView(R.id.viewPager_main)
@@ -82,6 +69,8 @@ public class MainActivity extends AppCompatActivity {
     TextView textViewRankSecond;
     @BindView(R.id.textview_rank_third)
     TextView textViewRankThird;
+    @BindView(R.id.btn_main_proofShot)
+    Button btnMainProofShot;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -125,20 +114,20 @@ public class MainActivity extends AppCompatActivity {
             public void onPageSelected(int position) {
                 switch (position) {
                     case 0:
-                        btnMainFacility.setBackgroundResource(R.drawable.mypage_menu_green);
-                        btnMainLandScape.setBackgroundResource(R.drawable.mypage_menu_white);
+                        btnMainLandScape.setBackgroundResource(R.drawable.mypage_menu_green);
+                        btnMainFacility.setBackgroundResource(R.drawable.mypage_menu_white);
                         btnMainKeyPoint.setBackgroundResource(R.drawable.mypage_menu_white);
                         break;
 
                     case 1:
-                        btnMainFacility.setBackgroundResource(R.drawable.mypage_menu_white);
-                        btnMainLandScape.setBackgroundResource(R.drawable.mypage_menu_green);
+                        btnMainLandScape.setBackgroundResource(R.drawable.mypage_menu_white);
+                        btnMainFacility.setBackgroundResource(R.drawable.mypage_menu_green);
                         btnMainKeyPoint.setBackgroundResource(R.drawable.mypage_menu_white);
                         break;
 
                     case 2:
-                        btnMainFacility.setBackgroundResource(R.drawable.mypage_menu_white);
                         btnMainLandScape.setBackgroundResource(R.drawable.mypage_menu_white);
+                        btnMainFacility.setBackgroundResource(R.drawable.mypage_menu_white);
                         btnMainKeyPoint.setBackgroundResource(R.drawable.mypage_menu_green);
                 }
             }
@@ -149,10 +138,24 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        btnMainFacility.setOnClickListener(movePageListener);
-        btnMainFacility.setTag(0);
+        btnMainInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, InfoActivity.class);
+                startActivity(intent);
+            }
+        });
+        btnMainProofShot.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, ProofShotActivity.class);
+                startActivity(intent);
+            }
+        });
         btnMainLandScape.setOnClickListener(movePageListener);
-        btnMainLandScape.setTag(1);
+        btnMainLandScape.setTag(0);
+        btnMainFacility.setOnClickListener(movePageListener);
+        btnMainFacility.setTag(1);
         btnMainKeyPoint.setOnClickListener(movePageListener);
         btnMainKeyPoint.setTag(2);
     }
@@ -163,18 +166,18 @@ public class MainActivity extends AppCompatActivity {
             int tag = (int) v.getTag();
             switch (tag) {
                 case 0:
-                    btnMainFacility.setBackgroundResource(R.drawable.mypage_menu_green);
-                    btnMainLandScape.setBackgroundResource(R.drawable.mypage_menu_white);
+                    btnMainLandScape.setBackgroundResource(R.drawable.mypage_menu_green);
+                    btnMainFacility.setBackgroundResource(R.drawable.mypage_menu_white);
                     btnMainKeyPoint.setBackgroundResource(R.drawable.mypage_menu_white);
                     break;
                 case 1:
-                    btnMainFacility.setBackgroundResource(R.drawable.mypage_menu_white);
-                    btnMainLandScape.setBackgroundResource(R.drawable.mypage_menu_green);
+                    btnMainLandScape.setBackgroundResource(R.drawable.mypage_menu_white);
+                    btnMainFacility.setBackgroundResource(R.drawable.mypage_menu_green);
                     btnMainKeyPoint.setBackgroundResource(R.drawable.mypage_menu_white);
                     break;
                 case 2:
-                    btnMainFacility.setBackgroundResource(R.drawable.mypage_menu_white);
                     btnMainLandScape.setBackgroundResource(R.drawable.mypage_menu_white);
+                    btnMainFacility.setBackgroundResource(R.drawable.mypage_menu_white);
                     btnMainKeyPoint.setBackgroundResource(R.drawable.mypage_menu_green);
                     break;
             }
@@ -205,9 +208,9 @@ public class MainActivity extends AppCompatActivity {
         public android.support.v4.app.Fragment getItem(int position) {
             switch (position) {
                 case 0:
-                    return new FacilityFragment();
-                case 1:
                     return new LandScapeFragment();
+                case 1:
+                    return new FacilityFragment();
                 case 2:
                     return new KeyPointFragment();
                 default:

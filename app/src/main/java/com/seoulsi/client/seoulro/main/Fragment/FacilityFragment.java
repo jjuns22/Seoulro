@@ -74,7 +74,7 @@ public class FacilityFragment extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_facility, null);
         ButterKnife.bind(this, view);
-
+        Log.d("TAG","시설 들어옴");
         token = LoginUserInfo.getInstance().getUserInfo().token;
         imageViewMainFacility.setBackgroundResource(R.drawable.main_map_facilities);
         //서비스 객체 초기화
@@ -174,14 +174,14 @@ public class FacilityFragment extends Fragment{
 
                 } else {
                     Log.d(TAG, "실패");
-                    Toast.makeText(getContext(), "커넥팅 에러", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "서비스 연결 문제", Toast.LENGTH_SHORT).show();
                 }
             }
 
 
             @Override
             public void onFailure(Call<DetailsResult> call, Throwable t) {
-                Toast.makeText(getContext(), "onFailure", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getContext(), "onFailure", Toast.LENGTH_SHORT).show();
             }
         });
     }

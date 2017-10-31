@@ -92,7 +92,7 @@ public class MyReviewFragment extends Fragment {
     public View.OnClickListener clickEvent = new View.OnClickListener() {
         public void onClick(View v) {
             final int itemPosition = myReviewRecyclerview.getChildPosition(v);
-            Toast.makeText(getContext(), itemPosition + "번 리스트 클릭!!", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getContext(), itemPosition + "번 리스트 클릭!!", Toast.LENGTH_SHORT).show();
 
         }
     };
@@ -120,11 +120,11 @@ public class MyReviewFragment extends Fragment {
                         }
                         isListViewAppending = false;
                     } else {
-                        Toast.makeText(getContext(), "토큰전송에러", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "서비스 연결 문제", Toast.LENGTH_SHORT).show();
                     }
                 } else {
                     Log.d(TAG, "통신실패");
-                    Toast.makeText(getContext(), "커넥팅 에러", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "서비스 연결 문제", Toast.LENGTH_SHORT).show();
                 }
             }
 

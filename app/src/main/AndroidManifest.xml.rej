@@ -1,0 +1,9 @@
+diff a/app/src/main/AndroidManifest.xml b/app/src/main/AndroidManifest.xml	(rejected hunks)
+@@ -40,6 +40,7 @@
+         android:theme="@style/AppTheme.NoActionBar">
+         <meta-data
+             android:name="com.google.android.geo.API_KEY"
++            android:value="AIzaSyDriXS2CiMl53A1ho_lcT1DcVOyCtGKZu0	" />
+ 
+         <activity
+             android:name=".SplashActivity"
