@@ -3,4 +3,102 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"></View>
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:textSize="16dp"
+            android:text="[2017 서울로 워킹데이] 서울로에서 남산까지"
+            android:textColor="#4E4E4E"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="8dp"></View>
+        <TextView
+            android:textColor="@color/colorGreen"
+            android:text="2017. 11. 11(토) 09:00~12:00"
+            android:gravity="end"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="5dp"></View>
+        <View
+            android:background="#808080"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"></View>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"></View>
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:textSize="16dp"
+            android:text="[서울로 100일의 자연] 전시회"
+            android:textColor="#4E4E4E"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="8dp"></View>
+        <TextView
+            android:textColor="@color/colorGreen"
+            android:text="2017. 08. 26(토) ~ 09. 01(금)"
+            android:gravity="end"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="5dp"></View>
+        <View
+            android:background="#808080"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"></View>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"></View>
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:textSize="16dp"
+            android:text="2017 서울로 여름축제 '서울로 go'"
+            android:textColor="#4E4E4E"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="8dp"></View>
+        <TextView
+            android:textColor="@color/colorGreen"
+            android:text="2017. 07. 21(금) ~ 07. 30(일)"
+            android:gravity="end"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="5dp"></View>
+        <View
+            android:background="#808080"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"></View>
+    </LinearLayout>
 </LinearLayout>

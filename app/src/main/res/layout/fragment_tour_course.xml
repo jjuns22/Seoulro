@@ -3,4 +3,42 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="40dp"></View>
+    <TextView
+        android:textColor="#4E4E4E"
+        android:layout_marginLeft="30dp"
+        android:textSize="30dp"
+        android:text="남산회현 코스"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="20dp"></View>
+    <TextView
+        android:textSize="15dp"
+        android:gravity="center"
+        android:textColor="#4E4E4E"
+        android:text="서울의 600년 역사와 함께 자연을 즐길 수 있는 코스"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="30dp"></View>
+    <LinearLayout
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    <TextView
+        android:gravity="center"
+        android:textSize="15dp"
+        android:textColor="#FFFFFF"
+        android:text="코스 정보 더 알아보기"
+        android:background="@color/colorMint"
+        android:layout_width="180dp"
+        android:layout_height="130dp" />
+    </LinearLayout>
 </LinearLayout>
