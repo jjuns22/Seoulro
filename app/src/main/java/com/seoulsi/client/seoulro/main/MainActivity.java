@@ -87,18 +87,26 @@ public class MainActivity extends AppCompatActivity {
         rankSecondName = getData.getStringExtra("rankSecondName");
         rankThirdPicture = getData.getStringExtra("rankThird");
         rankThirdName = getData.getStringExtra("rankThirdName");
-
+        Log.d(TAG,"rankFirtName : "+ rankFirstName);
+        Log.d(TAG,"rankSecondName : "+ rankSecondName);
+        Log.e(TAG,"rankThirdName : "+ rankThirdName);
         if(rankFirstPicture!=null) {
             Glide.with(MainActivity.this).load(rankFirstPicture).into(circleImageViewFirst);
+        }
+        if(rankFirstName != null)
+        {
             textViewRankFirst.setText(rankFirstName);
         }
         if(rankSecondPicture!=null) {
             Glide.with(MainActivity.this).load(rankSecondPicture).into(circleImageViewSecond);
+        }
+        if(rankSecondName != null){
             textViewRankSecond.setText(rankSecondName);
         }
-
        if(rankThirdPicture!=null){
             Glide.with(MainActivity.this).load(rankThirdPicture).into(circleImageViewThird);
+        }
+        if(rankThirdName != null){
             textViewRankThird.setText(rankThirdName);
         }
         viewPagerMain.setAdapter(new pagerAdapter(getSupportFragmentManager()));

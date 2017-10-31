@@ -120,6 +120,7 @@
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
                         android:layout_marginLeft="30dp"
                         android:layout_weight="1"
                         android:gravity="center"
@@ -163,6 +164,7 @@
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
                         android:layout_weight="1"
                         android:gravity="center"
                         android:orientation="vertical">
@@ -180,11 +182,11 @@
                                 android:textSize="30dp" />
 
                             <de.hdodenhof.circleimageview.CircleImageView
-                                android:layout_marginRight="10dp"
                                 android:id="@+id/circleImageView_first"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginBottom="1dp"
+                                android:layout_marginRight="10dp"
                                 android:src="@drawable/main_ranking_first" />
                         </FrameLayout>
 
@@ -202,6 +204,7 @@
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
                         android:layout_weight="1"
                         android:gravity="center"
                         android:orientation="vertical">
@@ -221,9 +224,9 @@
 
                             <de.hdodenhof.circleimageview.CircleImageView
                                 android:id="@+id/circleImageView_third"
-                                android:layout_marginRight="20dp"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_marginRight="20dp"
                                 android:layout_marginTop="60dp"
                                 android:src="@drawable/main_ranking_third" />
                         </FrameLayout>

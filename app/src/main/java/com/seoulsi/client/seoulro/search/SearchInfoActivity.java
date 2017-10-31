@@ -276,5 +276,4 @@ public class SearchInfoActivity extends AppCompatActivity {
             return 2;
         }
     }
-
 }

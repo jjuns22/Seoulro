@@ -17,7 +17,7 @@ public class PermanentProgramFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.fragment_permanent_program, null);
+        final View view = inflater.inflate(R.layout.fragment_permanent, null);
 
 
         return view;
